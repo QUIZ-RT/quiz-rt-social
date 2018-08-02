@@ -1,14 +1,8 @@
-import {createStore} from "redux"
-import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard.controller"
-
-// State - To hold states
-const state = []
-
-// State to track
-let actionList = []
+import {Store} from "../../boot/Store"
+// import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard.controller"
 
 // Reducer
-export const dashboardReducer = (state = {PopularTopic:[], FavoriteTopic:[], MyChallanges:[], Challenges:[]}, action) => {
+export const dashboardReducer = (state, action) => {
   switch (action.type) {
   case "GET_PopularTopic":
     return getPopularTopicReducer(state, action)
@@ -19,35 +13,21 @@ export const dashboardReducer = (state = {PopularTopic:[], FavoriteTopic:[], MyC
   }
 }
 
-//subscribe
-store.subscribe(renderView)
-function renderView() {
-const currentActionType = actionList[actionList.length - 1].type
+// subscribe
+Store.subscribe(renderDashboardView)
+function renderDashboardView() {
 
-  if(currentActionType == "GET_PopularTopic") {
-    createPopularTopicSection()
-  }
-  else if(currentActionType == "GET_FavoriteTopic") {
-
-  }
 }
 
 // GET Popular Topic method
 const getPopularTopicReducer = (state, action) => {
-  actionList.push(action)
-  state.PopularTopic = action.dataItem
+  state.PopularTopic = action.data
   return state
 }
 
 // GET Favorite Topic method
 const getFavoriteTopicReducer = (state, action) => {
-  actionList.push(action)
-  state.FavoriteTopic = action.dataItem
+  state.FavoriteTopic = action.data
   return state
-}
-
-
-const getStateData = () => {
-  return state.getState()
 }
 

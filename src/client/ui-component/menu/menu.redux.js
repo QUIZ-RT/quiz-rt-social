@@ -3,10 +3,9 @@ import {Store} from "../../boot/Store"
 // State - To hold states
 
 // State to track
-const actionList = []
 
 // Reducer
-export const menuReducer = (state = {currentview: "dashboard"}, action) => {
+export const menuReducer = (state, action) => {
   switch (action.type) {
   case "CurrentViewUpdate":
     return updateCurrentView(state, action)
@@ -16,14 +15,13 @@ export const menuReducer = (state = {currentview: "dashboard"}, action) => {
 }
 
 // subscribe
-Store.subscribe(renderView)
-function renderView() {
-
+Store.subscribe(renderMenuView)
+function renderMenuView() {
+  console.log(Store.getState())
 }
 
 const updateCurrentView = (state, action) => {
-  actionList.push(action)
-  state.currentview = action.dataItem
+  state.currentView = action.data
   return state
 }
 
