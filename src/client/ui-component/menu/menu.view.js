@@ -21,9 +21,10 @@ export const getMenuTemplate = (menuData) => {
   const menuHtmlStr = `<aside class="mdc-drawer mdc-drawer--temporary" dir="rtl">
     <nav class="mdc-drawer__drawer" dir="rtl">
       <header class="mdc-drawer__header">
-        <div class="mdc-drawer__header-content mdc-theme--on-primary mdc-theme--primary-bg">
-          Header here
-        </div>
+      <div class="mdc-drawer__header-content">
+      <div class="mdc-typography--headline6">Mail</div>
+      <div id="loggedInEmail" class="mdc-typography--subtitle2">k.sundar90@gmail.com</div>
+      </div>
       </header>
       <nav class="mdc-drawer__content mdc-list-group">
         <div id="icon-with-text-demo" class="mdc-list">
