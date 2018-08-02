@@ -1,8 +1,6 @@
-import {createStore} from "redux"
-import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard.controller"
 
+import {Store} from "../../boot/Store"
 // State - To hold states
-const state = []
 
 // State to track
 const actionList = []
@@ -19,6 +17,7 @@ export const menuReducer = (state = {currentview: "dashboard"}, action) => {
 
 // subscribe
 store.subscribe(renderView)
+
 function renderView() {
 
 }
@@ -29,6 +28,4 @@ const updateCurrentView = (state, action) => {
   return state
 }
 
-const getStateData = () => {
-  return state.getState()
-}
+
