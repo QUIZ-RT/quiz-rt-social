@@ -1,10 +1,22 @@
-import TemplateGenerator from "../../challenge/common/TemplateGenerator"
+import TemplateGenerator from "../../common/TemplateGenerator"
 
 export default class CreatePlayChallengeView {
   static createSidebar() {
+    CreatePlayChallengeView.playChallengeContainer()
+
     const playChallengeSection = document.getElementById("playChallengeSection")
     const playChallengeTemplate = CreatePlayChallengeView.createPlayTemplate()
     playChallengeSection.appendChild(playChallengeTemplate)
+  }
+  static playChallengeContainer() {
+    const playChallengeContainer = `<section class="mdl-grid" id="playChallengeSection">
+  
+      </section>`
+    const playChallengeContainerTemp = TemplateGenerator.createAllChildHTMLElement(playChallengeContainer)
+
+    const container = document.querySelector("body")
+
+    container.appendChild(playChallengeContainerTemp)
   }
 
   static createPlayTemplate() {
