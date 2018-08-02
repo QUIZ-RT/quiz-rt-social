@@ -20,24 +20,48 @@ export const getTopicModalbox = () => {
         </h2>
       </header>
       <section id="topic-mdc-dialog-description" class="mdc-dialog__body">
-      </section>
+        
+      </section> 
       <footer class="mdc-dialog__footer">
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Decline</button>
-        <button type="button" class="mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--accept">Accept</button>
-      </footer>
+        <button type="button" class="mdc-button mdc-button--raised close-btn  mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
+      </footer>     
     </div>
     <div class="mdc-dialog__backdrop"></div>
   </aside>`
   return htmlToTemplate(topicModalHtmlStr)
 }
 
-export const getToipcModalBodyContent = (item) => {
-  const modalBodyContentStr = `<div class="topicCardContainer"><div id="topic_${item.id}" class="mdc-card demo-card demo-card--photo">
-  <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-      <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('./src/client/assets/${item.Img}');">
+export const getToipcModalBodyContent = (state, id) => {
+  let follow = ""
+  if (state.follow) {
+    follow = `<button id="topic-${id}-unfollow" class="mar-btm-10px mdc-button mdc-button--raised">
+    Unfollow</button>`
+  }
+  else {
+    follow = `<button id="topic-${id}-follow" class="mar-btm-10px mdc-button mdc-button--raised">
+    Follow</button>`
+  }
+
+  const modalBodyContentStr = `  
+  <div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-tablet">
+        <div class="topicCardContainer">
+            <div id="topic_${id}" class="mdc-card demo-card demo-card--photo">
+              <a class="mdc-card__primary-action demo-card__primary-action" href="#">
+                <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${state.topicImage}');">
+                </div>
+              </a>  
+            </div>   
+        </div>
       </div>
-  </a>  
-  </div>
-  </div>`
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet">
+          <button id="topic-${id}-play" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
+          ${follow}
+          <button id="topic-${id}-leader" class="mar-btm-10px mdc-button mdc-button--raised">Leader Board</button>
+      </div>      
+    </div>
+  </div>  
+  `
   return htmlToTemplate(modalBodyContentStr)
 }
