@@ -1,6 +1,3 @@
 {
-    "presets": [
-        "env",
-        "latest"
-    ]
+  "presets": [ "es2015", "env" ]
 }
