@@ -1,8 +1,8 @@
-import {createStore} from 'redux'
-import reducer  from './reducer';
+import {createStore} from "redux"
+import reducer from "./reducer"
 
-let initialState={
+const initialState = {
 
-};
+}
 
-export const Store = createStore(reducer, initialState);
+export const Store = createStore(reducer, initialState)
