@@ -2,14 +2,15 @@
   "name": "quiz-rt-social",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/server/js/index.js",
+  "main": "./src/client/app.js",
   "scripts": {
-    "start": "node ./src/server/index.js --host 0.0.0.0",
-    "build": "webpack --mode production",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --host 0.0.0.0",
-    "server": "nodemon ./src/server/index.js --host 0.0.0.0",
+    "start": "node ./src/client/app.js --host 0.0.0.0",
+    "build": "./node_modules/webpack/bin/webpack.js --mode production",
+    "client": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development --devtool inline-source-map --hot --host 0.0.0.0",
+    "server": "nodemon ./src/client/app.js --host 0.0.0.0",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "mocha test ./src/**/*.test.js src/**/**/*.test.js --require babel-register --reporter spec || exit 0"
+    "lint": "eslint",
+    "test": "mocha test ./src/**/*.spec.js src/**/**/*.spec.js --require babel-register --reporter spec || exit 0"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,8 @@
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
+    "@material/select": "^0.38.0",
+    "@material/textfield": "^0.38.0",
     "@material/drawer": "^0.38.0",
     "@material/list": "^0.38.0",
     "@material/top-app-bar": "^0.38.0",

@@ -94,7 +94,7 @@ var config = {
       Waves: 'node-waves',
     }),
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: './index.html'
     }),
     new CleanWebpackPlugin([outputDirectory]),
   ],
