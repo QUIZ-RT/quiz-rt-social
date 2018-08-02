@@ -16,7 +16,7 @@ export const menuReducer = (state = {currentview: "dashboard"}, action) => {
 }
 
 // subscribe
-store.subscribe(renderView)
+Store.subscribe(renderView)
 
 function renderView() {
 
