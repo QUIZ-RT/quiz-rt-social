@@ -15,22 +15,43 @@ export const topicModalInitializeShow = (evt) => {
 }
 
 const openTopicModal = (state, id, target) => {
-  console.log("state - ", state, id, target)
   const dialogElement = document.querySelector("#topic-mdc-dialog")
   const dialog = new MDCDialog(dialogElement)
   const dialogHeader = dialogElement.querySelector("#topic-mdc-dialog-label")
   const dialogBody = dialogElement.querySelector("#topic-mdc-dialog-description")
-  // const dialogFooter = dialogElement.querySelector(".mdc-dialog__footer")
   dialogHeader.innerHTML = `Topic : ${state.topicText}`
   dialogBody.innerHTML = ""
-  dialogBody.appendChild(getToipcModalBodyContent(state, id))
-  //   .dialog.listen("MDCDialog:accept", function() {
-  //     console.log("accepted")
-  //   })
+  const topicModalBodyTemp = getToipcModalBodyContent(state, id)
+  const modalBtnList = topicModalBodyTemp.querySelectorAll("button")
+  modalBtnList.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      topicModalbtnClick(event)
+    })
+  })
+  dialogBody.appendChild(topicModalBodyTemp)
 
-  // dialog.listen("MDCDialog:cancel", function() {
-  //   console.log("canceled")
-  // })
+  dialog.listen("MDCDialog:cancel", function() {
+    console.log("canceled")
+  })
   dialog.lastFocusedTarget = target
   dialog.show()
+}
+
+const topicModalbtnClick = (event) => {
+  const btnData = event.target.id.split("-")
+  const topicId = btnData[1]
+  switch (btnData[2]) {
+  case "play":
+    console.log("play" + topicId)
+    break
+  case "leader":
+    console.log("leader" + topicId)
+    break
+  case "unfollow":
+    console.log("unfollow" + topicId)
+    break
+  case "follow":
+    console.log("follow" + topicId)
+    break
+  }
 }

@@ -8,6 +8,7 @@ export const topicReducer = (state = {"topics": {
     "modifiedBy": 1,
     "modifiedDate": "11/11/2018",
     "published": true,
+    "follow": true,
   },
   "test2": {
     "topicText": "Sports",
@@ -18,6 +19,7 @@ export const topicReducer = (state = {"topics": {
     "modifiedBy": 1,
     "modifiedDate": "11/11/2018",
     "published": true,
+    "follow": true,
   },
   "test3": {
     "topicText": "Envioments",
@@ -28,6 +30,7 @@ export const topicReducer = (state = {"topics": {
     "modifiedBy": 1,
     "modifiedDate": "11/11/2018",
     "published": true,
+    "follow": true,
   },
 }}, action) => {
   switch (action.type) {

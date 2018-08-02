@@ -21,7 +21,10 @@ export const getTopicModalbox = () => {
       </header>
       <section id="topic-mdc-dialog-description" class="mdc-dialog__body">
         
-      </section>      
+      </section> 
+      <footer class="mdc-dialog__footer">
+        <button type="button" class="mdc-button mdc-button--raised close-btn  mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
+      </footer>     
     </div>
     <div class="mdc-dialog__backdrop"></div>
   </aside>`
@@ -29,11 +32,20 @@ export const getTopicModalbox = () => {
 }
 
 export const getToipcModalBodyContent = (state, id) => {
-  const modalBodyContentStr = `
-  
+  let follow = ""
+  if (state.follow) {
+    follow = `<button id="topic-${id}-unfollow" class="mar-btm-10px mdc-button mdc-button--raised">
+    Unfollow</button>`
+  }
+  else {
+    follow = `<button id="topic-${id}-follow" class="mar-btm-10px mdc-button mdc-button--raised">
+    Follow</button>`
+  }
+
+  const modalBodyContentStr = `  
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-8-tablet">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-tablet">
         <div class="topicCardContainer">
             <div id="topic_${id}" class="mdc-card demo-card demo-card--photo">
               <a class="mdc-card__primary-action demo-card__primary-action" href="#">
@@ -44,9 +56,9 @@ export const getToipcModalBodyContent = (state, id) => {
         </div>
       </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet">
-          <button id="default-dialog-activation" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
-          <button id="default-dialog-activation" class="mar-btm-10px mdc-button mdc-button--raised">Follow</button>
-          <button id="default-dialog-activation" class="mar-btm-10px mdc-button mdc-button--raised">Leader Board</button>
+          <button id="topic-${id}-play" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
+          ${follow}
+          <button id="topic-${id}-leader" class="mar-btm-10px mdc-button mdc-button--raised">Leader Board</button>
       </div>      
     </div>
   </div>  
