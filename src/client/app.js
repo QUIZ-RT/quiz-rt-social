@@ -1,13 +1,12 @@
-import 'jquery';
-import './styles/scss/main.scss';
-import {} from '../../node_modules/material-design-lite/material.min';
-import CreateChallengeController from './ui-component/challenge/controller/CreateChallengeController';
+import "jquery"
+import "./styles/scss/main.scss"
+import {} from "../../node_modules/material-design-lite/material.min"
+import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
 import {createHeader} from "./ui-component/header/header.controller"
 import {createMenu} from "./ui-component/menu/menu.controller"
 import {createMainContainer} from "./ui-component/main/main.controlller"
 import {createPopularTopicSection, createFavoriteTopicSection, createChallengesSection, createMyChallengesSection} from "./ui-component/dashboard/dashboard.controller"
 import {createTopicmodal} from "./ui-component/topic-modal/topic-modal.controller"
-//import {createUserLogin} from "./ui-component/login-page/login.controller"
 
 createHeader()
 createMenu()
@@ -17,8 +16,8 @@ createFavoriteTopicSection()
 createChallengesSection()
 createMyChallengesSection()
 createTopicmodal()
-$('#challengeSection').on('click', '#create', CreateChallengeController.saveChallengeDetails);
-CreateChallengeController.displaySideBar();
+$("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
+CreateChallengeController.displaySideBar()
 
 // export const updateViewState = (viewName) => {
 //   switch (viewName) {
@@ -38,3 +37,4 @@ CreateChallengeController.displaySideBar();
 
 // // init
 // updateViewState("Dashboard")
+
