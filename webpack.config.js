@@ -75,11 +75,11 @@ var config = {
       }]
   },
   devServer: {
-    port: 8081,
+    port: 3000,
     open: true,
     proxy: {
       "/api/**": {
-        "target": "http://localhost:8081",
+        "target": "http://localhost:8080",
         "secure": false,
         "changeOrigin": true
       }
@@ -94,7 +94,7 @@ var config = {
       Waves: 'node-waves',
     }),
     new HtmlWebpackPlugin({
-      template: './index.html'
+      template: 'index.html'
     }),
     new CleanWebpackPlugin([outputDirectory]),
   ],

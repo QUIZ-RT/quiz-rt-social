@@ -6,5 +6,5 @@ export const createHeader = () => {
   renderViewToContainer(headerContent, "body")
   const topAppBarElement = document.querySelector(".mdc-top-app-bar")
   const topAppBar = new MDCTopAppBar(topAppBarElement)
-  console.log("topAppBar" + topAppBar)
+  console.log(topAppBar)
 }
