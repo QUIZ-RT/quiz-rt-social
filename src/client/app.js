@@ -8,6 +8,7 @@ import {createMainContainer} from "./ui-component/main/main.controlller"
 import {createPopularTopicSection, createFavoriteTopicSection, createChallengesSection, createMyChallengesSection} from "./ui-component/dashboard/dashboard.controller"
 import {createTopicmodal} from "./ui-component/topic-modal/topic-modal.controller"
 import CreatePlayChallengeController from "./ui-component/play-challenge/controller/playChallenge.controller"
+import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/ShareChallenges/shareChallenges.controller"
 // import {topicCltrl} from "./ui-component/topics/topic-controller"
 // import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
@@ -29,3 +30,7 @@ CreatePlayChallengeController.displayPlaySideBar()
 
 // // init
 // updateViewState("Dashboard")
+
+// share Challenges section
+createShareChallengesSection()
+ShareChallengesWithSelectedFriendsSection()
