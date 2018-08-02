@@ -46,7 +46,7 @@ export const getToipcModalBodyContent = (state, id) => {
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet">
           <button id="default-dialog-activation" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
           <button id="default-dialog-activation" class="mar-btm-10px mdc-button mdc-button--raised">Follow</button>
-          <button id="default-dialog-activation" class="mar-btm-10px mdc-button mdc-button--raised">Leader Board</button>
+          <button id="btnLeaderBoard" class="mar-btm-10px mdc-button mdc-button--raised">Leader Board</button>
       </div>      
     </div>
   </div>  

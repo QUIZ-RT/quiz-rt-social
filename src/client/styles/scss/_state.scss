@@ -35,3 +35,7 @@
  .selectedRow:hover {
      background-color: #bbdefb !important;
  }
+
+ .mdl-color--customTheme {
+     background-color: var(--mdc-theme-primary, #6200ee);
+ }

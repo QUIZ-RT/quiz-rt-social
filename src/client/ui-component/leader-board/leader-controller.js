@@ -1,16 +1,11 @@
-import {MDCSelect} from "@material/select/index"
 import {getLeaderBoardTemplate, renderViewToContainer} from "./leader-view"
-import {getChallengeDetails} from "./leader-board-service"
 
 export const createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
-  renderViewToContainer(leaderBoardContent, "body")
-
-  const result = JSON.parse(getChallengeDetails())
-  getFilteredDetails(result.gameStatus, 1)
+  renderViewToContainer(leaderBoardContent, "main")
 }
 
-const getFilteredDetails = (arry, days) => {
+export const getFilteredDetails = (arry, days) => {
   const startValue = new Date()
   const endValue = new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
   let html = ""
@@ -44,11 +39,3 @@ const getFilteredDetails = (arry, days) => {
   document.getElementById("leaderBody").innerHTML = html
   document.querySelector("tr[id='8']").className = "selectedRow"
 }
-
-document.addEventListener("DOMContentLoaded", function(event) {
-  const select = new MDCSelect(document.querySelector(".mdc-select"))
-  select.listen("change", () => {
-    const result = JSON.parse(getChallengeDetails())
-    getFilteredDetails(result.gameStatus, select.value)
-  })
-})
