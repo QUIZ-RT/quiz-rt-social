@@ -1,3 +1,5 @@
-import {createHeader} from "./ui-component/header/header.controller"
+import {createLeaderBoardForChallenges} from "./ui-component/leader-board/leader-controller"
 
-createHeader()
+createLeaderBoardForChallenges()
+// createHeader()
+
