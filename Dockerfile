@@ -9,19 +9,21 @@ RUN mkdir -p /usr/src/app
  
 # Switch to working directory
 WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+# Install dependencies (if any) in package.json
+RUN npm install
  
 # Copy contents of local folder to `WORKDIR`
 # You can pick individual files based on your need
 COPY . .
  
-# Install nodemon globally
-RUN npm install -g nodemon
- 
-# Install dependencies (if any) in package.json
-RUN npm install
+RUN npm run build
  
 # Expose port from container so host can access $PORT
-EXPOSE $PORT
+EXPOSE ${PORT}
  
 # Start the Node.js app on load
 CMD [ "npm", "start" ]
+

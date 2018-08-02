@@ -1,10 +1,10 @@
-import TemplateGenerator from '../common/TemplateGenerator';
+import TemplateGenerator from "../common/TemplateGenerator"
 
 export default class CreateChallengeView {
   static createSidebar() {
-    const challengeSection = document.getElementById('challengeSection');
-    const challengeTemplate = CreateChallengeView.createSidebarTemplate();
-    challengeSection.appendChild(challengeTemplate);
+    const challengeSection = document.getElementById("challengeSection")
+    const challengeTemplate = CreateChallengeView.createSidebarTemplate()
+    challengeSection.appendChild(challengeTemplate)
   }
 
   static createSidebarTemplate() {
@@ -35,7 +35,7 @@ export default class CreateChallengeView {
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--7-col">
                   <input class="mdl-textfield__input" type="text" id="challengeName" />
                   <label class="mdl-textfield__label" for="challengeName">Challenge Name</label>
-                </div>`;
+                </div>`
     for (let i = 1; i < 8; i += 1) {
       challengeTemplate = challengeTemplate.concat(` 
                       <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--8-col">
@@ -61,7 +61,7 @@ export default class CreateChallengeView {
                     <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
                       <input class="mdl-textfield__input" type="text" id="ques${i}ans" />
                       <label class="mdl-textfield__label" for="ques${i}ans">Answer</label>
-                    </div>`);
+                    </div>`)
     }
     challengeTemplate = challengeTemplate.concat(` 
                   <div class="mdl-card__actions mdl-card--border">
@@ -71,9 +71,9 @@ export default class CreateChallengeView {
               </form>
               </div>
               </main>
-            </div>`);
+            </div>`)
 
-    const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate);
-    return challengeTemplt;
+    const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
+    return challengeTemplt
   }
 }

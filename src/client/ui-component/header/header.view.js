@@ -1,12 +1,15 @@
+
 const htmlToTemplate = (htmlstr) => {
   const template = document.createElement("template")
   template.innerHTML = htmlstr
   return template.content
 }
+
 export const renderViewToContainer = (content, containerKey) => {
   const container = document.querySelector(containerKey)
   container.appendChild(content)
 }
+
 export const getHeaderTemplate = () => {
   const headerHtmlStr = `<header class="mdc-top-app-bar">
   <div class="mdc-top-app-bar__row">
