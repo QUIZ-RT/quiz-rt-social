@@ -14,7 +14,8 @@ export const getMenuTemplate = (menuData) => {
     menuData.forEach((item) => {
       menuItemStr += `<a id="menu_${item.id}" class="headermenu mdc-list-item mdc-list-item--selected demo-drawer-list-item" href="#">
             <i class="material-icons mdc-list-item__graphic" aria-hidden="true">${item.Icon}</i>${item.Name}
-          </a>`
+          </a>`;
+        
     })
   }
 
