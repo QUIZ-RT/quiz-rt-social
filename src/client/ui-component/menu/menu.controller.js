@@ -69,5 +69,5 @@ const menuNavigation = (evt) => {
   })[0]
   console.log("Clicked - " + menuItem.Name)
   drawer.open = false
-  store.dispatch({type: "CurrentViewUpdate", dataItem:  menuItem.Name.toLowerCase()})
+  store.dispatch({type: "CurrentViewUpdate", dataItem: menuItem.Name.toLowerCase()})
 }

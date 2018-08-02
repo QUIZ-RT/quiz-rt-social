@@ -5,10 +5,10 @@ import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard
 const state = []
 
 // State to track
-let actionList = []
+const actionList = []
 
 // Reducer
-export const menuReducer = (state = {currentview : "dashboard"}, action) => {
+export const menuReducer = (state = {currentview: "dashboard"}, action) => {
   switch (action.type) {
   case "CurrentViewUpdate":
     return updateCurrentView(state, action)
@@ -17,7 +17,7 @@ export const menuReducer = (state = {currentview : "dashboard"}, action) => {
   }
 }
 
-//subscribe
+// subscribe
 store.subscribe(renderView)
 function renderView() {
 
@@ -28,8 +28,6 @@ const updateCurrentView = (state, action) => {
   state.currentview = action.dataItem
   return state
 }
-
-
 
 const getStateData = () => {
   return state.getState()
