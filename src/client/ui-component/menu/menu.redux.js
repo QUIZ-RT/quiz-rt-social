@@ -1,5 +1,6 @@
 
-import {Store} from "../../boot/Store"
+// import {store} from "../../boot/Store"
+const store = require("./../../boot/Store")
 // State - To hold states
 
 // State to track
@@ -15,9 +16,9 @@ export const menuReducer = (state, action) => {
 }
 
 // subscribe
-Store.subscribe(renderMenuView)
+store.subscribe(renderMenuView)
 function renderMenuView() {
-  console.log(Store.getState())
+  console.log(store.getState())
 }
 
 const updateCurrentView = (state, action) => {

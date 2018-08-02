@@ -1,4 +1,5 @@
-import {Store} from "../../boot/Store"
+// import {Store} from "../../boot/Store"
+const store = require("../../boot/Store")
 // import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard.controller"
 
 // Reducer
@@ -14,7 +15,7 @@ export const dashboardReducer = (state, action) => {
 }
 
 // subscribe
-Store.subscribe(renderDashboardView)
+store.subscribe(renderDashboardView)
 function renderDashboardView() {
 
 }

@@ -8,5 +8,6 @@ const initialState = {
   MyChallanges: [],
   Challenges: [],
 }
+console.log("asdfas")
+export const store = createStore(reducer, initialState)
 
-export const Store = createStore(reducer, initialState)

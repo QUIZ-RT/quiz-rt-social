@@ -1,6 +1,7 @@
 // import $ from "jquery"
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
+import {store} from "./boot/Store"
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
 import {createHeader} from "./ui-component/header/header.controller"
 import {createMenu} from "./ui-component/menu/menu.controller"
@@ -10,6 +11,7 @@ import {createTopicmodal} from "./ui-component/topic-modal/topic-modal.controlle
 // import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
 // GoogleLogin()
+console.log(store)
 createHeader()
 createMenu()
 createMainContainer()
@@ -18,6 +20,7 @@ createFavoriteTopicSection()
 createChallengesSection()
 createMyChallengesSection()
 createTopicmodal()
+
 // $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
 // CreateChallengeController.displaySideBar()
 
