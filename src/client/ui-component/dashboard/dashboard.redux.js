@@ -1,4 +1,5 @@
 import {createStore} from "redux"
+import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard.controller"
 
 // State - To hold states
 const state = []
@@ -7,7 +8,7 @@ const state = []
 let actionList = []
 
 // Reducer
-const dashboardReducer = (state = {PopularTopic:[], FavoriteTopic:[], MyChallanges:[], Challenges:[]}, action) => {
+export const dashboardReducer = (state = {PopularTopic:[], FavoriteTopic:[], MyChallanges:[], Challenges:[]}, action) => {
   switch (action.type) {
   case "GET_PopularTopic":
     return getPopularTopicReducer(state, action)
@@ -18,16 +19,13 @@ const dashboardReducer = (state = {PopularTopic:[], FavoriteTopic:[], MyChallang
   }
 }
 
-//store
-export const store = createStore(dashboardReducer, state)
-
 //subscribe
 store.subscribe(renderView)
 function renderView() {
 const currentActionType = actionList[actionList.length - 1].type
 
   if(currentActionType == "GET_PopularTopic") {
-    
+    createPopularTopicSection()
   }
   else if(currentActionType == "GET_FavoriteTopic") {
 

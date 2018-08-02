@@ -1,5 +1,6 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
+import {store} from "../menu/menu.redux"
 
 const menuData = [{
   "id": 1,
@@ -37,11 +38,19 @@ const menuData = [{
   "Icon": "supervisor_account",
 },
 ]
+
+let drawer = null
 export const createMenu = () => {
   const menuContent = getMenuTemplate(menuData)
+  const menuList = menuContent.querySelectorAll(".headermenu")
+  menuList.forEach((menu) => {
+    menu.addEventListener("click", (event) => {
+      menuNavigation(event)
+    })
+  })
   renderViewToContainer(menuContent, "header")
   const drawerEl = document.querySelector(".mdc-drawer")
-  const drawer = new MDCTemporaryDrawer(drawerEl)
+  drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {
     drawer.open = true
   })
@@ -51,4 +60,14 @@ export const createMenu = () => {
   drawerEl.addEventListener("MDCTemporaryDrawer:close", function() {
     console.log("Received MDCTemporaryDrawer:close")
   })
+}
+
+const menuNavigation = (evt) => {
+  const menuId = evt.currentTarget.id.split("_")[1]
+  const menuItem = menuData.filter((x) => {
+    return x.id === parseInt(menuId)
+  })[0]
+  console.log("Clicked - " + menuItem.Name)
+  drawer.open = false
+  store.dispatch({type: "CurrentViewUpdate", dataItem:  menuItem.Name.toLowerCase()})
 }
