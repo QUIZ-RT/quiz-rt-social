@@ -28,4 +28,3 @@ const updateCurrentView = (state, action) => {
   return state
 }
 
-
