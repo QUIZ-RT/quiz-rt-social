@@ -15,7 +15,6 @@ import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection}
 // import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
 // GoogleLogin()
-import "./ui-component/chat/chat.controller"
 createHeader()
 createMenu()
 createMainContainer()

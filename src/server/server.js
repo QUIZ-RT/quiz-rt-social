@@ -1,17 +1,19 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { challaneDB } from './FirebaseDb/challengesDb';
 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 const  app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-var bodyParser = require('body-parser');
-app.use(bodyParser.json({ limit: '5mb' }));
- app.use("/api/firebase",(req,res)=>{
-     const response =FirebaseOAuth();
-     console.log(response.auth());
-   res.send("Sucessfully Authentication");
-});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//  app.use("/api/firebase",(req,res)=>{
+//      var response =FirebaseOAuth();
+//      console.log(response.auth());
+//    res.send("Sucessfully Authentication");
+// });
 
 app.use("/api/challenge",(req, res)=> {
     res.send(challaneDB(req, res));
