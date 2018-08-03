@@ -1,29 +1,17 @@
-export function storeChallenge(challenge) {
-  postCreateChallengeData(challenge)
-}
-
-export function postCreateChallengeData(challenge) {
-  console.log("challenge value:", challenge)
-  const url = "http://localhost:8080/api/challenge"
-   
-  const promise = new Promise((resolve, reject) => {
-    const stringify = require("json-stringify-safe")
-    fetch(url,{headers: {
-      "Content-Type": "application/json",
-      "Cache-Control":"no-cache"
+export const storeChallenge = (challengeJsonObj) => {
+  var settings = {
+    "url": "/api/challenge",
+    "type": "POST",
+    "mode": "no-cors",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache",
     },
-    method: "POST",
-    mode: "no-cors",
-    body:stringify(challenge)
-    }).then(
-      res => res.json()
-    ).then(json => {
-      console.log("response", json)
-      resolve(json);
-    }, error => {
-      reject(new ResponseError('Service Error' + error.message));
-    })
-  });
-  return promise;
+    "data": JSON.stringify(challengeJsonObj),
   }
+
+  $.ajax(settings).done(function(response) {
+    console.log(response)
+  })
+}
 
