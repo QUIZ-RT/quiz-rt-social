@@ -8,28 +8,24 @@ export const renderViewToContainer = (content, containerKey) => {
   const container = document.querySelector(containerKey)
   container.appendChild(content)
 }
-export const getHorizontalScrollableContainerTemplate = (dataList) => {
+export const getHorizontalScrollableContainerTemplate = (dataList, idkey) => {
   const hsContainerStr = `<div class="hsListContainer">
     </div>`
   const hsContainerTemp = htmlToTemplate(hsContainerStr)
   const appendListContainer = hsContainerTemp.querySelector(".hsListContainer")
   let hsContentStr = ""
   dataList.forEach((item) => {
-    hsContentStr += `<div class="mdc-card demo-card demo-card--photo">
+    console.log(item.Img)
+    hsContentStr += `<div id="${idkey}_${item.id}" class="mdc-card demo-card demo-card--photo">
     <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-        <div class="mdc-card__media mdc-card__media--square demo-card__media">
-        <div class="mdc-card__media-content demo-card__media-content--with-title">
-        <div class="demo-card__media-title mdc-typography--subtitle2">
-            ${item.Name}
-        </div>
-        </div>
+        <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('./src/client/assets/${item.Img}');">
         </div>
     </a>  
-    <div class="mdc-card__actions mdc-card__action-icons">
-        <button class="mdc-icon-button material-icons mdc-card__action mdc-card__action--icon"
-            data-mdc-ripple-is-unbounded
-            title="Share">share</button>
+    <a class="mdc-card__primary-action demo-card__primary-action" href="#">
+    <div class="mdc-typography--subtitle2 ">
+    ${item.Name}
     </div>
+    </a>
     </div>`
   })
 

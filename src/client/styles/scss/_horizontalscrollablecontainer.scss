@@ -1,18 +1,35 @@
 
 .hsListContainer {
-    height: 9em;
+    height: 8.6em;
     width: 100%;
-    background: #44059e;
+    background: #4f3f65;
     display: flex;
     align-items: flex-start;
     padding: 0 .5em;
+    margin-bottom: 1em;
     overflow-y: hidden;
-    -webkit-overflow-scrolling: auto
+    border-top: .1em solid #6200ee;
+    -webkit-overflow-scrolling: auto;
+    color: #120229;
+    text-align: center;
+    .mdc-card{
+        width: 7em;
+        height: 8em;
+        min-width: 6em;
+        min-height: 7em;
+        padding: .3em;
+        margin: .2em .5em;
+        -moz-box-shadow: 0 0.3em 0.9em 0 #0b0119;
+        -webkit-box-shadow:0 0.3em 0.9em 0 #0b0119;
+        box-shadow: 0 0.3em 0.9em 0 #0b0119;
+        .mdc-typography--subtitle2{
+            font-weight: bold;
+            cursor: pointer;
+        }
+    }
+    .mdc-card__media{
+    background-size: contain;
+    }
 }
 
-.mdc-card{
-    width: 7em;
-    height: 8em;
-    padding: .2em;
-    margin: .4em;
-}
+

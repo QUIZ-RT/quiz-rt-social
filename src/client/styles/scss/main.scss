@@ -1,4 +1,9 @@
+@import '../../../../node_modules/material-design-lite/src/material-design-lite';
+@import url(base.scss);
+@import url(module.scss);
+@import url(layout.scss);
 @import 'bootstrap/scss/bootstrap';
+@import '@material/select/mdc-select';
 @import '@material/top-app-bar/mdc-top-app-bar';
 @import '@material/drawer/mdc-drawer';
 @import '@material/list/mdc-list';
@@ -6,7 +11,9 @@
 @import '@material/elevation/mdc-elevation';
 @import '@material/form-field/mdc-form-field';
 @import '@material/card/mdc-card';
+@import '@material/dialog/mdc-dialog';
 @import '@material/grid-list/mdc-grid-list';
+@import '@material/layout-grid/mdc-layout-grid';
 
 
 @font-face {
@@ -50,3 +57,5 @@
 @import "./base";
 @import "./horizontalscrollablecontainer";
 @import "./dashboard";
+@import "./topics";
+@import "./shareChallenges";

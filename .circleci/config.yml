@@ -4,6 +4,14 @@
 #
 version: 2
 jobs:
+  machine:
+    services:
+      - docker
+
+  dependencies:
+    cache_directories:
+      - ~/docker
+  
   build:
     docker:
       # specify the version you desire here
@@ -35,3 +43,10 @@ jobs:
         
       # run tests!
       - run: yarn test
+
+  deployment:
+    staging:
+      commands:
+        - docker login --username=_ --password=${HEROKU_APP_TOKEN} registry.heroku.com
+        - docker build --rm=false -t registry.heroku.com/quiz-rt-social/web .
+        - docker push registry.heroku.com/quiz-rt-social/web:latest

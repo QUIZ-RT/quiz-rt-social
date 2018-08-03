@@ -1,0 +1,12 @@
+{
+    "extends": "airbnb-base",
+    "globals": {
+        "document": false,
+        "fetch": false        
+      },
+      "env":{
+          "browser":  true,
+          "jquery": true
+      }
+
+}
