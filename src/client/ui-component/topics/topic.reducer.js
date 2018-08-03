@@ -35,7 +35,7 @@ export const topicReducer = (state = {"topics": {
 }}, action) => {
   switch (action.type) {
   case "ADD_TOPIC":
-    return state
+    return Object.assign({}, state, action.topics)
   default:
     return state
   }

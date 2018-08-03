@@ -1,9 +1,9 @@
-@import "../../../../node_modules/material-design-lite/src/material-design-lite";
-@import "@material/select/mdc-select";
+@import '../../../../node_modules/material-design-lite/src/material-design-lite';
 @import url(base.scss);
 @import url(module.scss);
 @import url(layout.scss);
 @import 'bootstrap/scss/bootstrap';
+@import '@material/select/mdc-select';
 @import '@material/top-app-bar/mdc-top-app-bar';
 @import '@material/drawer/mdc-drawer';
 @import '@material/list/mdc-list';
