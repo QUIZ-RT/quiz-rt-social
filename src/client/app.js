@@ -1,8 +1,5 @@
 import $ from "jquery"
-<<<<<<< HEAD
 import {Store} from "./boot/Store"
-=======
->>>>>>> 20e65e847efbfab83df4ae1574c5eab17b25c98e
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
