@@ -16,7 +16,8 @@ app.use(bodyParser.json());
 // });
 
 app.use("/api/challenge",(req, res)=> {
-    res.send(challaneDB(req, res));
+    console.log('req body', req.body);
+    res.send(challaneDB(req.body));
 });
 
 
@@ -51,4 +52,4 @@ io.on('connection', function (socket) {
     });
 });
  
-http.listen(8080, () => console.log('Example app listening on port 3000!'));
+app.listen(8080, () => console.log('Example app listening on port 8080!'));
