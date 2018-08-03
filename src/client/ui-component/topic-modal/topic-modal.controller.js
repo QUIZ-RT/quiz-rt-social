@@ -1,6 +1,9 @@
 import {MDCDialog} from "@material/dialog"
+import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
 import {Store} from "../../boot/Store"
+import {getChallengeDetails} from "./../leader-board/leader-board-service"
+import {getFilteredDetails} from "./../leader-board/leader-controller"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -33,6 +36,33 @@ const openTopicModal = (state, id, target) => {
   dialog.listen("MDCDialog:cancel", function() {
     console.log("canceled")
   })
+
+  // ///////////////////////// Leader Board Related Code///////////////////////////////
+  document.querySelector(".btnLeaderBoard").addEventListener("click", function(event) {
+    const result = JSON.parse(getChallengeDetails())
+    getFilteredDetails(result.gameStatus, 1)
+
+    const dialogElement1 = document.querySelector("#topic-mdc-dialog")
+    const dialog1 = new MDCDialog(dialogElement1)
+    dialog1.close()
+
+    const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
+    const dialog2 = new MDCDialog(dialogElement2)
+    dialog2.show()
+
+    dialog2.listen("MDCDialog:cancel", function() {
+      document.getElementById("leaderBody").innerHTML = ""
+      const select2 = new MDCSelect(document.querySelector(".mdc-select"))
+      select2.value = "1"
+    })
+    const select = new MDCSelect(document.querySelector(".mdc-select"))
+    select.listen("change", () => {
+      const result = JSON.parse(getChallengeDetails())
+      getFilteredDetails(result.gameStatus, select.value)
+    })
+  })
+  // ////////////////////////////////////////////////////////////////////////////////////
+
   dialog.lastFocusedTarget = target
   dialog.show()
 }
