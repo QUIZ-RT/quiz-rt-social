@@ -44,7 +44,7 @@ export const updateViewState = (viewName) => {
     // share Challenges section
 	createChallengeSideBar()
     createLeaderBoardForChallenges()
-    createShareChallengesSection()
+   // createShareChallengesSection()
     ShareChallengesWithSelectedFriendsSection()
     break
   default:
