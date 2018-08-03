@@ -49,13 +49,13 @@ const challengeData = {
          playerId: "7",
          playerName: "vwx",
          score: "45323",
-         playedOn: "08/02/2018",
+         playedOn: "08/03/2018",
        },
        {
          playerId: "8",
          playerName: "yza",
          score: "36454",
-         playedOn: "08/02/2018",
+         playedOn: "08/03/2018",
        },
        {
          playerId: "9",

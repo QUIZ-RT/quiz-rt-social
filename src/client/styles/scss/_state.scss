@@ -15,6 +15,14 @@
      flex-direction: row;
  }
 
+ .display-column {
+    flex-direction:column;
+}
+
+.display-flex{
+    display: flex;
+}
+
  .selectRange {
      -moz-osx-font-smoothing: grayscale;
      -webkit-font-smoothing: antialiased;
@@ -24,9 +32,14 @@
  }
 
  .rankingTable {
-     width: 18.2vw;
+     width: 19vw;   
  }
 
+ .mdl-table{
+    max-height: 50vh;
+    overflow-y: scroll;
+ }
+ 
  .selectedRow {
      background-color: #64b5f6;
      font-weight: bold;
@@ -38,4 +51,11 @@
 
  .mdl-color--customTheme {
      background-color: var(--mdc-theme-primary, #6200ee);
+ }
+
+ .mdc-dialog__surface {
+     width: auto !important;
+     min-width: auto !important;
+     max-height: 64vh;
+     min-height: 64vh;
  }

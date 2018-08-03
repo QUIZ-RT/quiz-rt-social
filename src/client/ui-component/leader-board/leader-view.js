@@ -20,7 +20,7 @@ export const getLeaderBoardTemplate = () => {
           </h2>
         </header>
         <section id="leaderBrd-mdc-dialog-description" class="mdc-dialog__body">
-        <div class="group">
+        <div class="group display-flex display-column">
         <div class="mdc-select mdc-select--outlined">
             <select class="mdc-select__native-control selectRange">                          
               <option value="1" selected>
@@ -43,7 +43,7 @@ export const getLeaderBoardTemplate = () => {
         </div> 
         <div class="rankingTable mdl-shadow--2dp mdl-color--customTheme display-row justify-content-center" >       
             <div class="mdl-card__actions mdl-card--border">
-                <div id="mdl-table">
+                <div id="mdl-table" class="mdl-table">
                     <table id='mdl-table' class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead>
                             <tr class="mdl-color--grey-400">
