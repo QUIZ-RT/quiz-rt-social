@@ -22,13 +22,13 @@ function renderDashboardView() {
 
 // GET Popular Topic method
 const getPopularTopicReducer = (state, action) => {
-  state.PopularTopic = action.data
+  state.PopularTopic = action.dataItem
   return state
 }
 
 // GET Favorite Topic method
 const getFavoriteTopicReducer = (state, action) => {
-  state.FavoriteTopic = action.data
+  state.FavoriteTopic = action.dataItem
   return state
 }
 

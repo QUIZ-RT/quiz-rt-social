@@ -1,6 +1,7 @@
 
-// import {store} from "../../boot/Store"
-const store = require("./../../boot/Store")
+import {updateViewState} from "../../app"
+import {Store} from "../../boot/Store"
+
 // State - To hold states
 
 // State to track
@@ -9,21 +10,20 @@ const store = require("./../../boot/Store")
 const menuReducer = (state = {}, action) => {
   switch (action.type) {
   case "CurrentViewUpdate":
-    return Object.assign({}, ...state, action.dataItem)
+    const statePrev = {...state}
+    const newState = Object.assign({}, statePrev)
+    newState.currentView = action.dataItem
+    return newState
   default:
     return Object.assign({}, ...state)
   }
 }
 
-module.exports = menuReducer
-
 // subscribe
-store.subscribe(renderMenuView)
+Store.subscribe(renderMenuView)
 function renderMenuView() {
-  console.log(store.getState())
+  const storeData = Store.Store.getState()
+  updateViewState(storeData.currentView.Name)
 }
 
-const updateCurrentView = (state, action) => {
-  state.currentView = action.data
-  return state
-}
+module.exports = menuReducer

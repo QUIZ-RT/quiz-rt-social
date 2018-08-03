@@ -1,6 +1,9 @@
+// import "./boot/Store"
+// import "./boot/reducer"
 import $ from "jquery"
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
+
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
 import {createHeader} from "./ui-component/header/header.controller"
 import {createMenu} from "./ui-component/menu/menu.controller"
@@ -11,50 +14,72 @@ import CreatePlayChallengeController from "./ui-component/challenge/play-challen
 import {createNextQuestion, createChallenge, saveChallengeDetails, createChallengeSideBar} from "./ui-component/challenge/CreateChallenge/controller/CreateChallengeController"
 import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/shareChallenges.controller"
 
-// import {topicCltrl} from "./ui-component/topics/topic-controller"
-// import {createUserLogin} from "./ui-component/login-page/login.controller"
+import {topicCltrl} from "./ui-component/topics/topic-controller"
+import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
 // GoogleLogin()
-createHeader()
-createMenu()
-createMainContainer()
-createPopularTopicSection()
-createFavoriteTopicSection()
-createChallengesSection()
-createMyChallengesSection()
-createTopicmodal()
+// createHeader()
+// createMenu()
+// createMainContainer()
+// createPopularTopicSection()
+// createFavoriteTopicSection()
+// createChallengesSection()
+// createMyChallengesSection()
+// createTopicmodal()
 // topicCltrl()
 // createTopicmodal()
-$("body").on("click", "#create", createNextQuestion)
-$("body").on("click", "#nextQuestion", createNextQuestion)
-$("body").on("click", "#save", saveChallengeDetails)
-$("body").on("click", "#createChallenge", createChallenge)
-$("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPlaySideBar)
 
 // $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
 // CreateChallengeController.displaySideBar()
 
-// export const updateViewState = (viewName) => {
-//   switch (viewName) {
-//   case "Login":
-//     //createUserLogin()
-//     break
-//   case "Dashboard":
-//     createHeader()
-//     createMenu()
-//     createMainContainer()
-//     createPopularTopicSection()
-//     break
-//   default:
-//     break
-//   }
-// }
+export const updateViewState = (viewName) => {
+  switch (viewName) {
+  case "login":
+    clearContainer("body")
+    createUserLogin()
+    break
+  case "dashboard":
+    clearContainer("body")
+    createHeader()
+    createMenu()
+    createMainContainer()
+    createPopularTopicSection()
+    createFavoriteTopicSection()
+    createChallengesSection()
+    createMyChallengesSection()
+    createTopicmodal()
+    break
+  case "topics":
+    clearContainer("main")
+    createTopicmodal()
+    topicCltrl()
+    break
+  case "challenges":
+    clearContainer("main")
+    createChallengeSideBar()
+    $("body").on("click", "#create", createNextQuestion)
+    $("body").on("click", "#nextQuestion", createNextQuestion)
+    $("body").on("click", "#save", saveChallengeDetails)
+    $("body").on("click", "#createChallenge", createChallenge)
+    $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPlaySideBar)
+    createShareChallengesSection()
+    ShareChallengesWithSelectedFriendsSection()
+    break
+  case "friends":
+    clearContainer("main")
+    break
+  default:
+    break
+  }
+}
+const clearContainer = (containerKey) => {
+  document.querySelector(containerKey).innerHTML = ""
+}
 
+// createChallengeSideBar()
+// // // init
+updateViewState("dashboard")
 
-createChallengeSideBar()
-// // init
-// updateViewState("Dashboard")
-
-// share Challenges section
-createShareChallengesSection()
-ShareChallengesWithSelectedFriendsSection()
+// // share Challenges section
+// createShareChallengesSection()
+// ShareChallengesWithSelectedFriendsSection()

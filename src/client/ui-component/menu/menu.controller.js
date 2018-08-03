@@ -1,6 +1,7 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
-//import {store} from "../../boot/Store"
+// import {store} from "../../boot/Store"
+// const store = require("./../../boot/Store")
 
 const menuData = [{
   "id": 1,
@@ -25,7 +26,7 @@ const menuData = [{
 },
 {
   "id": 4,
-  "Name": "challenges",
+  "Name": "Challenges",
   "Status": "InActive",
   "href": "Redirect Action",
   "Icon": "games",
@@ -69,5 +70,7 @@ const menuNavigation = (evt) => {
   })[0]
   console.log("Clicked - " + menuItem.Name)
   drawer.open = false
-  //store.dispatch({type: "CurrentViewUpdate", data: menuItem.Name.toLowerCase()})
+  // if (store.getState().currentView !== menuItem.Name.toLowerCase()) {
+  //   store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
+  // }
 }

@@ -1,7 +1,12 @@
-import {getHorizontalScrollableContainerTemplate} from "./horizontalscrollablecontainer.view"
+import {getHorizontalScrollableContainerChallenges, getHorizontalScrollableContainerTopic} from "./horizontalscrollablecontainer.view"
 
-export const createHorizontalScrollableTemplate = (dataList, idKey) => {
-  const hsTemplate = getHorizontalScrollableContainerTemplate(dataList, idKey)
+export const createHorizontalScrollableTopic = (dataList, idKey) => {
+  const hsTemplate = getHorizontalScrollableContainerTopic(dataList, idKey)
+  return hsTemplate
+}
+
+export const createHorizontalScrollableChallenges = (dataList, idKey) => {
+  const hsTemplate = getHorizontalScrollableContainerChallenges(dataList, idKey)
   return hsTemplate
 }
 
