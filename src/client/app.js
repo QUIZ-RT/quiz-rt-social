@@ -12,17 +12,9 @@ import {createNextQuestion, createChallenge, saveChallengeDetails, createChallen
 import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/controller/shareChallenges.controller"
 import {createLeaderBoardForChallenges} from "./ui-component/leader-board/leader-controller"
 // import {topicCltrl} from "./ui-component/topics/topic-controller"
-// import {createUserLogin} from "./ui-component/login-page/login.controller"
+import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
 // GoogleLogin()
-createHeader()
-createMenu()
-createMainContainer()
-createPopularTopicSection()
-createFavoriteTopicSection()
-createChallengesSection()
-createMyChallengesSection()
-createTopicmodal()
 // topicCltrl()
 // createTopicmodal()
 $("body").on("click", "#create", createNextQuestion)
@@ -34,24 +26,33 @@ $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPla
 // $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
 // CreateChallengeController.displaySideBar()
 
-// export const updateViewState = (viewName) => {
-//   switch (viewName) {
-//   case "Login":
-//     //createUserLogin()
-//     break
-//   case "Dashboard":
-//     createHeader()
-//     createMenu()
-//     createMainContainer()
-//     createPopularTopicSection()
-//     break
-//   default:
-//     break
-//   }
-// }
+export const updateViewState = (viewName) => {
+  switch (viewName) {
+  case "Login":
+    createUserLogin()
+    break
+  case "Dashboard":
+    createHeader()
+    createMenu()
+    createMainContainer()
+    createPopularTopicSection()
+    createFavoriteTopicSection()
+    createChallengesSection()
+    createMyChallengesSection()
+    createTopicmodal()
+    //createChallengeSideBar()
+    // share Challenges section
+	createChallengeSideBar()
+    createLeaderBoardForChallenges()
+    createShareChallengesSection()
+    ShareChallengesWithSelectedFriendsSection()
+    break
+  default:
+    break
+  }
+}
 
-createChallengeSideBar()
-createLeaderBoardForChallenges()
+
 // // init
 // updateViewState("Dashboard")
 
@@ -60,4 +61,3 @@ $("#shareChallenge").on("click", function() {
   createShareChallengesSection()
 })
 
-ShareChallengesWithSelectedFriendsSection()
