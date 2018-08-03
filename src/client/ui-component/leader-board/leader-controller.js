@@ -36,6 +36,7 @@ export const getFilteredDetails = (arry, days) => {
                      <td>${item.score}</td>
                    </tr>`
   }
+
   document.getElementById("leaderBody").innerHTML = html
   document.querySelector("tr[id='8']").className = "selectedRow"
 }

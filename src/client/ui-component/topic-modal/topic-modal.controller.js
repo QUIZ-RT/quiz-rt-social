@@ -49,6 +49,11 @@ const openTopicModal = (state, id, target) => {
     const dialog2 = new MDCDialog(dialogElement2)
     dialog2.show()
 
+    dialog2.listen("MDCDialog:cancel", function() {
+      document.getElementById("leaderBody").innerHTML = ""
+      const select2 = new MDCSelect(document.querySelector(".mdc-select"))
+      select2.value = "1"
+    })
     const select = new MDCSelect(document.querySelector(".mdc-select"))
     select.listen("change", () => {
       const result = JSON.parse(getChallengeDetails())
