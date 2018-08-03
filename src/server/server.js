@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { challaneDB } from './FirebaseDb/challengesDb';
-import bodyParser  from 'body-parser';
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
