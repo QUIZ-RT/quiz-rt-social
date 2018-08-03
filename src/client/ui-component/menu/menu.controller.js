@@ -1,7 +1,14 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
 // import {store} from "../../boot/Store"
-const store = require("./../../boot/Store")
+const Store = require("./../../boot/Store")
+// subscribe
+Store.Store.subscribe(renderMenuView)
+
+function renderMenuView() {
+    console.log(Store.getState())
+}
+
 
 const menuData = [{
   "id": 1,

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\client",
+    "\\src\\client\\boot",
+    "\\src\\client\\ui-component",
+    "\\src\\client\\ui-component\\dashboard",
+    "\\src\\client\\ui-component\\play-challenge",
+    "\\src\\server",
+    "\\src\\server\\FirebaseAuth",
+    "\\src\\server\\FirebaseDb"
+  ],
+  "SelectedNode": "\\src\\client\\boot\\reducer.js",
+  "PreviewInSolutionExplorer": false
+}

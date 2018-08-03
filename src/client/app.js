@@ -1,4 +1,5 @@
-// import $ from "jquery"
+import $ from "jquery"
+import {Store} from "./boot/Store"
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
 import {store} from "./boot/Store"
@@ -51,7 +52,6 @@ $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPla
 //     break
 //   }
 // }
-
 
 createChallengeSideBar()
 // // init
