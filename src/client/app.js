@@ -10,7 +10,7 @@ import {createTopicmodal} from "./ui-component/topic-modal/topic-modal.controlle
 import CreatePlayChallengeController from "./ui-component/challenge/play-challenge/controller/playChallenge.controller"
 import {createNextQuestion, createChallenge, saveChallengeDetails, createChallengeSideBar} from "./ui-component/challenge/CreateChallenge/controller/CreateChallengeController"
 import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/controller/shareChallenges.controller"
-
+import {createLeaderBoardForChallenges} from "./ui-component/leader-board/leader-controller"
 // import {topicCltrl} from "./ui-component/topics/topic-controller"
 // import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
@@ -51,6 +51,7 @@ $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPla
 // }
 
 createChallengeSideBar()
+createLeaderBoardForChallenges()
 // // init
 // updateViewState("Dashboard")
 
