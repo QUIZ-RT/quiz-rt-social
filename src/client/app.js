@@ -1,4 +1,4 @@
-// import $ from "jquery"
+import $ from "jquery"
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
