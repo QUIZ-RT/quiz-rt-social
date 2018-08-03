@@ -50,7 +50,6 @@ $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPla
 //   }
 // }
 
-
 createChallengeSideBar()
 // // init
 // updateViewState("Dashboard")

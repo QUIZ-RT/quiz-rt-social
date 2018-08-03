@@ -1,9 +1,9 @@
 import {createChallengeContainer, createQuestion, createChallengeHeader, createChallengeSideBarView} from "../view/CreateChallengeView"
-// import {storeChallenge} from "../service/CreateChallengeService"
+import {storeChallenge} from "../service/CreateChallengeService"
 
 let count = 0
 const challenge =
-            {"challengeId": "",
+            {"challengeId": "1",
               "topicName": "",
               "challengeName": "",
               "questions": [],
@@ -73,7 +73,7 @@ function saveChallengeDetails(evnt) {
   challenge.questions.push(questionObj)
   console.log(`final challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
 
-  // storeChallenge(challenge);
+  storeChallenge(challenge);
   const formSection = document.getElementById("challengeSection")
   formSection.innerHTML = ""
 }
