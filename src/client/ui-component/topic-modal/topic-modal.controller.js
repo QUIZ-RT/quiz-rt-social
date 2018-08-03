@@ -128,7 +128,7 @@ const topicDataList = {
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
-  renderViewToContainer(topicModaltemplate, "main")
+  renderViewToContainer(topicModaltemplate, "#quiz-maincontent")
 }
 export const topicModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]

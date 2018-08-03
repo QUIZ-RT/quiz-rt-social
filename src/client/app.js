@@ -16,74 +16,22 @@ import CreatePlayChallengeController from "./ui-component/challenge/play-challen
 import {createNextQuestion, createChallenge, saveChallengeDetails, createChallengeSideBar} from "./ui-component/challenge/CreateChallenge/controller/CreateChallengeController"
 import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/controller/shareChallenges.controller"
 
-import {topicCltrl} from "./ui-component/topics/topic-controller"
 import {createUserLogin} from "./ui-component/login-page/login.controller"
-// import {GoogleLogin} from "./ui-component/login-page/login.controller"
-// GoogleLogin()
-// createHeader()
-// createMenu()
-// createMainContainer()
-// createPopularTopicSection()
-// createFavoriteTopicSection()
-// createChallengesSection()
-// createMyChallengesSection()
-// createTopicmodal()
-// topicCltrl()
-// createTopicmodal()
 
-// $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
-// CreateChallengeController.displaySideBar()
+//Login Page
 
-console.log('Store.....', Store);
+createUserLogin()
 
-export const updateViewState = (viewName) => {
-  switch (viewName) {
-  case "login":
-    clearContainer("body")
-    createUserLogin()
-    break
-  case "dashboard":
-    clearContainer("body")
-    createHeader()
-    createMenu()
-    createMainContainer()
-    createPopularTopicSection()
-    createFavoriteTopicSection()
-    createChallengesSection()
-    createMyChallengesSection()
-    createTopicmodal()
-    break
-  case "topics":
-    clearContainer("main")
-    createTopicmodal()
-    topicCltrl()
-    break
-  case "challenges":
-    clearContainer("main")
-    createChallengeSideBar()
-    $("body").on("click", "#create", createNextQuestion)
-    $("body").on("click", "#nextQuestion", createNextQuestion)
-    $("body").on("click", "#save", saveChallengeDetails)
-    $("body").on("click", "#createChallenge", createChallenge)
-    $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPlaySideBar)
-    createShareChallengesSection()
-    ShareChallengesWithSelectedFriendsSection()
-    break
-  case "friends":
-    clearContainer("main")
-    break
-  default:
-    break
-  }
-}
-const clearContainer = (containerKey) => {
-  document.querySelector(containerKey).innerHTML = ""
-}
+
 
 // createChallengeSideBar()
-// // // init
-//updateViewState("dashboard")
-
-// // share Challenges section
+// $("body").on("click", "#create", createNextQuestion)
+// $("body").on("click", "#nextQuestion", createNextQuestion)
+// $("body").on("click", "#save", saveChallengeDetails)
+// $("body").on("click", "#createChallenge", createChallenge)
+// $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPlaySideBar)
 // createShareChallengesSection()
 // ShareChallengesWithSelectedFriendsSection()
+
+
+

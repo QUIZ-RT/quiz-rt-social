@@ -50,7 +50,7 @@ export const createMenu = () => {
       menuNavigation(event)
     })
   })
-  renderViewToContainer(menuContent, "header")
+  renderViewToContainer(menuContent, "#quiz-header")
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {
@@ -78,3 +78,10 @@ const menuNavigation = (evt) => {
     Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
   }
 }
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.menuReducer.currentView !== 'login'){
+    createMenu()
+  }
+})

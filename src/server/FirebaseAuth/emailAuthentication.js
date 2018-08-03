@@ -26,8 +26,8 @@ firebaseAp.auth().onAuthStateChanged(firebaseUser => {
     // console.log("i am LOGIN MY OBJECT IS = ", firebaseUser)
     //cleanBody()
     //updateViewState("dashboard")
-    Store.dispatch({type: "CurrentUserInfoUpdate", dataItem: firebaseUser})
-    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: 'dashboard'}})
+    Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo :firebaseUser, Name: 'dashboard'}})
+    
   }
   else {
     // console.log("NOT LOGGED IN")

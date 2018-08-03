@@ -1,5 +1,6 @@
 import {renderViewToContainer, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
 import {topicModalInitializeShow} from "../topic-modal/topic-modal.controller"
+import {Store} from "../../boot/Store"
 
 const topicData = {
   "t1": {
@@ -259,17 +260,31 @@ export const createPopularTopicSection = () => {
       topicModalInitializeShow(event)
     })
   })
-  renderViewToContainer(pTopictemp, "main")
+  renderViewToContainer(pTopictemp, "#quiz-maincontent")
 }
 export const createFavoriteTopicSection = () => {
   const fTopictemp = getFavTopicTemplate(topicData, "Favorite Topic")
-  renderViewToContainer(fTopictemp, "main")
+  renderViewToContainer(fTopictemp, "#quiz-maincontent")
 }
 export const createChallengesSection = () => {
   const challengestemp = getChallengesTemplate(challengeData, "Challenges")
-  renderViewToContainer(challengestemp, "main")
+  renderViewToContainer(challengestemp, "#quiz-maincontent")
 }
 export const createMyChallengesSection = () => {
   const mychallengestemp = getMyChallengesTemplate(challengeData, "My Challenges")
-  renderViewToContainer(mychallengestemp, "main")
+  renderViewToContainer(mychallengestemp, "#quiz-maincontent")
 }
+
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.menuReducer.currentView === 'dashboard'){
+    document.querySelector('#quiz-maincontent').innerHTML = ""
+    createPopularTopicSection()
+    createFavoriteTopicSection()
+    createChallengesSection()
+    createMyChallengesSection()
+    createTopicmodal()
+  }
+})
+
