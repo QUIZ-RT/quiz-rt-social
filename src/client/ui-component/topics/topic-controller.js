@@ -3,11 +3,58 @@ import {Store} from "../../boot/Store"
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import $ from "jquery"
 
+const topicsList = {
+  "test1": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+    "follow": true,
+  },
+  "test2": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+    "follow": true,
+  },
+  "test3": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+    "follow": true,
+  },
+}
+
+
+  
+
+
+
 export const createTopics = () => {
-  const obj = Store.getState()
+  const state = Store.getState()
+ 
+ 
+  ///////////////////For Demo Data///////////////
+  state.topicReducer={TopicList : topicsList}
+/////////////////////////////////////////////////
+
   let topics = ""
-  for (const newTopic in obj.topicReducer.topics) {
-    topics += topicView(obj.topicReducer.topics[newTopic], newTopic)
+  for (const newTopicId in state.topicReducer.TopicList) {
+    topics += topicView(state.topicReducer.TopicList[newTopicId], newTopicId)
   }
   render(topics)
   addEvents()

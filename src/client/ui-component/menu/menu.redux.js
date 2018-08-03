@@ -2,7 +2,7 @@ import {Store} from "../../boot/Store"
 
 
 // Reducer
-const menuReducer = (state = {}, action) => {
+export const menuReducer = (state = {}, action) => {
     const statePrev = {...state}
     const newState = Object.assign({}, statePrev)
     switch (action.type) {
@@ -18,5 +18,4 @@ const menuReducer = (state = {}, action) => {
     }
 }
 
-module.exports = menuReducer
 

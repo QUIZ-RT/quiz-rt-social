@@ -1,10 +1,10 @@
 import {combineReducers} from "redux"
-import menuReducer from "../ui-component/menu/menu.redux"
-import dashboardReducer from "../ui-component/dashboard/dashboard.redux"
-//import topicReducer from "../ui-component/topics/topic.reducer"
+import {menuReducer} from "../ui-component/menu/menu.redux"
+import {dashboardReducer} from "../ui-component/dashboard/dashboard.redux"
+import {topicReducer} from "../ui-component/topics/topic.reducer"
 
 
 
 export default combineReducers({
-    menuReducer, dashboardReducer
+    menuReducer, dashboardReducer, topicReducer
 })

@@ -17,6 +17,7 @@ import {createNextQuestion, createChallenge, saveChallengeDetails, createChallen
 import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/controller/shareChallenges.controller"
 
 import {createUserLogin} from "./ui-component/login-page/login.controller"
+import {createTopics} from "./ui-component/topics/topic-controller"
 
 //Login Page
 

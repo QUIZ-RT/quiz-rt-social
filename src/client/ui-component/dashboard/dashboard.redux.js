@@ -6,10 +6,10 @@ export const dashboardReducer = (state = {}, action) => {
     const newState = Object.assign({}, statePrev)
     switch (action.type) {
     case "GET_PopularTopic":
-    newState.PopularTopic = action.dataItem.PopularTopic
+    newState.PopularTopicList = action.dataItem.PopularTopics
     return newState
     case "GET_FavoriteTopic":
-    newState.FavoriteTopic = action.dataItem.FavoriteTopic
+    newState.FavoriteTopicList = action.dataItem.FavoriteTopics
     return newState
     default:
       return Object.assign({}, ...state)

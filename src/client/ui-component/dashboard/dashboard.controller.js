@@ -1,5 +1,5 @@
 import {renderViewToContainer, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
-import {topicModalInitializeShow} from "../topic-modal/topic-modal.controller"
+import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import {Store} from "../../boot/Store"
 
 const topicData = {
