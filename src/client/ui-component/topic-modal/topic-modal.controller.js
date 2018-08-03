@@ -1,18 +1,139 @@
 import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
-import {Store} from "../../boot/Store"
-import {getChallengeDetails} from "./../leader-board/leader-board-service"
-import {getFilteredDetails} from "./../leader-board/leader-controller"
+// import {Store} from "../../boot/Store"
+
+const topicDataList = {
+  "t1": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t2": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t3": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t4": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t5": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t6": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t7": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t8": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t9": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t10": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t11": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t12": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+}
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
-  renderViewToContainer(topicModaltemplate, "main")
+  renderViewToContainer(topicModaltemplate, "#quiz-maincontent")
 }
 export const topicModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
-  const state = Store.getState().topicReducer.topics["" + targetId]
+  const state = topicDataList[targetId]
   openTopicModal(state, targetId, evt.target)
   evt.preventDefault()
 }

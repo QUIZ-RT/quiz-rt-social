@@ -1,10 +1,9 @@
 import {topicView} from "./topic.view"
 import {Store} from "../../boot/Store"
-import {topicModalInitializeShow} from "../topic-modal/topic-modal.controller"
+import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import $ from "jquery"
 
-const topicCltrl = () => {
-  console.log("Topic Cltrl")
+export const createTopics = () => {
   const obj = Store.getState()
   let topics = ""
   for (const newTopic in obj.topicReducer.topics) {
@@ -24,7 +23,7 @@ const render = (topics) => {
                     ${topics}
                 </ul>
             </div>`
-  const container = document.querySelector("main")
+  const container = document.querySelector("#quiz-maincontent")
   container.innerHTML = html
 }
 
@@ -47,6 +46,13 @@ const addEvents = () => {
   })
 }
 
-export {
-  topicCltrl,
-}
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.menuReducer.currentView === 'topics'){
+    document.querySelector('#quiz-maincontent').innerHTML = ""
+    createTopicmodal()
+    createTopics();
+  }
+})
+

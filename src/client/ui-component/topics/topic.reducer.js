@@ -33,11 +33,17 @@ export const topicReducer = (state = {"topics": {
     "follow": true,
   },
 }}, action) => {
+
+  const statePrev = {...state}
+  const newState = Object.assign({}, statePrev)
   switch (action.type) {
   case "ADD_TOPIC":
-    return state
+   //newState.topics = 
+    return newState
   default:
-    return state
+    return newState
   }
 }
+
+
 

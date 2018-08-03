@@ -1,6 +1,7 @@
 import {config} from "../config"
 import firebase from "firebase"
 import {updateViewState} from "../../client/app"
+import {Store} from "../../client/boot/Store"
 const firebaseAp = firebase.initializeApp(config)
 export const signIn = (email, password) => {
   const auth = firebaseAp.auth()
@@ -23,13 +24,16 @@ export const logout = () => {
 firebaseAp.auth().onAuthStateChanged(firebaseUser => {
   if (firebaseUser) {
     // console.log("i am LOGIN MY OBJECT IS = ", firebaseUser)
-    cleanBody()
-    updateViewState("Dashboard")
+    //cleanBody()
+    //updateViewState("dashboard")
+    Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo :firebaseUser, Name: 'dashboard'}})
+    
   }
   else {
     // console.log("NOT LOGGED IN")
-    cleanBody()
-    updateViewState("Login")
+    //cleanBody()
+    // updateViewState("login")
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: 'login'}})
   }
 })
 

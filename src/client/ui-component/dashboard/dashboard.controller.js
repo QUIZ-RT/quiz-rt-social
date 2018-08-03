@@ -1,70 +1,194 @@
-import {getPopularTopicTemplate, renderViewToContainer, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
+import {renderViewToContainer, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
 import {topicModalInitializeShow} from "../topic-modal/topic-modal.controller"
-const popularTopicData = [
-  {
-    "id": "1",
-    "Name": "Cricket",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "Cricket",
+import {Store} from "../../boot/Store"
+
+const topicData = {
+  "t1": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "2",
-    "Name": "JavaScript",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "JavaScript",
+  "t2": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "3",
-    "Name": "Information Tech",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "Information Tech",
+  "t3": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "4",
-    "Name": "Cricket",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "Cricket",
+  "t4": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "5",
-    "Name": "JavaScript",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "JavaScript",
+  "t5": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "6",
-    "Name": "Information Tech",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "Information Tech",
+  "t6": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "7",
-    "Name": "Cricket",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "Cricket",
+  "t7": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "8",
-    "Name": "JavaScript",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "JavaScript",
+  "t8": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-  {
-    "id": "9",
-    "Name": "Information Tech",
-    "Img": "topic002.png",
-    "Route": "NavigateToTopic",
-    "Title": "Information Tech",
+  "t9": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
   },
-]
+  "t10": {
+    "topicText": "Politics",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t11": {
+    "topicText": "Sports",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+  "t12": {
+    "topicText": "Envioments",
+    "topicUrl": "",
+    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+    "createdDate": "11/11/2018",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedDate": "11/11/2018",
+    "published": true,
+  },
+}
+// const popularTopicData = [
+//   {
+//     "id": "1",
+//     "Name": "Cricket",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "Cricket",
+//   },
+//   {
+//     "id": "2",
+//     "Name": "JavaScript",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "JavaScript",
+//   },
+//   {
+//     "id": "3",
+//     "Name": "Information Tech",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "Information Tech",
+//   },
+//   {
+//     "id": "4",
+//     "Name": "Cricket",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "Cricket",
+//   },
+//   {
+//     "id": "5",
+//     "Name": "JavaScript",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "JavaScript",
+//   },
+//   {
+//     "id": "6",
+//     "Name": "Information Tech",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "Information Tech",
+//   },
+//   {
+//     "id": "7",
+//     "Name": "Cricket",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "Cricket",
+//   },
+//   {
+//     "id": "8",
+//     "Name": "JavaScript",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "JavaScript",
+//   },
+//   {
+//     "id": "9",
+//     "Name": "Information Tech",
+//     "Img": "topic002.png",
+//     "Route": "NavigateToTopic",
+//     "Title": "Information Tech",
+//   },
+// ]
 
 const challengeData = [
   {
@@ -129,24 +253,38 @@ const challengeData = [
 // ]
 
 export const createPopularTopicSection = () => {
-  const pTopictemp = getPopularTopicTemplate(popularTopicData, "Popular Topic")
+  const pTopictemp = getPopularTopicTemplate(topicData, "Popular Topic")
   const pTopicitems = pTopictemp.querySelectorAll(".mdc-card")
   pTopicitems.forEach((item) => {
     item.addEventListener("click", (event) => {
       topicModalInitializeShow(event)
     })
   })
-  renderViewToContainer(pTopictemp, "main")
+  renderViewToContainer(pTopictemp, "#quiz-maincontent")
 }
 export const createFavoriteTopicSection = () => {
-  const fTopictemp = getFavTopicTemplate(popularTopicData, "Favorite Topic")
-  renderViewToContainer(fTopictemp, "main")
+  const fTopictemp = getFavTopicTemplate(topicData, "Favorite Topic")
+  renderViewToContainer(fTopictemp, "#quiz-maincontent")
 }
 export const createChallengesSection = () => {
   const challengestemp = getChallengesTemplate(challengeData, "Challenges")
-  renderViewToContainer(challengestemp, "main")
+  renderViewToContainer(challengestemp, "#quiz-maincontent")
 }
 export const createMyChallengesSection = () => {
   const mychallengestemp = getMyChallengesTemplate(challengeData, "My Challenges")
-  renderViewToContainer(mychallengestemp, "main")
+  renderViewToContainer(mychallengestemp, "#quiz-maincontent")
 }
+
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.menuReducer.currentView === 'dashboard'){
+    document.querySelector('#quiz-maincontent').innerHTML = ""
+    createPopularTopicSection()
+    createFavoriteTopicSection()
+    createChallengesSection()
+    createMyChallengesSection()
+    createTopicmodal()
+  }
+})
+

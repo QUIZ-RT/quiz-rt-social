@@ -1,34 +1,22 @@
-// import {Store} from "../../boot/Store"
-const Store = require("../../boot/Store")
-// import {createPopularTopicSection, createFavoriteTopicSection} from "./dashboard.controller"
+import {Store} from "../../boot/Store"
 
 // Reducer
-export const dashboardReducer = (state, action) => {
-  switch (action.type) {
-  case "GET_PopularTopic":
-    return getPopularTopicReducer(state, action)
-  case "GET_FavoriteTopic":
-    return getFavoriteTopicReducer(state, action)
-  default:
-    return state
-  }
+export const dashboardReducer = (state = {}, action) => {
+    const statePrev = {...state}
+    const newState = Object.assign({}, statePrev)
+    switch (action.type) {
+    case "GET_PopularTopic":
+    newState.PopularTopic = action.dataItem.PopularTopic
+    return newState
+    case "GET_FavoriteTopic":
+    newState.FavoriteTopic = action.dataItem.FavoriteTopic
+    return newState
+    default:
+      return Object.assign({}, ...state)
+    }
 }
 
-// subscribe
-Store.Store.subscribe(renderDashboardView)
-function renderDashboardView() {
 
-}
 
-// GET Popular Topic method
-const getPopularTopicReducer = (state, action) => {
-  state.PopularTopic = action.data
-  return state
-}
 
-// GET Favorite Topic method
-const getFavoriteTopicReducer = (state, action) => {
-  state.FavoriteTopic = action.data
-  return state
-}
 

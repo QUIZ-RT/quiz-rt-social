@@ -6,8 +6,8 @@ const path = require('path');
 const outputDirectory = "dist";
 
 var config = {
-  entry: ['babel-polyfill',
-    './src/client/app.js',
+  entry: ['./src/client/app.js',
+    'babel-polyfill',
     './src/client/styles/scss/main.scss'
   ],
   output: {

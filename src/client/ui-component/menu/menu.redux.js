@@ -1,13 +1,21 @@
+import {Store} from "../../boot/Store"
 
 
 // Reducer
 const menuReducer = (state = {}, action) => {
-  switch (action.type) {
-  case "CurrentViewUpdate":
-    return Object.assign({}, ...state, action.dataItem)
-  default:
-    return Object.assign({}, ...state)
-  }
+    const statePrev = {...state}
+    const newState = Object.assign({}, statePrev)
+    switch (action.type) {
+    case "CurrentViewUpdate":
+      newState.currentView = action.dataItem.Name
+      return newState
+    case "LoggedInUserInfo":
+      newState.currentUserInfo = action.dataItem.UserInfo
+      newState.currentView = action.dataItem.Name
+      return newState
+    default:
+      return Object.assign({}, ...state)
+    }
 }
 
 module.exports = menuReducer

@@ -14,5 +14,7 @@ export const createUserLogin = () => {
     const password = document.getElementById("password")
     goToSignup(username.value, password.value)
   })
-  renderViewToContainer(userContent, "body")
+  renderViewToContainer(userContent, "#quiz-maincontent")
 }
+
+
