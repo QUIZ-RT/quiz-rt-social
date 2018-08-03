@@ -1,8 +1,4 @@
 import $ from "jquery"
-<<<<<<< HEAD
-import {Store} from "./boot/Store"
-=======
->>>>>>> 20e65e847efbfab83df4ae1574c5eab17b25c98e
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
@@ -13,12 +9,20 @@ import {createPopularTopicSection, createFavoriteTopicSection, createChallengesS
 import {createTopicmodal} from "./ui-component/topic-modal/topic-modal.controller"
 import CreatePlayChallengeController from "./ui-component/challenge/play-challenge/controller/playChallenge.controller"
 import {createNextQuestion, createChallenge, saveChallengeDetails, createChallengeSideBar} from "./ui-component/challenge/CreateChallenge/controller/CreateChallengeController"
-import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/controller/shareChallenges.controller"
-import {createLeaderBoardForChallenges} from "./ui-component/leader-board/leader-controller"
+import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/shareChallenges.controller"
+
 // import {topicCltrl} from "./ui-component/topics/topic-controller"
-import {createUserLogin} from "./ui-component/login-page/login.controller"
+// import {createUserLogin} from "./ui-component/login-page/login.controller"
 // import {GoogleLogin} from "./ui-component/login-page/login.controller"
 // GoogleLogin()
+createHeader()
+createMenu()
+createMainContainer()
+createPopularTopicSection()
+createFavoriteTopicSection()
+createChallengesSection()
+createMyChallengesSection()
+createTopicmodal()
 // topicCltrl()
 // createTopicmodal()
 $("body").on("click", "#create", createNextQuestion)
@@ -30,42 +34,27 @@ $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPla
 // $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
 // CreateChallengeController.displaySideBar()
 
-export const updateViewState = (viewName) => {
-  switch (viewName) {
-  case "Login":
-    createUserLogin()
-    break
-  case "Dashboard":
-    createHeader()
-    createMenu()
-    createMainContainer()
-    createPopularTopicSection()
-    createFavoriteTopicSection()
-    createChallengesSection()
-    createMyChallengesSection()
-    createTopicmodal()
-    //createChallengeSideBar()
-    // share Challenges section
-	createChallengeSideBar()
-    createLeaderBoardForChallenges()
-   // createShareChallengesSection()
-    ShareChallengesWithSelectedFriendsSection()
-    break
-  default:
-    break
-  }
-}
+// export const updateViewState = (viewName) => {
+//   switch (viewName) {
+//   case "Login":
+//     //createUserLogin()
+//     break
+//   case "Dashboard":
+//     createHeader()
+//     createMenu()
+//     createMainContainer()
+//     createPopularTopicSection()
+//     break
+//   default:
+//     break
+//   }
+// }
 
-<<<<<<< HEAD
+
 createChallengeSideBar()
-=======
-
->>>>>>> 20e65e847efbfab83df4ae1574c5eab17b25c98e
 // // init
 // updateViewState("Dashboard")
 
 // share Challenges section
-$("#shareChallenge").on("click", function() {
-  createShareChallengesSection()
-})
-
+createShareChallengesSection()
+ShareChallengesWithSelectedFriendsSection()
