@@ -70,7 +70,7 @@ export const getFriendsToShareChallengeTemplate = (friends) => {
   const friendsLi = htmlToTemplate(friendsUserNamesContentStr)
   friendsUlContainer.appendChild(friendsLi)
   friendsDivContainer.appendChild(friendsUlContainer)
-  const submitButton = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+  const submitButton = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="submitSharedChallenge">
                             Submit
                         </button>`
   const submitButtonTemp = htmlToTemplate(submitButton)

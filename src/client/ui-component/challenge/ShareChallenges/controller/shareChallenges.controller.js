@@ -1,4 +1,4 @@
-import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "./shareChallenges.view"
+import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
 
 const shareChallenges = [
   {
