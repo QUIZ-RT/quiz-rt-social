@@ -2,12 +2,20 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { challaneDB } from './FirebaseDb/challengesDb';
+import bodyParser  from 'body-parser';
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const  app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 
 //  app.use("/api/firebase",(req,res)=>{
 //      var response =FirebaseOAuth();
@@ -15,9 +23,9 @@ app.use(bodyParser.json());
 //    res.send("Sucessfully Authentication");
 // });
 
-app.use("/api/challenge",(req, res)=> {
-    console.log('req body', req.body);
-    res.send(challaneDB(req.body));
+
+app.post("/api/challenge",(req, res)=> {
+    res.send(challaneDB(req, res));
 });
 
 

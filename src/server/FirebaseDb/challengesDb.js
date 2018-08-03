@@ -1,21 +1,20 @@
 import firebase from "firebase"
-import { config } from "../config";
+import {config} from "../config"
 
+export const challaneDB = (req, resp) => {
+    if (!firebase.apps.length) {
+        firebase.initializeApp(config);
+    }
+ const challenges = firebase.database().ref("Challenges");
+ let nextChallengSeq =0;
+ challenges.once("value", function(challengesNode) {
+    nextChallengSeq = Math.max.apply(Math,(Object.keys(challengesNode.val())));
+    nextChallengSeq = +nextChallengSeq+1;
+    challenges.child(`${nextChallengSeq}`).set(req.body);
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
 
-
-export const challaneDB = (request) => {
-if (!firebase.apps.length){
-    firebase.initializeApp(config);
+  return "success";
 }
- 
-let fb = firebase.database().ref('data');
-fb.child("9").set(request);
-    // let fb = firebase.database().ref('data');
-    // let myUpdate = {};
-    // myUpdate.email = "XI";
-    // myUpdate.displayName = "ZZZ";
-    // myUpdate.status ="sss";
-    // fb.child("8").set(myUpdate);
-    // console.log(fb);
-    return "Success";
-}
+
