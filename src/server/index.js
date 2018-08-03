@@ -2,13 +2,17 @@ const express = require('express');
 const os = require('os');
 
 const app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var bodyParser = require('body-parser');
 
 app.use(express.static('dist'));
 app.use(bodyParser.json({ limit: '5mb' }));
 
+// index.js 
+// by requiring `babel/register`, all of our successive `require`s will be Babel'd
+require('babel-register')({
+    presets: [ 'es2015' ]
+ });
+ 
+ require('./server');
 var onlineUsers = [];
 
 io.on('connection', function (socket) {
