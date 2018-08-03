@@ -36,16 +36,6 @@ function createchatSection() {
   return createHTMLElement(chatSection)
 }
 
-const createChatContainer = () => {
-  const body = document.getElementsByTagName("body")[0]
-  if ($("#onlineUsers")[0] === undefined) {
-    body.appendChild(createOnlineUsersView())
-  }
-  if ($(".chat-module")[0] === undefined) {
-    body.appendChild(createchatSection())
-  }
-}
-$(createChatContainer())
 function createChatHeaderLeft(name) {
   const headerLeft = `<div class="left">
           <span>
@@ -61,12 +51,12 @@ function createChatHeaderLeft(name) {
 function chatboxScrollBottom() {
   $("ol.discussion").animate({scrollTop: $("ol.discussion").prop("scrollHeight")})
 }
-const ol = document.querySelector("ol.discussion")
 
 function appendMessage(message, cssClass) {
   var messageTimestamp = new Date().toLocaleString("en-US", {hour: "numeric", minute: "numeric", hour12: true})
   var chatMessageTimestamp = "<label class=\"chatMessageTimestamp\">" + messageTimestamp + "</label>"
   if (message.type === "text") {
+    const ol = document.querySelector("ol.discussion")
     ol.appendChild(createMsgLiElementSelf(message.text + chatMessageTimestamp, cssClass, message.name))
   }
   chatboxScrollBottom()
@@ -166,9 +156,14 @@ function render() {
   }
 }
 
-store.subscribe(render)
-
-export {
-  createLiElement, createChatHeaderLeft, createMsgLiElementSelf,
+export const createChatContainer = () => {
+  const body = document.getElementsByTagName("main")[0]
+  if ($("#onlineUsers")[0] === undefined) {
+    body.appendChild(createOnlineUsersView())
+  }
+  if ($(".chat-module")[0] === undefined) {
+    body.appendChild(createchatSection())
+  }
+  store.subscribe(render)
 }
 

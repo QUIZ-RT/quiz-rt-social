@@ -6,7 +6,7 @@ $navHeight: 64px;
   }
   
   .chat-top-bar {
-    background: #666;
+    background: #6200ee;
     color: white;
     padding: 0.5rem;
     position: relative;
@@ -65,8 +65,9 @@ $navHeight: 64px;
       width: 40px;
       position: relative; 
       img {
+        height: 2.5em;
         display: block; 
-        width: 100%;
+        width: 40%;
       }
     }
   }

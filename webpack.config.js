@@ -87,7 +87,7 @@ var config = {
     }]
   },
   devServer: {
-    port: 8081,
+    port: 3000,
     open: true,
     proxy: {
       "/api/**": {
