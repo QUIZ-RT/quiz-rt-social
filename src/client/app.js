@@ -1,6 +1,8 @@
 // import "./boot/Store"
 // import "./boot/reducer"
-import $ from "jquery"
+//import $ from "jquery"
+import {Store} from "./boot/Store"
+import "./boot/subscribe"
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
 
@@ -12,7 +14,7 @@ import {createPopularTopicSection, createFavoriteTopicSection, createChallengesS
 import {createTopicmodal} from "./ui-component/topic-modal/topic-modal.controller"
 import CreatePlayChallengeController from "./ui-component/challenge/play-challenge/controller/playChallenge.controller"
 import {createNextQuestion, createChallenge, saveChallengeDetails, createChallengeSideBar} from "./ui-component/challenge/CreateChallenge/controller/CreateChallengeController"
-import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/shareChallenges.controller"
+import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection} from "./ui-component/challenge/ShareChallenges/controller/shareChallenges.controller"
 
 import {topicCltrl} from "./ui-component/topics/topic-controller"
 import {createUserLogin} from "./ui-component/login-page/login.controller"
@@ -31,6 +33,8 @@ import {createUserLogin} from "./ui-component/login-page/login.controller"
 
 // $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
 // CreateChallengeController.displaySideBar()
+
+console.log('Store.....', Store);
 
 export const updateViewState = (viewName) => {
   switch (viewName) {
@@ -78,7 +82,7 @@ const clearContainer = (containerKey) => {
 
 // createChallengeSideBar()
 // // // init
-updateViewState("dashboard")
+//updateViewState("dashboard")
 
 // // share Challenges section
 // createShareChallengesSection()

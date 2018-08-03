@@ -1,29 +1,22 @@
-
-import {updateViewState} from "../../app"
 import {Store} from "../../boot/Store"
-
-// State - To hold states
-
-// State to track
+import {updateViewState} from "../../app"
 
 // Reducer
 const menuReducer = (state = {}, action) => {
-  switch (action.type) {
-  case "CurrentViewUpdate":
     const statePrev = {...state}
     const newState = Object.assign({}, statePrev)
-    newState.currentView = action.dataItem
-    return newState
-  default:
-    return Object.assign({}, ...state)
-  }
-}
-
-// subscribe
-Store.subscribe(renderMenuView)
-function renderMenuView() {
-  const storeData = Store.Store.getState()
-  updateViewState(storeData.currentView.Name)
+    newState.actionType = action.type
+    switch (action.type) {
+    case "CurrentViewUpdate":
+      newState.currentView = action.dataItem
+      return newState
+    case "CurrentUserInfoUpdate":
+      newState.currentUserInfo = action.dataItem
+      return newState
+    default:
+      return Object.assign({}, ...state)
+    }
 }
 
 module.exports = menuReducer
+

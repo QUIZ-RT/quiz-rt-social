@@ -1,20 +1,29 @@
-import {firebase} from "firebase"
-
-const config = {
-  apiKey: "AIzaSyCmo8KDSPyTWauu7z5dFhGUUi_cuTi-XF8",
-  authDomain: "quizapp-social.firebaseapp.com",
-  databaseURL: "https://quizapp-social.firebaseio.com",
-  projectId: "quizapp-social",
-  storageBucket: "quizapp-social.appspot.com",
-  messagingSenderId: "367717626621",
+export function storeChallenge(challenge) {
+  postCreateChallengeData(challenge)
 }
 
-function storeChallenge(challengeJsonObj) {
-  // Get a reference to the database service
-  firebase.initializeApp(config)
-  const database = firebase.database()
-  database.ref("users/sushil").set(challengeJsonObj)
-  console.log("Change has been created")
-}
-export {storeChallenge}
+export function postCreateChallengeData(challenge) {
+  console.log("challenge value:", challenge)
+  const url = "http://localhost:8080/api/challenge"
+   
+  const promise = new Promise((resolve, reject) => {
+    const stringify = require("json-stringify-safe")
+    fetch(url,{headers: {
+      "Content-Type": "application/json",
+      "Cache-Control":"no-cache"
+    },
+    method: "POST",
+    mode: "no-cors",
+    body:stringify(challenge)
+    }).then(
+      res => res.json()
+    ).then(json => {
+      console.log("response", json)
+      resolve(json);
+    }, error => {
+      reject(new ResponseError('Service Error' + error.message));
+    })
+  });
+  return promise;
+  }
 

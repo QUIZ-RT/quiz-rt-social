@@ -1,27 +1,45 @@
-import config from '../config';
-import firbaseAuth from 'firebaseauth';
+import {config} from "../config"
+import firebase from "firebase"
+import {updateViewState} from "../../client/app"
+import {Store} from "../../client/boot/Store"
+const firebaseAp = firebase.initializeApp(config)
+export const signIn = (email, password) => {
+  const auth = firebaseAp.auth()
+  const promise = auth.signInWithEmailAndPassword(email, password)
+  promise.catch(e => window.alert("This user has not registered."))
+}
 
-export class emailAuthentication{
-    constructor(){
-        this.firebase =new firbaseAuth(config.API_Key);
-    }
+export const signUp = (email, password) => {
+  const auth = firebaseAp.auth()
+  const promise = auth.createUserWithEmailAndPassword(email, password)
+  promise.catch(e => console.log(e.message))
+}
 
-    registerUserWithEmail=(email,password)=>{
-        this.firebase.registerUserWithEmail(email,password,"",(err,result)=>{
-            if(err)
-                console.log(err);
-                else
-                console.log(result);
-        })
-    }
+export const logout = () => {
+  firebaseAp.auth().signOut()
+  // console.log("I SIGNNED OUT SUCCESSFULLY")
+}
 
-    signInWithEmail=(email,password)=>{
-        this.firebase.signInWithEmail(email,password,(err,result)=>{
-            if(err)
-            console.log(err);
-            else
-            console.log(result);
-        });
-    }
+// Adding a real time listener for user authentication
+firebaseAp.auth().onAuthStateChanged(firebaseUser => {
+  if (firebaseUser) {
+    // console.log("i am LOGIN MY OBJECT IS = ", firebaseUser)
+    //cleanBody()
+    //updateViewState("dashboard")
+    Store.dispatch({type: "CurrentUserInfoUpdate", dataItem: firebaseUser})
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: 'dashboard'}})
+  }
+  else {
+    // console.log("NOT LOGGED IN")
+    //cleanBody()
+    // updateViewState("login")
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: 'login'}})
+  }
+})
 
+function cleanBody() {
+  const bodyElement = document.querySelector("body")
+  while (bodyElement.hasChildNodes()) {
+    bodyElement.removeChild(bodyElement.childNodes[0])
+  }
 }

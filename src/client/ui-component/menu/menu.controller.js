@@ -1,7 +1,8 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
-// import {store} from "../../boot/Store"
-// const store = require("./../../boot/Store")
+import {Store} from "../../boot/Store"
+
+
 
 const menuData = [{
   "id": 1,
@@ -61,6 +62,8 @@ export const createMenu = () => {
   drawerEl.addEventListener("MDCTemporaryDrawer:close", function() {
     console.log("Received MDCTemporaryDrawer:close")
   })
+
+  {}
 }
 
 const menuNavigation = (evt) => {
@@ -70,7 +73,8 @@ const menuNavigation = (evt) => {
   })[0]
   console.log("Clicked - " + menuItem.Name)
   drawer.open = false
-  // if (store.getState().currentView !== menuItem.Name.toLowerCase()) {
-  //   store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
-  // }
+  const currentState = Store.getState()
+  if (currentState.menuReducer.currentView !== menuItem.Name.toLowerCase()) {
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
+  }
 }
