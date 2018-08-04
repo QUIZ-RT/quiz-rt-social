@@ -1,4 +1,4 @@
-import {topicView} from "./topic.view"
+import {htmlToTemplate, topicView} from "./topic.view"
 import {Store} from "../../boot/Store"
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import $ from "jquery"
@@ -27,7 +27,7 @@ const topicsList = {
     "follow": true,
   },
   "test3": {
-    "topicText": "Envioments",
+    "topicText": "Environments",
     "topicUrl": "",
     "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
     "createdDate": "11/11/2018",
@@ -71,7 +71,7 @@ const render = (topics) => {
                 </ul>
             </div>`
   const container = document.querySelector("#quiz-maincontent")
-  container.innerHTML = html
+  container.appendChild(htmlToTemplate(html))
 }
 
 const addEvents = () => {

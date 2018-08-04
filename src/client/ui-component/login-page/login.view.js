@@ -7,7 +7,7 @@ const htmlToTemplate = (htmlstr) => {
 // first
 export const getUserTemplate = () => {
   const userHtmlContent = `
-  <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
+  <div class="mdl-layout mdl-js-layout">
   <main class="mdl-layout__content" style = "margin: auto">
   <div class="mdl-card mdl-shadow--6dp">
   <div class="mdl-card__title mdl-color--primary mdl-color-text--white">

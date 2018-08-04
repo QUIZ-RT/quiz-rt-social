@@ -1,5 +1,6 @@
 import {MDCTopAppBar} from "@material/top-app-bar/index"
 import {getHeaderTemplate, renderViewToContainer} from "./header.view"
+import {createMenu} from "../menu/menu.controller"
 import {goToLogout} from "../login-page/login.service"
 import {Store} from "../../boot/Store"
 
@@ -19,6 +20,9 @@ export const createHeader = () => {
 Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView !== 'login'){
+    document.querySelector("#quiz-header").innerHTML = ""
     createHeader()
+    createMenu()
+    
   }
 })
