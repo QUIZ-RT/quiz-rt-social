@@ -1,4 +1,4 @@
-import {topicView} from "./topic.view"
+import {htmlToTemplate, topicView} from "./topic.view"
 import {Store} from "../../boot/Store"
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import $ from "jquery"
@@ -54,7 +54,7 @@ const render = (topics) => {
                 </ul>
             </div>`
   const container = document.querySelector("#quiz-maincontent")
-  container.innerHTML = html
+  container.appendChild(htmlToTemplate(html))
 }
 
 const addEvents = () => {

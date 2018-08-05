@@ -1,3 +1,9 @@
+export const htmlToTemplate = (htmlstr) => {
+    const template = document.createElement("template")
+    template.innerHTML = htmlstr
+    return template.content
+  }
+
 export const topicView = (topicObj, topicId) => {
   return `<li class="mdc-grid-tile pointer" id="grid_${topicId}">
     <div class="mdc-grid-tile__primary">

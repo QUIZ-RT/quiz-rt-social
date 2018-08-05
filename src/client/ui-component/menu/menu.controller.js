@@ -51,6 +51,9 @@ export const createMenu = () => {
     })
   })
   renderViewToContainer(menuContent, "#quiz-header")
+  const emailName = document.getElementById("loggedInEmail")
+  const currentState = Store.getState()
+  emailName.innerText = currentState.menuReducer.currentUserInfo.email;
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {
@@ -79,9 +82,9 @@ const menuNavigation = (evt) => {
   }
 }
 
-Store.subscribe(() => {
-  const currentState = Store.getState()
-  if(currentState.menuReducer.currentView !== 'login'){
-    createMenu()
-  }
-})
+// Store.subscribe(() => {
+//   const currentState = Store.getState()
+//   if(currentState.menuReducer.currentView !== 'login'){
+//     createMenu()
+//   }
+// })
