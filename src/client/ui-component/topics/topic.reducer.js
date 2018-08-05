@@ -8,9 +8,11 @@ export const topicReducer = (state = {}, action) => {
     return newState
     break
   case "ADD_TOPIC":
-   //newState.topics = 
-    return newState
-    break
+  console.log(state)
+    const data = Object.assign({}, state, action.payload)
+    console.log(data)
+    // return Object.assign({}, state.topics, action.payload)
+    return data
   default:
     return newState
   }

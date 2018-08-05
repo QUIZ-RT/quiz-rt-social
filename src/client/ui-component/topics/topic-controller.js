@@ -2,62 +2,45 @@ import {topicView} from "./topic.view"
 import {Store} from "../../boot/Store"
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import $ from "jquery"
-
-const topicsList = {
-  "test1": {
-    "topicText": "Politics",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test2": {
-    "topicText": "Sports",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test3": {
-    "topicText": "Envioments",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-}
-
-
-  
-
+import {getTopicsFromFireBase, addtopics,getTopics} from "./topics.service"
 
 
 export const createTopics = () => {
-  const state = Store.getState()
- 
- 
-  ///////////////////For Demo Data///////////////
-  state.topicReducer={TopicList : topicsList}
-/////////////////////////////////////////////////
+  getTopics()
+  .then(result=>{
+    Store.dispatch({"type": "ADD_TOPIC", "payload": result})
+    createTopic(result)
+  },errors=>{
+    console.log(errors)
+    getTopicsFromFireBase()
+    .then(
+      result => {
+        Store.dispatch({"type": "ADD_TOPIC", "payload": result})
+        addtopics(result).then(
+          res => {
+            console.log("res", res)
+          },
+          err => {
+            console.log(err)
+          })
+        createTopic(result)
+      },
+      error => {
+        const obj = Store.getState().topicReducer
+        createTopic(obj)
+      })
+  })
+  
+}
 
+const createTopic = (state) => {
   let topics = ""
-  for (const newTopicId in state.topicReducer.TopicList) {
-    topics += topicView(state.topicReducer.TopicList[newTopicId], newTopicId)
+  for (const newTopic in state) {
+    topics += topicView(state[newTopic], newTopic)
   }
   render(topics)
   addEvents()
+  createTopicmodal()
 }
 
 const render = (topics) => {
