@@ -2,11 +2,12 @@ import {config} from "../config"
 import firebase from "firebase"
 import {updateViewState} from "../../client/app"
 import {Store} from "../../client/boot/Store"
+import {showSnackBar} from "../../client/ui-component/snackbar/snackbar.controller"
 const firebaseAp = firebase.initializeApp(config)
 export const signIn = (email, password) => {
   const auth = firebaseAp.auth()
   const promise = auth.signInWithEmailAndPassword(email, password)
-  promise.catch(e => window.alert("This user has not registered."))
+  promise.catch(e => showSnackBar("This user has not registered.", "Error"))
 }
 
 export const signUp = (email, password) => {

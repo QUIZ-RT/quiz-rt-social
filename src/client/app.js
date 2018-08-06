@@ -8,6 +8,7 @@ import {} from "../../node_modules/material-design-lite/material.min"
 
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
 import {createLoader} from "./ui-component/loader/loader.controller"
+import {createSnackBar} from "./ui-component/snackbar/snackbar.controller"
 import {createHeader} from "./ui-component/header/header.controller"
 import {createMenu} from "./ui-component/menu/menu.controller"
 import {createMainContainer} from "./ui-component/main/main.controlller"
@@ -21,6 +22,7 @@ import {createUserLogin} from "./ui-component/login-page/login.controller"
 import {createTopics} from "./ui-component/topics/topic-controller"
 
 createLoader()
+createSnackBar()
 
 //Login Page
 
