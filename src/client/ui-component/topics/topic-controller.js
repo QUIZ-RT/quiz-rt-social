@@ -104,9 +104,7 @@ const addEvents = () => {
 
 Store.subscribe(() => {
   const currentState = Store.getState()
-  if(currentState.menuReducer.currentView === 'topics'){
-    
-    //createTopicmodal()
+  if(currentState.menuReducer.currentView === 'topics'){    
     if (topicCtr === 0) {
       document.querySelector('#quiz-maincontent').innerHTML = ""
       createTopics();

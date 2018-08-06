@@ -95,7 +95,6 @@ const topicModalbtnClick = (event) => {
     break
   case "unfollow":
     topic = topicData["" + topicId]
-    //topic.follow = !topic.follow
     let ind = topic.users.indexOf(userid)
     if(ind>-1){
       topic.users.splice(ind,1)
@@ -103,10 +102,11 @@ const topicModalbtnClick = (event) => {
     data.data = topic.users;
     updateFollow(data).then(result=>{
       console.log(result)
-      topic.users = data.data;
-      render(topic, topicId,userid)
+      topic.users = data.data;      
       topicData["" + topicId]['users'] = topic.users
       Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      render(topic, topicId,userid)
     },error=>{
       console.log(error);
     })
@@ -115,15 +115,16 @@ const topicModalbtnClick = (event) => {
   case "follow":
     topic = topicData["" + topicId]     
     if(topic.users!==undefined){
-      data.data = [userid];
+      topic.users.push(userid)
     }else{
-      data.data.push(userid);
+      topic.users = [userid];
     }
-    updateFollow(data).then(result=>{
-      topic.users = data.data;
-      render(topic, topicId,userid)
+    data.data = topic.users
+    updateFollow(data).then(result=>{        
       topicData["" + topicId]['users'] = topic.users
       Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+      render(topic, topicId,userid)
+      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
     },error=>{
       console.log(error);
     });    

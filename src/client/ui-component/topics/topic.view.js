@@ -15,7 +15,7 @@ export const topicView = (topicObj, topicId) => {
         
     </div>
     <span class="mdc-grid-tile__secondary">
-        <span class="mdc-grid-tile__title">${topicObj.topicText} &nbsp;&nbsp;${userNum} </span>
+        <span class="mdc-grid-tile__title">${topicObj.topicText} &nbsp;&nbsp;<span id="topic_follower_${topicId}">${userNum}</span> </span>
     </span>
 </li>`
 }
