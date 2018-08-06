@@ -1,8 +1,8 @@
-import {getSnackBarHtml, renderViewToContainer} from "./snackbar.view"
+import {getSnackbarHtml, renderViewToContainer} from "./snackbar.view"
 
 export const createSnackBar = () =>{
-    const snackBarTemplate = getSnackBarHtml();
-    renderViewToContainer(snackBarTemplate, "body")
+    const snackbarTemplate = getSnackbarHtml();
+    renderViewToContainer(snackbarTemplate, "body")
 }
 
 export const showSnackBar = (text, msgtype) => {
@@ -18,4 +18,4 @@ export const showSnackBar = (text, msgtype) => {
     setTimeout(function() {
       snackBar.style.display = "none"
     }, 3000)
-}
+  }

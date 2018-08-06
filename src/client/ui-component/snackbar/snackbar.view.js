@@ -8,7 +8,7 @@ export const renderViewToContainer = (content, containerKey) => {
     container.appendChild(content)
   }
 
-export const getSnackBarHtml = () =>{
+export const getSnackbarHtml = () =>{
     const snackBarhtml = `<div id="quiz-snackbar" style="display:none">
     </div>`
     return htmlToTemplate(snackBarhtml)
