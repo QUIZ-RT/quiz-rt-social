@@ -1,6 +1,5 @@
 @import '../../../../node_modules/material-design-lite/src/material-design-lite';
 @import url(base.scss);
-@import url(module.scss);
 @import url(layout.scss);
 @import 'state';
 @import 'bootstrap/scss/bootstrap';
@@ -65,6 +64,6 @@
 @import "./dashboard";
 @import "./topics";
 @import "./shareChallenges";
-
-    @import "./chat";
+@import "./module";
+@import "./chat";
 

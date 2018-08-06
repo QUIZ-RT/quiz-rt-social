@@ -1,17 +1,46 @@
-import {topicView} from "./topic.view"
+import {htmlToTemplate, topicView} from "./topic.view"
 import {Store} from "../../boot/Store"
-import {topicModalInitializeShow} from "../topic-modal/topic-modal.controller"
+import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import $ from "jquery"
+import {getTopicsFromFireBase, addtopics,getTopics} from "./topics.service"
 
-const topicCltrl = () => {
-  console.log("Topic Cltrl")
-  const obj = Store.getState()
+
+export const createTopics = () => {
+  getTopics()
+  .then(result=>{
+    Store.dispatch({"type": "ADD_TOPIC", "payload": result})
+    createTopic(result)
+  },errors=>{
+    console.log(errors)
+    getTopicsFromFireBase()
+    .then(
+      result => {
+        Store.dispatch({"type": "ADD_TOPIC", "payload": result})
+        addtopics(result).then(
+          res => {
+            console.log("res", res)
+          },
+          err => {
+            console.log(err)
+          })
+        createTopic(result)
+      },
+      error => {
+        const obj = Store.getState().topicReducer
+        createTopic(obj)
+      })
+  })
+  
+}
+
+const createTopic = (state) => {
   let topics = ""
-  for (const newTopic in obj.topicReducer.topics) {
-    topics += topicView(obj.topicReducer.topics[newTopic], newTopic)
+  for (const newTopic in state) {
+    topics += topicView(state[newTopic], newTopic)
   }
   render(topics)
   addEvents()
+  createTopicmodal()
 }
 
 const render = (topics) => {
@@ -24,8 +53,8 @@ const render = (topics) => {
                     ${topics}
                 </ul>
             </div>`
-  const container = document.querySelector("main")
-  container.innerHTML = html
+  const container = document.querySelector("#quiz-maincontent")
+  container.appendChild(htmlToTemplate(html))
 }
 
 const addEvents = () => {
@@ -47,6 +76,13 @@ const addEvents = () => {
   })
 }
 
-export {
-  topicCltrl,
-}
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.menuReducer.currentView === 'topics'){
+    document.querySelector('#quiz-maincontent').innerHTML = ""
+    createTopicmodal()
+    createTopics();
+  }
+})
+

@@ -1,43 +1,22 @@
-export const topicReducer = (state = {"topics": {
-  "test1": {
-    "topicText": "Politics",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test2": {
-    "topicText": "Sports",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test3": {
-    "topicText": "Envioments",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-}}, action) => {
+export const topicReducer = (state = {}, action) => {
+
+  const statePrev = {...state}
+  const newState = Object.assign({}, statePrev)
   switch (action.type) {
+  case "GET_TOPIC":
+    newState.TopicList = action.dataItem.topicList
+    return newState
+    break
   case "ADD_TOPIC":
-    return state
+  console.log(state)
+    const data = Object.assign({}, state, action.payload)
+    console.log(data)
+    // return Object.assign({}, state.topics, action.payload)
+    return data
   default:
-    return state
+    return newState
   }
 }
+
+
 
