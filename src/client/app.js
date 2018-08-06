@@ -25,15 +25,12 @@ createLoader()
 //Login Page
 
 //createUserLogin()
+CreatePlayChallengeController.displayPlaySideBar();
 
 
-
-// createChallengeSideBar()
-// $("body").on("click", "#create", createNextQuestion)
-// $("body").on("click", "#nextQuestion", createNextQuestion)
-// $("body").on("click", "#save", saveChallengeDetails)
-// $("body").on("click", "#createChallenge", createChallenge)
-// $("body").on("click", "#playChallenge", CreatePlayChallengeController.displayPlaySideBar)
+$("body").on("click", "#create", createNextQuestion)
+$("body").on("click", "#nextQuestion", createNextQuestion)
+$("body").on("click", "#save", saveChallengeDetails)
 // createShareChallengesSection()
 // ShareChallengesWithSelectedFriendsSection()
 
