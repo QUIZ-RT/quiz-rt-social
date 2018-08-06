@@ -9,7 +9,7 @@
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --host 0.0.0.0",
     "server": "nodemon ./src/server/index.js --host 0.0.0.0",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "mocha test ./src/**/*.spec.js src/**/**/*.spec.js --require babel-register --reporter spec || exit 0"
+    "test": "mocha test ./src/**/*.test.js src/**/**/*.test.js --require babel-register --reporter spec || exit 0"
   },
   "author": "",
   "license": "ISC",
