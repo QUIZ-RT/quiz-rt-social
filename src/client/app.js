@@ -1,7 +1,7 @@
 import "jquery"
 import "./styles/scss/main.scss"
 import {} from "../../node_modules/material-design-lite/material.min"
-import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
+// import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
 import {createHeader} from "./ui-component/header/header.controller"
 import {createMenu} from "./ui-component/menu/menu.controller"
 import {createMainContainer} from "./ui-component/main/main.controlller"
@@ -20,12 +20,12 @@ createMainContainer()
 // createChallengesSection()
 // createMyChallengesSection()
 // createTopicmodal()
-$("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
+// $("#challengeSection").on("click", "#create", CreateChallengeController.saveChallengeDetails)
 $("#menu_5").on("click", function(event) {
   console.log("menu 5 is clicked")
   Store.dispatch({type: "SHOW_FRIENDS_CHAT"})
 })
-CreateChallengeController.displaySideBar()
+// CreateChallengeController.displaySideBar()
 
 // export const updateViewState = (viewName) => {
 //   switch (viewName) {
