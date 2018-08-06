@@ -14,8 +14,9 @@ export const topicReducer = (state = {}, action) => {
     // return Object.assign({}, state.topics, action.payload)
     return data
   default:
-    return newState
+    return state
   }
+  return newState;
 }
 
 

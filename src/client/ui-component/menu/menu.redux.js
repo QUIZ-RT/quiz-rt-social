@@ -14,8 +14,9 @@ export const menuReducer = (state = { menuReducer:{currentView: "login"} }, acti
       newState.currentView = action.dataItem.Name
       return newState
     default:
-      return Object.assign({}, ...state)
+      return newState;
     }
+    return newState;
 }
 
 

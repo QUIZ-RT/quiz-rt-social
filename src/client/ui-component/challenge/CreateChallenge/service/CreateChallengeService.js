@@ -15,3 +15,22 @@ export const storeChallenge = (challengeJsonObj) => {
   })
 }
 
+export const getTopics = () => {
+  const promise = new Promise(function(resolve, reject) {
+    fetch("/api/topics/gettopics", {
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
+      method: "get",
+    }).then(
+      res => res.json()
+    ).then(json => {
+      resolve(json)
+    }, error => {
+      reject(error)
+    })
+  })
+  return promise  
+}
+

@@ -24,7 +24,7 @@ createLoader()
 
 //Login Page
 
-//createUserLogin()
+createUserLogin()
 CreatePlayChallengeController.displayPlaySideBar();
 
 

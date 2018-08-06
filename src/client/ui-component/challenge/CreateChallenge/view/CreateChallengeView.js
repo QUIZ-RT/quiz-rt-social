@@ -1,5 +1,6 @@
 import TemplateGenerator from "../../common/TemplateGenerator"
 import {Store} from '../../../../boot/Store';
+import {getTopics} from '../service/CreateChallengeService'
 
 function createChallengeSideBarView() {
   const challenegSideBarTemp = `<div class="mdl-layout__drawer" id="sidebar">
@@ -42,50 +43,57 @@ function createChallengeContainer() {
   container.appendChild(challengeContainerTemp)
 }
 function createChallengeHeader() {
-  const challengeSection = document.getElementById("challengeSection")
-  const challengeTemplate = createChallengeHeaderTemplate()
-  challengeSection.appendChild(challengeTemplate)
+  createChallengeHeaderTemplate()
 }
 
 function createChallengeHeaderTemplate() {
-  const challengeTemplate = `<div class="mdl-color--grey-100" id="firstPage">
-        <main class="mdl-layout__content mdl-cell mdl-cell--12-col">
-          <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-              <h2 class="mdl-card__title-text"> Create Challenge</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-              <form action="#" id="form">
-              <div class="mdc-select mdl-cell mdl-cell--12-col">
-                <select class="mdc-select__native-control" id="topic">
-                  <option value="" disabled selected>Select your Topic</option>
-                  <option value="sport">
-                    Sports
-                  </option>
-                  <option value="Entertainment">
-                  Entertainment
-                  </option>
-                  <option value="Politics">
-                  Politics
-                  </option>
-                </select>
-                <!--<label class="mdc-floating-label">Select your Topic</label>-->
-                <div class="mdc-line-ripple"></div>
-              </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-                  <input class="mdl-textfield__input" type="text" id="challengeName" />
-                  <label class="mdl-textfield__label" for="challengeName">Challenge Name</label>
-                </div>
-                <div class="mdl-card__actions mdl-card--border">
-                      <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="create">Create Challenge</button>
-                  </div>
-                  </form>
-                  </div>
-                  </div>
-                  </main>
-                </div>`
-  const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
-  return challengeTemplt
+  
+  let state = Store.getState();
+  let topicsArray =  Object.values(state.topicReducer.TopicList);
+  console.log(" createChallengeHeaderTemplate topicsArray :", topicsArray);
+    for(let index =0;index<topicsArray.length;index+=1){
+      
+      topics =topics.concat(` <option value="${topicsArray[index].topicText}">
+                 ${topicsArray[index].topicText}
+                </option>`);
+    }
+
+     const challengeTemplate = `<div class="mdl-color--grey-100" id="firstPage">
+     <main class="mdl-layout__content mdl-cell mdl-cell--12-col">
+       <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--12-col">
+         <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
+           <h2 class="mdl-card__title-text"> Create Challenge</h2>
+         </div>
+         <div class="mdl-card__supporting-text">
+           <form action="#" id="form">
+           <div class="mdc-select mdl-cell mdl-cell--12-col">
+             <select class="mdc-select__native-control" id="topic">
+               <option value="" disabled selected>Select your Topic</option>
+                 ${topics}
+             </select>
+             <!--<label class="mdc-floating-label">Select your Topic</label>-->
+             <div class="mdc-line-ripple"></div>
+           </div>
+             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+               <input class="mdl-textfield__input" type="text" id="challengeName" />
+               <label class="mdl-textfield__label" for="challengeName">Challenge Name</label>
+             </div>
+             <div class="mdl-card__actions mdl-card--border">
+                   <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="create">Create Challenge</button>
+               </div>
+               </form>
+               </div>
+               </div>
+               </main>
+             </div>`
+const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
+const challengeSection = document.getElementById("challengeSection")
+challengeSection.appendChild(challengeTemplt);
+
+  // },errors=>{
+  //    console.log(errors)
+  // })
+ 
 }
 function createQuestion(challengeJsonObj, count) {
   let questionTemplate = ` 
