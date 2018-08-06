@@ -31,17 +31,7 @@ const htmlToTemplate = (htmlstr) => {
     return htmlToTemplate(challengeModalHtmlStr)
   }
   
-  export const getTopicModalBodyContent = (state, id) => {
-    let follow = ""
-    if (state.follow) {
-      follow = `<button id="challenge-${id}-unfollow" class="mar-btm-10px mdc-button mdc-button--raised">
-      Unfollow</button>`
-    }
-    else {
-      follow = `<button id="challenge-${id}-follow" class="mar-btm-10px mdc-button mdc-button--raised">
-      Follow</button>`
-    }
-  
+  export const getChallengeModalBodyContent = (state, id) => {
     const modalBodyContentStr = `  
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
@@ -49,15 +39,14 @@ const htmlToTemplate = (htmlstr) => {
           <div class="challengeCardContainer">
               <div id="challenge_${id}" class="mdc-card demo-card demo-card--photo">
                 <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-                  <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${state.challengeImage}');">
+                  <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png');">
                   </div>
                 </a>  
               </div>   
           </div>
         </div>
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet">
-            <button id="challenge-${id}-play" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
-            ${follow}
+            <button id="challenge-${id}-play" class="mar-btm-10px mdc-button mdc-button--raised">Play Challenge</button>
             <button id="challenge-${id}-leader" class="mar-btm-10px mdc-button mdc-button--raised btnLeaderBoard">Leader Board</button>
         </div>      
       </div>

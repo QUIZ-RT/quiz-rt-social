@@ -8,8 +8,8 @@ import {createLeaderBoardForChallenges} from "../leader-board/leader-controller"
 
 let topicCtr = 0;
 export const createTopics = () => { 
-    getTopics()
-      .then(result => {
+      getTopics()
+        .then(result => {
         console.log(result);
 
         getTopicsFromQAGEN()

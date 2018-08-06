@@ -1,44 +1,45 @@
-import {renderViewToContainer, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
+import {renderViewToContainer, getDashboardContainerTemplate, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import {challengeModalInitializeShow, createChallengemodal} from "../challenge-modal/challenge-modal.controller"
 import {showLoader, hideLoader} from "../loader/loader.controller"
+import {getTopics} from "../topics/topics.service"
 import {Store} from "../../boot/Store"
 
-const topicData = {
-  "test1": {
-    "topicText": "Politics",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test2": {
-    "topicText": "Sports",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test3": {
-    "topicText": "Environments",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-}
+// const topicData = {
+//   "test1": {
+//     "topicText": "Politics",
+//     "topicUrl": "",
+//     "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+//     "createdDate": "11/11/2018",
+//     "createdBy": 1,
+//     "modifiedBy": 1,
+//     "modifiedDate": "11/11/2018",
+//     "published": true,
+//     "follow": true,
+//   },
+//   "test2": {
+//     "topicText": "Sports",
+//     "topicUrl": "",
+//     "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+//     "createdDate": "11/11/2018",
+//     "createdBy": 1,
+//     "modifiedBy": 1,
+//     "modifiedDate": "11/11/2018",
+//     "published": true,
+//     "follow": true,
+//   },
+//   "test3": {
+//     "topicText": "Environments",
+//     "topicUrl": "",
+//     "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+//     "createdDate": "11/11/2018",
+//     "createdBy": 1,
+//     "modifiedBy": 1,
+//     "modifiedDate": "11/11/2018",
+//     "published": true,
+//     "follow": true,
+//   },
+// }
 // const popularTopicData = [
 //   {
 //     "id": "1",
@@ -163,404 +164,425 @@ const topicData = {
 
 const challengeDataList = [
   {
-      "challengeId":"01",
-      "topicName": sport,
-      "challengeName": ch1,
-      "questions":[
-          {"qId":'1',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'2',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'3',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'4',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'5',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'6',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'7',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              }
-      ]
-  },
-  {
-      "challengeId":"06",
-      "topicName": sport,
-      "challengeName": ch1,
-      "questions":[
-          {"qId":'1',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'2',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'3',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'4',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'5',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'6',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'7',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              }
-      ]
-  },
-  {
-      "challengeId":"02",
-      "topicName": sport,
-      "challengeName": ch1,
-      "questions":[
-          {"qId":'1',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'2',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'3',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'4',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'5',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'6',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'7',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              }
-      ]
-  },
-  {
-      "challengeId":"03",
-      "topicName": sport,
-      "challengeName": ch1,
-      "questions":[
-          {"qId":'1',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'2',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'3',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'4',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'5',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'6',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'7',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              }
-      ]
-  },
-  {
-      "challengeId":"04",
-      "topicName": sport,
-      "challengeName": ch1,
-      "questions":[
-          {"qId":'1',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'2',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'3',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'4',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'5',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'6',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              },
-              {"qId":'7',
-              "question": "where are you from ?",
-              "options":{
-                      "optionA" : "Bangalore",
-                      "optionB" : "Delhi",
-                      "optionC" : "Kolkata",
-                      "optionD" : "Mumbai",
-              },
-          "answer": "Bangalore"
-              }
-      ]
-  }
+    "challengeId":"01",
+    "topicName": "sport",
+    "challengeName": "chall",
+    "questions":[
+        {"qId":'1',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'2',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'3',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'4',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'5',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'6',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'7',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            }
+    ]
+},
+{
+    "challengeId":"06",
+    "topicName": "sport",
+    "challengeName": "ch2",
+    "questions":[
+        {"qId":'1',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'2',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'3',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'4',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'5',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'6',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'7',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            }
+    ]
+},
+{
+    "challengeId":"02",
+    "topicName": "sport",
+    "challengeName": "ch2",
+    "questions":[
+        {"qId":'1',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'2',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'3',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'4',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'5',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'6',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'7',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            }
+    ]
+},
+{
+    "challengeId":"03",
+    "topicName": "sport",
+    "challengeName": "ch2",
+    "questions":[
+        {"qId":'1',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'2',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'3',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'4',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'5',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'6',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'7',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            }
+    ]
+},
+{
+    "challengeId":"04",
+    "topicName": "sport",
+    "challengeName": "ch2",
+    "questions":[
+        {"qId":'1',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'2',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'3',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'4',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'5',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'6',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            },
+            {"qId":'7',
+            "question": "where are you from ?",
+            "options":{
+                    "optionA" : "Bangalore",
+                    "optionB" : "Delhi",
+                    "optionC" : "Kolkata",
+                    "optionD" : "Mumbai",
+            },
+        "answer": "Bangalore"
+            }
+    ]
+}
 ]
 
-
-// const challangeData = [
-//   {
-//     "Img": "topic002.png",
-//   },
-// ]
-
-export const getTopics = () => {
- 
+const getChallenges = () => {
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(()=>{
+      resolve(challengeDataList)
+    }, 500)
+  })
+  return promise
 }
 
-export const createPopularTopicSection = () => {
+
+export const loadDashBoardData = () => {
+  getTopics().then(topicdata => {
+    const pop_Topic = topicdata
+    const fav_Topic = topicdata
+    Store.dispatch({type: "GET_TopicData", dataItem: {Topics: topicdata, PopularTopics:pop_Topic, FavoriteTopics: fav_Topic }})
+    // Store.dispatch({ "type": "ADD_TOPIC", "payload": topicdata })
+
+  })
+  getChallenges().then(challengedata => {
+    const my_Challeges = challengedata
+    Store.dispatch({type: "GET_ChallengeData", dataItem: {Challeges:challengedata, MyChalleges: my_Challeges }})
+  })
+
+}
+
+const loadDashboardContainer = () => {
+  const dashboardContainerTemp = getDashboardContainerTemplate();
+  renderViewToContainer(dashboardContainerTemp, "#quiz-maincontent")
+}
+
+
+export const createPopularTopicSection = (topicData) => {
+  document.querySelector('#dashboard_pTopic').innerHTML = ""
   const pTopictemp = getPopularTopicTemplate(topicData, "Popular Topic")
   const pTopicitems = pTopictemp.querySelectorAll(".mdc-card")
   pTopicitems.forEach((item) => {
@@ -568,9 +590,10 @@ export const createPopularTopicSection = () => {
       topicModalInitializeShow(event)
     })
   })
-  renderViewToContainer(pTopictemp, "#quiz-maincontent")
+  renderViewToContainer(pTopictemp, "#dashboard_pTopic")
 }
-export const createFavoriteTopicSection = () => {
+export const createFavoriteTopicSection = (topicData) => {
+  document.querySelector('#dashboard_fTopic').innerHTML = ""
   const fTopictemp = getFavTopicTemplate(topicData, "Favorite Topic")
   const fTopicitems = fTopictemp.querySelectorAll(".mdc-card")
   fTopicitems.forEach((item) => {
@@ -578,9 +601,10 @@ export const createFavoriteTopicSection = () => {
       topicModalInitializeShow(event)
     })
   })
-  renderViewToContainer(fTopictemp, "#quiz-maincontent")
+  renderViewToContainer(fTopictemp, "#dashboard_fTopic")
 }
-export const createChallengesSection = () => {
+export const createChallengesSection = (challengeDataList) => {
+  document.querySelector('#dashboard_challenge').innerHTML = ""
   const challengestemp = getChallengesTemplate(challengeDataList, "Challenges")
   const challengeitems = challengestemp.querySelectorAll(".mdc-card")
   challengeitems.forEach((item) => {
@@ -588,9 +612,10 @@ export const createChallengesSection = () => {
       challengeModalInitializeShow(event)
     })
   })
-  renderViewToContainer(challengestemp, "#quiz-maincontent")
+  renderViewToContainer(challengestemp, "#dashboard_challenge")
 }
-export const createMyChallengesSection = () => {
+export const createMyChallengesSection = (challengeDataList) => {
+  document.querySelector('#dashboard_mychallenge').innerHTML = ""
   const mychallengestemp = getMyChallengesTemplate(challengeDataList, "My Challenges")
   const mychallengeitems = mychallengestemp.querySelectorAll(".mdc-card")
   mychallengeitems.forEach((item) => {
@@ -598,20 +623,34 @@ export const createMyChallengesSection = () => {
       challengeModalInitializeShow(event)
     })
   })
-  renderViewToContainer(mychallengestemp, "#quiz-maincontent")
+  renderViewToContainer(mychallengestemp, "#dashboard_mychallenge")
 }
 
 
 Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'dashboard'){
-    showLoader()
     document.querySelector('#quiz-maincontent').innerHTML = ""
-    createPopularTopicSection()
-    createFavoriteTopicSection()
-    createChallengesSection()
-    createMyChallengesSection()
+    loadDashboardContainer()
+    if(!currentState.dashboardReducer.Action || currentState.dashboardReducer.Action == "Init"){
+    loadDashBoardData()
+    }else{
+      if (currentState.dashboardReducer.PopularTopicList && currentState.dashboardReducer.PopularTopicList !== []){
+        createPopularTopicSection(currentState.dashboardReducer.PopularTopicList)
+      }
+      if (currentState.dashboardReducer.FavoriteTopicList && currentState.dashboardReducer.FavoriteTopicList !== []){
+        createFavoriteTopicSection(currentState.dashboardReducer.FavoriteTopicList)
+      }
+      
+      if (currentState.dashboardReducer.ChallegeList && currentState.dashboardReducer.ChallegeList !== []){
+        createChallengesSection(currentState.dashboardReducer.ChallegeList)
+      }
+      if (currentState.dashboardReducer.MyChallegeList && currentState.dashboardReducer.MyChallegeList !== []){
+        createMyChallengesSection(currentState.dashboardReducer.MyChallegeList)
+      }
+    }
     createTopicmodal()
+    createChallengemodal();
     hideLoader()
   }
 })
