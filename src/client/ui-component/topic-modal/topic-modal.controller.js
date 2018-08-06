@@ -1,6 +1,6 @@
 import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
-import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
+import {renderViewToContainer, getTopicModalbox, getTopicModalBodyContent} from "./topic-modal.view"
 // import {Store} from "../../boot/Store"
 
 const topicDataList = {
@@ -58,7 +58,7 @@ const openTopicModal = (state, id, target) => {
   const dialogBody = dialogElement.querySelector("#topic-mdc-dialog-description")
   dialogHeader.innerHTML = `Topic : ${state.topicText}`
   dialogBody.innerHTML = ""
-  const topicModalBodyTemp = getToipcModalBodyContent(state, id)
+  const topicModalBodyTemp = getTopicModalBodyContent(state, id)
   const modalBtnList = topicModalBodyTemp.querySelectorAll("button")
   modalBtnList.forEach((item) => {
     item.addEventListener("click", (event) => {
