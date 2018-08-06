@@ -1,4 +1,5 @@
 import TemplateGenerator from "../../common/TemplateGenerator"
+import {Store} from '../../../../boot/Store';
 
 function createChallengeSideBarView() {
   const challenegSideBarTemp = `<div class="mdl-layout__drawer" id="sidebar">
@@ -11,16 +12,32 @@ function createChallengeSideBarView() {
   </div>`
 
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
-  const container = document.querySelector("body")
-  container.appendChild(challengeSideBarTemplate)
+  const container = document.querySelector("#quiz-maincontent")
+  container.appendChild(challengeSideBarTemplate);
+
+  $("#quiz-maincontent").on("click", "#createChallenge", callCreateChallenge);
+  $("#quiz-maincontent").on("click", "#playChallenge", callPlayChallenge);
+  $("#quiz-maincontent").on("click", "#shareChallenge", callShareChallenge);
 }
+
+function callCreateChallenge(){
+  Store.dispatch({type:"currentchallengeview",dataItem:"createChallenge"});
+}
+function callPlayChallenge(){
+  Store.dispatch({type:"currentchallengeview",dataItem:"playChallenge"});
+}
+function callShareChallenge(){
+  Store.dispatch({type:"currentchallengeview",dataItem:"shareChallenge"});
+}
+
+
 function createChallengeContainer() {
   const challengeContainer = `<section class="mdl-grid" id="challengeSection">
 
     </section>`
   const challengeContainerTemp = TemplateGenerator.createAllChildHTMLElement(challengeContainer)
 
-  const container = document.querySelector("body")
+  const container = document.querySelector("#quiz-maincontent")
 
   container.appendChild(challengeContainerTemp)
 }

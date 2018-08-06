@@ -1,16 +1,38 @@
 import {createChallengeContainer, createQuestion, createChallengeHeader, createChallengeSideBarView} from "../view/CreateChallengeView"
 import {storeChallenge} from "../service/CreateChallengeService"
+import {Store} from '../../../../boot/Store';
 
 let count = 0
-const challenge =
-            {"challengeId": "", "topicName": "", "challengeName": "", "questions": [],}
-function createChallengeSideBar() {
-  createChallengeSideBarView()
-}
-function createChallenge() {
-  createChallengeContainer()
-  createChallengeHeader()
-}
+const challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],}
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.menuReducer.currentView === 'challenges'){
+    document.querySelector('#quiz-maincontent').innerHTML = "";
+    createChallengeSideBarView();
+    createChallengeContainer();
+    createChallengeHeader();
+  }
+})
+
+
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.challengeReducer.currentView === 'createChallenge'){
+    document.querySelector('#challengeSection').innerHTML = "";
+    createChallengeContainer()
+    createChallengeHeader()
+  }
+})
+
+// function createChallengeSideBar() {
+//   createChallengeSideBarView()
+// }
+
+// function createChallenge() {
+//   createChallengeContainer()
+//   createChallengeHeader()
+// }
 
 function createNextQuestion(evnt) {
   evnt.preventDefault()
@@ -31,7 +53,7 @@ function createNextQuestion(evnt) {
     const quesopt3 = document.getElementById(`ques${currentQuesCount}opt3`).value
     const quesopt4 = document.getElementById(`ques${currentQuesCount}opt4`).value
     const quesans = document.getElementById(`ques${currentQuesCount}ans`).value
-    const questionObj = `{"question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
+    const questionObj = `{"qid":${currentQuesCount}",question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
     challenge.questions.push(questionObj)
     console.log(`current challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
   }
@@ -47,7 +69,7 @@ function saveChallengeDetails(evnt) {
   const quesopt3 = document.getElementById(`ques${count}opt3`).value
   const quesopt4 = document.getElementById(`ques${count}opt4`).value
   const quesans = document.getElementById(`ques${count}ans`).value
-  const questionObj = `{"question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
+  const questionObj = `{"qid":${currentQuesCount}","question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
   challenge.questions.push(questionObj)
   console.log(`final challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
 
@@ -56,4 +78,9 @@ function saveChallengeDetails(evnt) {
   formSection.innerHTML = ""
   count = 0
 }
-export {createChallenge, createNextQuestion, saveChallengeDetails, createChallengeSideBar}
+
+// Store.subscribe(()=>{
+//   let currentState = Store.getState();
+//   if(currentState.createchallengeReducer.)
+// })
+export {createNextQuestion, saveChallengeDetails}
