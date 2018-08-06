@@ -1,4 +1,5 @@
 import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
+import {Store} from '../../../../boot/Store'
 
 const shareChallenges = [
   {
@@ -29,10 +30,18 @@ const shareChallenges = [
 
 const friends = ["TRavi", "TPrashanth", "TShyamal", "TSuresh", "TManju"]
 
-export const createShareChallengesSection = () => {
-  const shareChallengesData = getShareChallengeTemplate(shareChallenges)
-  renderViewToContainer(shareChallengesData, "main")
-}
+Store.subscribe(() => {
+  const currentState = Store.getState()
+  if(currentState.challengeReducer.currentView === 'shareChallenge'){
+    document.querySelector('#challengeSection').innerHTML = "";
+    const shareChallengesData = getShareChallengeTemplate(shareChallenges)
+     renderViewToContainer(shareChallengesData, "#challengeSection")
+  }
+})
+// export const createShareChallengesSection = () => {
+//   const shareChallengesData = getShareChallengeTemplate(shareChallenges)
+//   renderViewToContainer(shareChallengesData, "main")
+// }
 
 export const ShareChallengesWithSelectedFriendsSection = () => {
   const shareChallengesWithFriendsData = getFriendsToShareChallengeTemplate(friends)

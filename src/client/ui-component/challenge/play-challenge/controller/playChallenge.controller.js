@@ -1,9 +1,18 @@
 import CreatePlayChallengeView from "../view/playChallenge.view"
 // import CreateChallengeService from '../service/CreateChallengeService';
+import {Store} from '../../../../boot/Store';
 
 export default class CreatePlayChallengeController {
-  static displayPlaySideBar() {
-    CreatePlayChallengeView.createSidebar()
+
+ 
+   static displayPlaySideBar() {
+     Store.subscribe(() => {
+        const currentState = Store.getState()
+        if(currentState.challengeReducer.currentView === 'playChallenge'){
+          document.querySelector('#challengeSection').innerHTML = "";
+          CreatePlayChallengeView.createSidebar()
+        }
+  })
   }
 
   static saveChallengeDetails(evnt) {
