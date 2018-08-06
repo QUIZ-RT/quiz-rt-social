@@ -2,13 +2,16 @@ import {signIn, signUp, logout} from "../../../server/FirebaseAuth/emailAuthenti
 import {showSnackBar} from "../snackbar/snackbar.controller"
 import {config} from "../../../server/config"
 import firebase from "firebase"
+import {Store} from "../../boot/Store"
 export const goToSignin = () => {
   function newLogin(user){
     if(user){
       console.log('calling app()')
+      Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo :user.email, Name: 'dashboard'}})
       app(user);
     } else{
       console.log('in else')
+      Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: 'login'}})
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(user){
           console.log('result', user);        
