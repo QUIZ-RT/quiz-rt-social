@@ -1,12 +1,13 @@
 import {signIn, signUp, logout} from "../../../server/FirebaseAuth/emailAuthentication"
+import {showSnackBar} from "../snackbar/snackbar.controller"
 
 export const goToSignin = (username, password) => {
   // console.log(username, "  i am signin  ", password)
   if (username.length === 0) {
-    window.alert("Username cant be empty")
+    showSnackBar("Username cant be empty", "Error")
   }
   else if (password.length === 0) {
-    window.alert("Password cant be empty")
+    showSnackBar("Password cant be empty", "Error")
   }
   else {
     signIn(username, password)
