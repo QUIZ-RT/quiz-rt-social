@@ -17,6 +17,7 @@ export const getShareChallengeTemplate = (dataList) => {
                             <th class="mdl-data-table__cell--non-numeric">Challenge Name</th>
                             <th>ChallengedBy</th>
                             <th>Option</th>
+                            <th>Play</th>
                             </tr>
                         </thead>
                     </table>`
