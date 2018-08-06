@@ -3,8 +3,8 @@ import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
 import {quizStore} from "../../store/quiz-store"
 
-import {getChallengeDetails} from "./../leader-board/leader-board-service"
-import {getFilteredDetails} from "./../leader-board/leader-controller"
+import {getChallengeDetails,getGameDetails } from "./../leader-board/leader-board-service"
+import {getFilteredDetails2} from "./../leader-board/leader-controller"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -38,8 +38,8 @@ const openTopicModal = (state, id, target) => {
 
   // ///////////////////////// Leader Board Related Code///////////////////////////////
   document.querySelector("#btnLeaderBoard").addEventListener("click", function(event) {
-    const result = JSON.parse(getChallengeDetails())
-    getFilteredDetails(result.gameStatus, 1)
+    const result = JSON.parse(getGameDetails())
+    getFilteredDetails2(result.games)
 
     const dialogElement1 = document.querySelector("#topic-mdc-dialog")
     const dialog1 = new MDCDialog(dialogElement1)
