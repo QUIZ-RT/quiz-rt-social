@@ -7,7 +7,7 @@ const htmlToTemplate = (htmlstr) => {
 // first
 export const getUserTemplate = () => {
   const userHtmlContent = `
-  <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
+  <div class="mdl-layout mdl-js-layout">
   <main class="mdl-layout__content" style = "margin: auto">
   <div class="mdl-card mdl-shadow--6dp">
   <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
@@ -19,12 +19,12 @@ export const getUserTemplate = () => {
   <div class="mdl-card__supporting-text">
   <form id="loginAction" action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-  <input class="mdl-textfield__input" type="text" id="username">
-  <label class="mdl-textfield__label" for="username">Enter the username</label>
+  <input class="mdl-textfield__input" type="text" id="username" placeholder="Enter username">
+  <label class="mdl-textfield__label" for="username"></label>
   </div> <br>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-  <input class="mdl-textfield__input" type="password" id="password">
-  <label class="mdl-textfield__label" for="password">Enter the password</label>
+  <input class="mdl-textfield__input" type="password" id="password" placeholder="Enter password">
+  <label class="mdl-textfield__label" for="password"></label>
   </div> <br>
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="signin">
   Sign in

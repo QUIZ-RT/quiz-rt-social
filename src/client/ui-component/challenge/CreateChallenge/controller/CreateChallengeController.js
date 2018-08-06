@@ -3,11 +3,7 @@ import {storeChallenge} from "../service/CreateChallengeService"
 
 let count = 0
 const challenge =
-            {"challengeId": "1",
-              "topicName": "",
-              "challengeName": "",
-              "questions": [],
-            }
+            {"challengeId": "", "topicName": "", "challengeName": "", "questions": [],}
 function createChallengeSideBar() {
   createChallengeSideBarView()
 }
@@ -29,22 +25,13 @@ function createNextQuestion(evnt) {
   count = count + 1
   if (count > 1) {
     const currentQuesCount = count - 1
-    const ques1 = document.getElementById(`ques${currentQuesCount}`).value
-    const ques1opt1 = document.getElementById(`ques${currentQuesCount}opt1`).value
-    const ques1opt2 = document.getElementById(`ques${currentQuesCount}opt2`).value
-    const ques1opt3 = document.getElementById(`ques${currentQuesCount}opt3`).value
-    const ques1opt4 = document.getElementById(`ques${currentQuesCount}opt4`).value
-    const ques1ans = document.getElementById(`ques${currentQuesCount}ans`).value
-    const questionObj = `{
-          "question": ${ques1},
-          "options":[
-                      "optionA": ${ques1opt1},
-                      "optionB": ${ques1opt2},
-                      "optionC" ${ques1opt3},
-                      "optionD": ${ques1opt4}
-                    ],
-            "answer": ${ques1ans}
-          }`
+    const ques = document.getElementById(`ques${currentQuesCount}`).value
+    const quesopt1 = document.getElementById(`ques${currentQuesCount}opt1`).value
+    const quesopt2 = document.getElementById(`ques${currentQuesCount}opt2`).value
+    const quesopt3 = document.getElementById(`ques${currentQuesCount}opt3`).value
+    const quesopt4 = document.getElementById(`ques${currentQuesCount}opt4`).value
+    const quesans = document.getElementById(`ques${currentQuesCount}ans`).value
+    const questionObj = `{"question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
     challenge.questions.push(questionObj)
     console.log(`current challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
   }
@@ -54,27 +41,19 @@ function createNextQuestion(evnt) {
 function saveChallengeDetails(evnt) {
   evnt.preventDefault()
   console.log("count is " + count)
-  const ques1 = document.getElementById(`ques${count}`).value
-  const ques1opt1 = document.getElementById(`ques${count}opt1`).value
-  const ques1opt2 = document.getElementById(`ques${count}opt2`).value
-  const ques1opt3 = document.getElementById(`ques${count}opt3`).value
-  const ques1opt4 = document.getElementById(`ques${count}opt4`).value
-  const ques1ans = document.getElementById(`ques${count}ans`).value
-  const questionObj = `{
-          "question": ${ques1},
-          "options":[
-                      "optionA": ${ques1opt1},
-                      "optionB": ${ques1opt2},
-                      "optionC" ${ques1opt3},
-                      "optionD": ${ques1opt4}
-                    ],
-            "answer": ${ques1ans}
-          }`
+  const ques = document.getElementById(`ques${count}`).value
+  const quesopt1 = document.getElementById(`ques${count}opt1`).value
+  const quesopt2 = document.getElementById(`ques${count}opt2`).value
+  const quesopt3 = document.getElementById(`ques${count}opt3`).value
+  const quesopt4 = document.getElementById(`ques${count}opt4`).value
+  const quesans = document.getElementById(`ques${count}ans`).value
+  const questionObj = `{"question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
   challenge.questions.push(questionObj)
   console.log(`final challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
 
-  storeChallenge(challenge);
+  storeChallenge(challenge)
   const formSection = document.getElementById("challengeSection")
   formSection.innerHTML = ""
+  count = 0
 }
 export {createChallenge, createNextQuestion, saveChallengeDetails, createChallengeSideBar}

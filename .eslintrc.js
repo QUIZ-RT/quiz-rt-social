@@ -27,5 +27,9 @@ module.exports = {
   "space-before-function-paren": [2, "never"],
   "space-in-parens": [2, "never"],
   "spaced-comment": [2, "always"]
+  },
+  "env": {
+    "browser": true,
+    "jquery": true
   }
 };

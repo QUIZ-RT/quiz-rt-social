@@ -1,6 +1,8 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
-// import {store} from "../../boot/Store"
+import {Store} from "../../boot/Store"
+
+
 
 const menuData = [{
   "id": 1,
@@ -25,7 +27,7 @@ const menuData = [{
 },
 {
   "id": 4,
-  "Name": "challenges",
+  "Name": "Challenges",
   "Status": "InActive",
   "href": "Redirect Action",
   "Icon": "games",
@@ -48,7 +50,10 @@ export const createMenu = () => {
       menuNavigation(event)
     })
   })
-  renderViewToContainer(menuContent, "header")
+  renderViewToContainer(menuContent, "#quiz-header")
+  const emailName = document.getElementById("loggedInEmail")
+  const currentState = Store.getState()
+  emailName.innerText = currentState.menuReducer.currentUserInfo.email;
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {
@@ -60,6 +65,8 @@ export const createMenu = () => {
   drawerEl.addEventListener("MDCTemporaryDrawer:close", function() {
     console.log("Received MDCTemporaryDrawer:close")
   })
+
+  {}
 }
 
 const menuNavigation = (evt) => {
@@ -69,5 +76,15 @@ const menuNavigation = (evt) => {
   })[0]
   console.log("Clicked - " + menuItem.Name)
   drawer.open = false
-  // store.dispatch({type: "CurrentViewUpdate", data: menuItem.Name.toLowerCase()})
+  const currentState = Store.getState()
+  if (currentState.menuReducer.currentView !== menuItem.Name.toLowerCase()) {
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
+  }
 }
+
+// Store.subscribe(() => {
+//   const currentState = Store.getState()
+//   if(currentState.menuReducer.currentView !== 'login'){
+//     createMenu()
+//   }
+// })
