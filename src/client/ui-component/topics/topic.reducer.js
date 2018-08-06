@@ -10,6 +10,7 @@ export const topicReducer = (state = {}, action) => {
     default:   
       return state
   }
+  return state;
 }
 
 

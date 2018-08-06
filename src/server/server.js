@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
-import { challaneDB } from './FirebaseDb/challengesDb';
+import { addChallengeToDB } from './FirebaseDb/challengesDb';
+import { getAllChallengesFromDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
 
 
@@ -26,10 +27,21 @@ app.use(function(req, res, next) {
 
 
 app.post("/api/challenge",(req, res)=> {
-    res.send(challaneDB(req, res));
+    res.send(addChallengeToDB(req, res));
 });
 
-
+//expose API to Question Generator
+app.use("/api/allChallenges",(req, res)=> {
+    let data = getAllChallengesFromDB(req, res);
+    data.then(
+        result=>{
+            res.send(result);
+        },
+        error=>{
+            res.send(error);
+        }        
+    )
+});
 
 var onlineUsers = [];
 

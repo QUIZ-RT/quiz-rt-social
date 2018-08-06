@@ -13,6 +13,7 @@ export const menuReducer = (state = { menuReducer:{currentView: "login"} }, acti
     default:
       return state;
     }
+    return state;
 }
 
 
