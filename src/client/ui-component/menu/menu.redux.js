@@ -1,6 +1,3 @@
-import {Store} from "../../boot/Store"
-
-
 // Reducer
 export const menuReducer = (state = { menuReducer:{currentView: "login"} }, action) => {
     const statePrev = {...state}
@@ -14,7 +11,7 @@ export const menuReducer = (state = { menuReducer:{currentView: "login"} }, acti
       newState.currentView = action.dataItem.Name
       return newState
     default:
-      return Object.assign({}, ...state)
+      return state;
     }
 }
 

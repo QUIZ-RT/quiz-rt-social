@@ -1,43 +1,10 @@
 import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
-import {renderViewToContainer, getTopicModalbox, getTopicModalBodyContent} from "./topic-modal.view"
-// import {Store} from "../../boot/Store"
-
-const topicDataList = {
-  "test1": {
-    "topicText": "Politics",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test2": {
-    "topicText": "Sports",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-  "test3": {
-    "topicText": "Environments",
-    "topicUrl": "",
-    "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-    "createdDate": "11/11/2018",
-    "createdBy": 1,
-    "modifiedBy": 1,
-    "modifiedDate": "11/11/2018",
-    "published": true,
-    "follow": true,
-  },
-}
+import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
+import {Store} from "../../boot/Store"
+import {updateFollow} from "../topics/topics.service"
+import {getFilteredDetails } from "../leader-board/leader-controller"
+import {getChallengeDetails} from "../leader-board/leader-board-service"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -46,26 +13,23 @@ export const createTopicmodal = () => {
 export const topicModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
-  const state = topicDataList[targetId]
-  openTopicModal(state, targetId, evt.target)
+  //const state = topicDataList[targetId]
+  const state = Store.getState();
+  
+  //.topics["" + targetId]
+  openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
   evt.preventDefault()
 }
 
-const openTopicModal = (state, id, target) => {
+const openTopicModal = (state, id, target, emailId) => {
   const dialogElement = document.querySelector("#topic-mdc-dialog")
   const dialog = new MDCDialog(dialogElement)
   const dialogHeader = dialogElement.querySelector("#topic-mdc-dialog-label")
-  const dialogBody = dialogElement.querySelector("#topic-mdc-dialog-description")
   dialogHeader.innerHTML = `Topic : ${state.topicText}`
-  dialogBody.innerHTML = ""
-  const topicModalBodyTemp = getTopicModalBodyContent(state, id)
-  const modalBtnList = topicModalBodyTemp.querySelectorAll("button")
-  modalBtnList.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      topicModalbtnClick(event)
-    })
+  render(state, id,emailId)
+  dialog.listen("MDCDialog:cancel", function() {
+    console.log("canceled")
   })
-  dialogBody.appendChild(topicModalBodyTemp)
 
   dialog.listen("MDCDialog:cancel", function() {
     console.log("canceled")
@@ -101,9 +65,27 @@ const openTopicModal = (state, id, target) => {
   dialog.show()
 }
 
+const render = (state, id,emailId) => {
+  const dialogBody = document.querySelector("#topic-mdc-dialog-description")
+  const topicModalBodyTemp = getToipcModalBodyContent(state, id,emailId)
+  const modalBtnList = topicModalBodyTemp.querySelectorAll("button")
+  modalBtnList.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      topicModalbtnClick(event)
+    })
+  })
+  dialogBody.innerHTML = ""
+  dialogBody.appendChild(topicModalBodyTemp)
+}
+
 const topicModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const topicId = btnData[1]
+  const state = Store.getState()
+  const topicData = state.topicReducer.Topics
+  let data  = {"id":topicId,"data":[]}
+  let topic = ""
+  let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
   case "play":
     console.log("play" + topicId)
@@ -112,10 +94,40 @@ const topicModalbtnClick = (event) => {
     console.log("leader" + topicId)
     break
   case "unfollow":
-    console.log("unfollow" + topicId)
+    topic = topicData["" + topicId]
+    let ind = topic.users.indexOf(userid)
+    if(ind>-1){
+      topic.users.splice(ind,1)
+    }
+    data.data = topic.users;
+    updateFollow(data).then(result=>{
+      console.log(result)
+      topic.users = data.data;      
+      topicData["" + topicId]['users'] = topic.users
+      Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      render(topic, topicId,userid)
+    },error=>{
+      console.log(error);
+    })
+    
     break
   case "follow":
-    console.log("follow" + topicId)
+    topic = topicData["" + topicId]     
+    if(topic.users!==undefined){
+      topic.users.push(userid)
+    }else{
+      topic.users = [userid];
+    }
+    data.data = topic.users
+    updateFollow(data).then(result=>{        
+      topicData["" + topicId]['users'] = topic.users
+      Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+      render(topic, topicId,userid)
+      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+    },error=>{
+      console.log(error);
+    });    
     break
   }
 }
