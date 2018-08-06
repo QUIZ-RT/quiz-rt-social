@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { challaneDB } from './FirebaseDb/challengesDb';
+import { Topics } from './topics/topics';
+
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -57,6 +59,40 @@ io.on('connection', function (socket) {
             }
         });
     });
+});
+
+const topic = new Topics();
+
+app.use("/api/topics/addtopics", (req, res) => {
+    res.send(topic.addTopic(req.body));
+});
+
+app.use("/api/topics/gettopics", (req, res) => {
+    let data = topic.getTopics();
+    data.then(
+        result=>{
+            res.send(result);
+        },
+        error=>{
+            res.send(error);
+        }        
+    )
+});
+
+app.use("/api/topics/updatetopics", (req, res) => {
+    console.log(req.body)
+    res.send(req.body);
+});
+
+app.use("/api/topics/deletetopics", (req, res) => {
+    console.log(req.body)
+    res.send(req.body);
+});
+
+app.use("/api/topics/updatefollow", (req, res) => {
+    console.log(req.body);
+    topic.updateFollow(req.body.id,req.body.data);
+    res.send({"status":"success"});
 });
  
 app.listen(8080, () => console.log('Example app listening on port 8080!'));

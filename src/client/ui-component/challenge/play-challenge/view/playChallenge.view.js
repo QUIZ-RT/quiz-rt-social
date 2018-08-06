@@ -2,22 +2,23 @@ import TemplateGenerator from "../../common/TemplateGenerator"
 
 export default class CreatePlayChallengeView {
   static createSidebar() {
-    CreatePlayChallengeView.playChallengeContainer()
+   // CreatePlayChallengeView.playChallengeContainer()
 
-    const playChallengeSection = document.getElementById("playChallengeSection")
+    const playChallengeSection = document.getElementById("challengeSection")
+
     const playChallengeTemplate = CreatePlayChallengeView.createPlayTemplate()
     playChallengeSection.appendChild(playChallengeTemplate)
   }
-  static playChallengeContainer() {
-    const playChallengeContainer = `<section class="mdl-grid" id="playChallengeSection">
+  // static playChallengeContainer() {
+  //   const playChallengeContainer = `<section class="mdl-grid" id="playChallengeSection">
   
-      </section>`
-    const playChallengeContainerTemp = TemplateGenerator.createAllChildHTMLElement(playChallengeContainer)
+  //     </section>`
+  //   const playChallengeContainerTemp = TemplateGenerator.createAllChildHTMLElement(playChallengeContainer)
 
-    const container = document.querySelector("body")
+  //   const container = document.querySelector("body")
 
-    container.appendChild(playChallengeContainerTemp)
-  }
+  //   container.appendChild(playChallengeContainerTemp)
+  // }
 
   static createPlayTemplate() {
     let playChallengeTemplate = `<div class="mdl-color--grey-100">

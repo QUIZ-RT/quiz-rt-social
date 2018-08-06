@@ -31,9 +31,11 @@ export const getTopicModalbox = () => {
   return htmlToTemplate(topicModalHtmlStr)
 }
 
-export const getToipcModalBodyContent = (state, id) => {
+export const getToipcModalBodyContent = (state, id,emailId) => {
+  console.log("state", state)
   let follow = ""
-  if (state.follow) {
+   
+  if (state.users!==undefined && state.users.indexOf(emailId)>-1) {
     follow = `<button id="topic-${id}-unfollow" class="mar-btm-10px mdc-button mdc-button--raised">
     Unfollow</button>`
   }
