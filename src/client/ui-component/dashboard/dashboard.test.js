@@ -24,42 +24,15 @@ describe('Dashboard', function() {
         "follow": true,
       }
     }
-    const ptopic= {
-      "test002": {
-        "topicText": "Politics",
-        "topicUrl": "",
-        "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-        "createdDate": "11/11/2018",
-        "createdBy": 1,
-        "modifiedBy": 1,
-        "modifiedDate": "11/11/2018",
-        "published": true,
-        "follow": true,
-      }
-    }
-    const ftopic= {
-      "test003": {
-        "topicText": "Politics",
-        "topicUrl": "",
-        "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-        "createdDate": "11/11/2018",
-        "createdBy": 1,
-        "modifiedBy": 1,
-        "modifiedDate": "11/11/2018",
-        "published": true,
-        "follow": true,
-      }
-    }
+   
     store.dispatch({
       type: 'GET_TopicData',
-      dataItem: {"Topics" : topics, "PopularTopics": ptopic, "FavoriteTopics" : ftopic}
+      dataItem: {"Topics" : topics}
     });
 
     console.log('store.getState()', store.getState());
 
     store.getState().should.have.property('TopicList');
-    store.getState().should.have.property('PopularTopicList');
-    store.getState().should.have.property('FavoriteTopicList');
 
     // store.getState().items[1].should.have.property('id');
     // store.getState().items[1].should.have.property('text').and.equal('New item');
