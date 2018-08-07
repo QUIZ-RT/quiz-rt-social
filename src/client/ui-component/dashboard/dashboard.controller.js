@@ -4,6 +4,7 @@ import {challengeModalInitializeShow, createChallengemodal} from "../challenge-m
 import {showLoader, hideLoader} from "../loader/loader.controller"
 import {getTopics} from "../topics/topics.service"
 import {Store} from "../../boot/Store"
+import {createLeaderBoardForChallenges} from "../leader-board/leader-controller"
 
 // const topicData = {
 //   "test1": {
@@ -652,6 +653,7 @@ Store.subscribe(() => {
     }
     createTopicmodal()
     createChallengemodal();
+    createLeaderBoardForChallenges()
     if(document.querySelector('#dashboard_pTopic').innerHTML !== ""
         && document.querySelector('#dashboard_fTopic').innerHTML !== ""
         && document.querySelector('#dashboard_challenge').innerHTML !== ""

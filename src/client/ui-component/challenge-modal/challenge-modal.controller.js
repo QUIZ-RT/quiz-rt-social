@@ -2,7 +2,8 @@ import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
-
+import {getFilteredDetails } from "../leader-board/leader-controller"
+import {getChallengeDetails} from "../leader-board/leader-board-service"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -54,6 +55,9 @@ const openChallengeModal = (state, id, target) => {
       document.getElementById("leaderBody").innerHTML = ""
       const select2 = new MDCSelect(document.querySelector(".mdc-select"))
       select2.value = "1"
+    //   const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
+    // const dialog1 = new MDCDialog(dialogElement1)
+    dialog1.close()
     })
     const select = new MDCSelect(document.querySelector(".mdc-select"))
     select.listen("change", () => {
