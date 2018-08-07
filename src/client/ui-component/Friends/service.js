@@ -46,7 +46,7 @@ function acceptFriendRequest(req_id) {
   console.log("friend service - accptFrinedRequest " + req_id)
   var settings = {
     "url": "/api/friends/accept",
-    "data": JSON.stringify({ req_id : 7 }),
+    "data": JSON.stringify({ req_id : req_id }),
     "type": "POST",
     "mode": "no-cors",
     "headers": {
@@ -67,7 +67,7 @@ function rejectFriendRequest(req_id) {
   console.log("friend service - rejectFriendRequest " + req_id)
   var settings = {
     "url": "/api/friends/reject",
-    "data": JSON.stringify({ req_id : 7 }),
+    "data": JSON.stringify({ req_id : req_id }),
     "type": "POST",
     "mode": "no-cors",
     "headers": {

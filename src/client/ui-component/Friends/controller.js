@@ -32,7 +32,7 @@ function rejectFriendRequest(event) {
 function sendFriendRequest(event) {
   console.log("sendFriendRequest controller")
   console.log(event)
-  Store.dispatch({type: "SEND_FRIEND_REQ", reciever: event.target.getAttribute("user_id"), userName: userName}) 
+  Store.dispatch({type: "SEND_FRIEND_REQ", reciever: event.target.getAttribute("user_email"), userName: userName}) 
 }
 
 function searchUser(event) {
@@ -75,6 +75,10 @@ function render() {
       {
         console.log("in friends controller SEARCH_FRIENDS_LOADED page")
         showSearchPageWithResult(state.friendsAndChat.searchResult)
+      }
+      else if (state.friendsAndChat.page === "FRIENDS_NOT_LOADED") {
+        console.log("in friends controller FRIENDS not loaded page")
+        showFriendList(state.friendsAndChat.friends, true)
       }
       else if (state.friendsAndChat.page === "FRIENDS_LOADED") {
         console.log("in friends controller FRIENDS loaded page")

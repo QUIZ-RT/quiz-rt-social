@@ -49,7 +49,12 @@ function createChallengeHeader() {
 function createChallengeHeaderTemplate() {
   
   let state = Store.getState();
-  let topicsArray =  Object.values(state.topicReducer.TopicList);
+
+  let topicsArray =  []
+  if(state.topicReducer && state.topicReducer.TopicList){
+    topicsArray = Object.values(state.topicReducer.TopicList);  
+  }
+  let topics = ``;
   console.log(" createChallengeHeaderTemplate topicsArray :", topicsArray);
     for(let index =0;index<topicsArray.length;index+=1){
       

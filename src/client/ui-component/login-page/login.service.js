@@ -7,7 +7,7 @@ export const goToSignin = () => {
   function newLogin(user){
     if(user){
       console.log('calling app()')
-      Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo :user.email, Name: 'dashboard'}})
+      Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo :user, Name: 'dashboard'}})
       app(user);
     } else{
       console.log('in else')
