@@ -58,6 +58,7 @@ export const createTopics = () => {
 }
 
 const loadTopic = (state) => {
+  showLoader()
   let topics = ""
   for (const newTopic in state) {
     topics += topicView(state[newTopic], newTopic)
@@ -65,6 +66,7 @@ const loadTopic = (state) => {
   render(topics)
   addEvents()
   createTopicmodal()
+  createLeaderBoardForChallenges()     
 }
 
 const render = (topics) => {
@@ -79,6 +81,7 @@ const render = (topics) => {
             </div>`
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(htmlToTemplate(html))
+  hideLoader()
 }
 
 const addEvents = () => {
@@ -104,17 +107,17 @@ const addEvents = () => {
 Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'topics'){  
-    showLoader()
+    
     if (topicCtr === 0) {
       document.querySelector('#quiz-maincontent').innerHTML = ""
-      createTopics();
-      createLeaderBoardForChallenges()
+      createTopics();      
       topicCtr++
     }else{
-      if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC')
-      loadTopic(currentState.topicReducer.Topics)
+      if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC'){
+        loadTopic(currentState.topicReducer.Topics)
+      }     
     }
-    hideLoader()
+   
   }
 })
 

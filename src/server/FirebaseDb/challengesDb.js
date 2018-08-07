@@ -1,7 +1,7 @@
 import firebase from "firebase"
 import {config} from "../config"
 
-export const challaneDB = (req, resp) => {
+export const addChallengeToDB = (req, resp) => {
     if (!firebase.apps.length) {
         firebase.initializeApp(config);
     }
@@ -12,7 +12,6 @@ export const challaneDB = (req, resp) => {
     nextChallengSeq = +nextChallengSeq+1;
     let requestBody = req.body;
     requestBody.challengeId = nextChallengSeq ;
-    console.log("final request body ",requestBody);
     challenges.child(`${nextChallengSeq}`).set(requestBody);
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
@@ -21,3 +20,18 @@ export const challaneDB = (req, resp) => {
   return "success";
 }
 
+export const getAllChallengesFromDB = (req, resp) => {
+    if (!firebase.apps.length) {
+        firebase.initializeApp(config);
+    }
+ const challengesRef = firebase.database().ref();
+ const promise = new Promise(function(resolve, reject) {
+    challengesRef.child("Challenges").once("value", function(challengesNode) {
+        resolve(challengesNode.val());
+  }, function (errorObject) {
+         reject(errorObject);
+         
+  });
+});
+  return promise;
+}

@@ -3,14 +3,29 @@ import {loadFriends, loadPendingFriendReq, searchUsers, sendFriendRequest, accep
 export const friendReducer = (currentState = { }, action) => {
   console.log("inside friendReducer")
   const newState = currentState
+  let friends = []
+  if(currentState.friendsAndChat && currentState.friendsAndChat.friends){
+    friends = currentState.friendsAndChat.friends
+  }
+
+  let pendingFrndReq = []
+  if(currentState.friendsAndChat && currentState.friendsAndChat.pendingFriendRequest){
+    pendingFrndReq = currentState.friendsAndChat.pendingFriendRequest
+  }
+
+  let searchResult = []
+  if (currentState.friendsAndChat && currentState.friendsAndChat.searchResult) {
+    searchResult = currentState.friendsAndChat.searchResult
+  }
   switch (action.type) {
   case "SHOW_FRIENDS_CHAT" :
     console.log("inside SHOW_FRIENDS_CHAT")
-    newState.SELECTED_PAGE = "FRIENDS_AND_CHAT"
+    //newState.SELECTED_PAGE = "FRIENDS_AND_CHAT"
     newState.friendsAndChat = {
       page: "DEFAULT",
-      friends: [],
-      pendingFriendRequest: [],
+      friends: friends,
+      pendingFriendRequest: pendingFrndReq,
+      searchResult: searchResult,
     }
     break
   case "FETCH_FRIENDS_REQ" :
@@ -18,56 +33,63 @@ export const friendReducer = (currentState = { }, action) => {
     newState.friendsAndChat = {
       page: "FRIENDS_NOT_LOADED",
       friends: [],
-      pendingFriendRequest: [],
+      pendingFriendRequest: pendingFrndReq,
+      searchResult: searchResult,
     }
-    loadFriends(currentState.userName)
+    loadFriends(action.userName)
     break
   case "FETCH_FRIENDS_RES" :
     console.log("inside FETCH_FRIENDS_RES")
+    console.log(action.users)
     newState.friendsAndChat = {
       page: "FRIENDS_LOADED",
       friends: action.users,
-      pendingFriendRequest: [],
+      pendingFriendRequest: pendingFrndReq,
+      searchResult: searchResult,
     }
     break
   case "FETCH_FRIENDS_PENDING_REQUEST_REQ":
     console.log("inside FETCH_FRIENDS_PENDING_REQUEST_REQ")
     newState.friendsAndChat = {
       page: "FRIENDS_PENDING_REQUEST_NOT_LOADED",
-      friends: currentState.friendsAndChat.friends,
-      pendingFriendRequest: [],
+      friends: friends,
+      pendingFriendRequest: pendingFrndReq,
+      searchResult: searchResult,
     }
-    loadPendingFriendReq(currentState.userName)
+    loadPendingFriendReq(action.userName)
     break
   case "FETCH_FRIENDS_PENDING_REQUEST_RES":
     console.log("inside FETCH_FRIENDS_PENDING_REQUEST_RES")
     newState.friendsAndChat = {
       page: "FRIENDS_PENDING_REQUEST_LOADED",
-      friends: currentState.friendsAndChat.friends,
+      friends: friends,
       pendingFriendRequest: action.users,
+      searchResult: searchResult,
     }
     break
   case "SEARCH_FRIENDS_REQ":
     console.log("inside SEARCH_FRIENDS_REQ")
+    console.log(action)
     newState.friendsAndChat = {
       page: "SEARCH_FRIENDS_NOT_LOADED",
-      friends: currentState.friendsAndChat.friends,
-      pendingFriendRequest: currentState.friendsAndChat.pendingFriendRequest,
+      friends: friends,
+      pendingFriendRequest: pendingFrndReq,
+      searchResult: [],
     }
     searchUsers(action.value)
     break
   case "SEARCH_FRIENDS_RES":
     console.log("inside SEARCH_FRIENDS_RES")
     newState.friendsAndChat = {
-      page: "SEARCH_FRIENDS_LOADED'",
-      friends: currentState.friendsAndChat.friends,
-      pendingFriendRequest: currentState.friendsAndChat.pendingFriendRequest,
+      page: "SEARCH_FRIENDS_LOADED",
+      friends: friends,
+      pendingFriendRequest: pendingFrndReq,
       searchResult: action.users,
     }
     break
   case "SEND_FRIEND_REQ":
     console.log("inside SEND_FRIEND_REQ")
-    sendFriendRequest(currentState.userName, action.reciever)
+    sendFriendRequest(action.userName, action.reciever)
     break
   case "ACCEPT_FRINED_REQUEST":
     console.log("inside accept friend req")

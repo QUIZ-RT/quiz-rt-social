@@ -57,14 +57,14 @@ export const getHorizontalScrollableContainerChallenges = (dataList, idkey) => {
   let hsContentStr = ""
   dataList.forEach((item) => {
     console.log(item.Img)
-    hsContentStr += `<div id="${idkey}_${item.id}" class="mdc-card demo-card demo-card--photo">
+    hsContentStr += `<div id="${idkey}_${item.challengeId}" class="mdc-card demo-card demo-card--photo">
       <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-          <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${item.Img}');">
+          <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png');">
           </div>
       </a>  
       <a class="mdc-card__primary-action demo-card__primary-action" href="#">
       <div class="mdc-typography--subtitle2 ">
-      ${item.Name}
+      ${item.challengeName}
       </div>
       </a>
       </div>`

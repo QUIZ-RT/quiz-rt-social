@@ -72,7 +72,9 @@ var config = {
       }, {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url-loader?limit=10000&mimetype=image/svg+xml"
-      },{
+      }, { 
+        test: /\.js$/, loader: 'exports-loader' 
+      }, {
         test: /\.(jpe?g|png|gif|svg)$/,
         use: [
             {

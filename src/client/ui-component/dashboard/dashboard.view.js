@@ -29,7 +29,14 @@ const createDashboardContent = (dataList, headingText, idKey, isTopic) => {
   appendListContainer.appendChild(hsContentTemp)
   return hsSection
 }
+export const getDashboardContainerTemplate = () => {
+  const dashboardContainer = `<div id="dashboard_pTopic"></div>
+  <div id="dashboard_fTopic"></div>
+  <div id="dashboard_challenge"></div>
+  <div id="dashboard_mychallenge"></div>`
 
+  return htmlToTemplate(dashboardContainer)
+}
 export const getPopularTopicTemplate = (dataList, headingText) => {
   return createDashboardContent(dataList, headingText, "ptopic", true)
 }

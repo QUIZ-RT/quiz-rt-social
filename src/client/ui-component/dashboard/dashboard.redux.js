@@ -1,18 +1,25 @@
 import {Store} from "../../boot/Store"
 
 // Reducer
-export const dashboardReducer = (state = {}, action) => {
-    const statePrev = {...state}
+export const dashboardReducer = (state = {Action: "Init"}, action) => {
+    const statePrev = state
     const newState = Object.assign({}, statePrev)
     switch (action.type) {
-    case "GET_PopularTopic":
+    case "GET_TopicData":
+    newState.TopicList = action.dataItem.Topics
     newState.PopularTopicList = action.dataItem.PopularTopics
-    return newState
-    case "GET_FavoriteTopic":
     newState.FavoriteTopicList = action.dataItem.FavoriteTopics
+    newState.Action = action.type
     return newState
+    break
+    case "GET_ChallengeData":
+    newState.ChallegeList = action.dataItem.Challeges
+    newState.MyChallegeList = action.dataItem.MyChalleges
+    newState.Action = action.type
+    return newState
+    break
     default:
-      return Object.assign({}, ...state)
+      return state
     }
 }
 
