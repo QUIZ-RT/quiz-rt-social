@@ -15,10 +15,6 @@ function createChallengeSideBarView() {
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate);
-
-  $("#quiz-maincontent").off("click").on("click", "#createChallenge", callCreateChallenge);
-  $("#quiz-maincontent").off("click").on("click", "#playChallenge", callPlayChallenge);
-  $("#quiz-maincontent").off("click").on("click", "#shareChallenge", callShareChallenge);
 }
 
 function callCreateChallenge(){
@@ -162,4 +158,4 @@ function createQuestion(challengeJsonObj, count) {
   formSection.appendChild(challengeTemplt)
 }
 
-export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate}
+export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callPlayChallenge,callShareChallenge}

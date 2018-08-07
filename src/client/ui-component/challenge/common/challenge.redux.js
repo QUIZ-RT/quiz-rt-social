@@ -10,13 +10,7 @@ export const challengeReducer = (state = {}, action) => {
       return newState
     case "CHALLENGE_TOPICS":
         newState.topics = action.dataItem;
-        return newState;
-    case "ChallengeScreenStat":
-            newState.challengeSec = action.dataItem;
-            return newState;
-    case "ChallengeScreenStatReset":
-            newState.challengeSec = undefined;
-            return newState;
+        return newState;     
     default:
       return Object.assign({}, ...state)
     }

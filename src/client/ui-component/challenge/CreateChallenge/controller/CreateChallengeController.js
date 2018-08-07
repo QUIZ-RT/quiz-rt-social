@@ -10,16 +10,10 @@ Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'challenges'){
    
-        if(currentState.challengeReducer.challengeSec ===undefined){
             document.querySelector('#quiz-maincontent').innerHTML = "";
             createChallengeSideBarView();
             createChallengeContainer();
-            Store.dispatch({"type":"ChallengeScreenStat","dataItem":"yes"});
         }
-         
-   } else{
-    Store.dispatch({"type":"ChallengeScreenStatReset","dataItem":"no"});
-   }
   if(currentState.challengeReducer.currentView === 'createChallenge'){
     document.querySelector('#challengeSection').innerHTML = "";
     console.log("hello sushil")
