@@ -16,18 +16,21 @@ function createChallengeSideBarView() {
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate);
 
-  $("#quiz-maincontent").on("click", "#createChallenge", callCreateChallenge);
-  $("#quiz-maincontent").on("click", "#playChallenge", callPlayChallenge);
-  $("#quiz-maincontent").on("click", "#shareChallenge", callShareChallenge);
+  $("#quiz-maincontent").off("click").on("click", "#createChallenge", callCreateChallenge);
+  $("#quiz-maincontent").off("click").on("click", "#playChallenge", callPlayChallenge);
+  $("#quiz-maincontent").off("click").on("click", "#shareChallenge", callShareChallenge);
 }
 
 function callCreateChallenge(){
+  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"createChallenge"});
 }
 function callPlayChallenge(){
+  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"playChallenge"});
 }
 function callShareChallenge(){
+  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"shareChallenge"});
 }
 
@@ -43,14 +46,17 @@ function createChallengeContainer() {
   container.appendChild(challengeContainerTemp)
 }
 function createChallengeHeader() {
-  createChallengeHeaderTemplate()
+  getTopics();
+  //createChallengeHeaderTemplate()
 }
 
-function createChallengeHeaderTemplate() {
-  
-  let state = Store.getState();
-  let topicsArray =  Object.values(state.topicReducer.TopicList);
-  console.log(" createChallengeHeaderTemplate topicsArray :", topicsArray);
+function createChallengeHeaderTemplate(topicsArray) {
+
+  // Store.subscribe(()=>{
+  //   let state = Store.getState();
+  //   if(state.challengeReducer.currentView ==="createChallenge"){
+     let topics = ``
+  //   let topicsArray = Object.values(state.challengeReducer.topics);
     for(let index =0;index<topicsArray.length;index+=1){
       
       topics =topics.concat(` <option value="${topicsArray[index].topicText}">
@@ -89,10 +95,10 @@ function createChallengeHeaderTemplate() {
 const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
 const challengeSection = document.getElementById("challengeSection")
 challengeSection.appendChild(challengeTemplt);
-
-  // },errors=>{
-  //    console.log(errors)
-  // })
+  //}
+  //})
+  
+  
  
 }
 function createQuestion(challengeJsonObj, count) {
@@ -156,4 +162,4 @@ function createQuestion(challengeJsonObj, count) {
   formSection.appendChild(challengeTemplt)
 }
 
-export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView}
+export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate}
