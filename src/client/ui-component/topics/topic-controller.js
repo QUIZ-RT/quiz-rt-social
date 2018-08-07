@@ -4,14 +4,13 @@ import { topicModalInitializeShow, createTopicmodal } from "../topic-modal/topic
 import $ from "jquery"
 import { getTopicsFromQAGEN, addtopics, getTopics } from "./topics.service"
 import {createLeaderBoardForChallenges} from "../leader-board/leader-controller"
+import {showLoader, hideLoader} from "../loader/loader.controller"
 
 
 let topicCtr = 0;
 export const createTopics = () => { 
     getTopics()
       .then(result => {
-        console.log(result);
-
         getTopicsFromQAGEN()
           .then(
             response => {
@@ -38,7 +37,7 @@ export const createTopics = () => {
             });
 
       }, errors => {
-        console("getTopics error ", errors)
+        console.log("getTopics error ", errors)
         getTopicsFromQAGEN()
           .then(
             result => {
@@ -104,7 +103,8 @@ const addEvents = () => {
 
 Store.subscribe(() => {
   const currentState = Store.getState()
-  if(currentState.menuReducer.currentView === 'topics'){    
+  if(currentState.menuReducer.currentView === 'topics'){  
+    showLoader()
     if (topicCtr === 0) {
       document.querySelector('#quiz-maincontent').innerHTML = ""
       createTopics();
@@ -114,6 +114,7 @@ Store.subscribe(() => {
       if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC')
       loadTopic(currentState.topicReducer.Topics)
     }
+    hideLoader()
   }
 })
 

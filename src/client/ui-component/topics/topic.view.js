@@ -11,7 +11,7 @@ export const topicView = (topicObj, topicId) => {
   } 
   return `<li class="mdc-grid-tile pointer" id="grid_${topicId}">
     <div class="mdc-grid-tile__primary">
-        <img class="mdc-grid-tile__primary-content mdc-image-list__image" src="${topicObj.topicImage}" />
+        <img class="mdc-grid-tile__primary-content mdc-image-list__image" src="https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png" />
         
     </div>
     <span class="mdc-grid-tile__secondary">

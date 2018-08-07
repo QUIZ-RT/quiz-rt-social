@@ -1,5 +1,6 @@
 const addtopics = (topics) => {
     const promise = new Promise(function(resolve, reject) {
+      let obj = {};
       fetch("/api/topics/addtopics", {
         headers: {
           "Content-Type": "application/json",
@@ -9,8 +10,11 @@ const addtopics = (topics) => {
         body: JSON.stringify(topics),
       }).then(
         res => res.json()
-      ).then(json => {
-        resolve(json)
+      ).then(data => {
+        data.forEach(element => {
+          obj[""+element.id]=element;
+        });
+        resolve(obj)
       }, error => {
         reject(error)
       })
@@ -78,43 +82,22 @@ const addtopics = (topics) => {
   }
   
   const getTopicsFromQAGEN = () => {
-    const promise = new Promise(function(resolve) {
-      const obj = {
-        "test1": {
-          "topicText": "Politics",
-          "topicUrl": "",
-          "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-          "createdDate": "11/11/2018",
-          "createdBy": 1,
-          "modifiedBy": 1,
-          "modifiedDate": "11/11/2018",
-          "published": true,
-          "users":[]
-        },
-        "test2": {
-          "topicText": "Sports",
-          "topicUrl": "",
-          "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-          "createdDate": "11/11/2018",
-          "createdBy": 1,
-          "modifiedBy": 1,
-          "modifiedDate": "11/11/2018",
-          "published": true,
-          "users":[]
-        },
-        "test3": {
-          "topicText": "Envioments",
-          "topicUrl": "",
-          "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
-          "createdDate": "11/11/2018",
-          "createdBy": 1,
-          "modifiedBy": 1,
-          "modifiedDate": "11/11/2018",
-          "published": true,
-          "users":[]
-        },
-      }
-      resolve(obj)
+    const promise = new Promise(function(resolve,reject) {
+      let obj = {};
+      fetch("https://quizgenx.herokuapp.com/firebase/api/topics", {      
+        method: "get",
+      }).then(
+        res => res.json()
+      ).then(data => {
+        console.log("gettopicfromservice - ",data)
+        data.forEach(element => {
+          obj[""+element.id]=element;
+        });
+        resolve(obj)
+      }, error => {
+        reject(error)
+      })
+
     })
     return promise
   }

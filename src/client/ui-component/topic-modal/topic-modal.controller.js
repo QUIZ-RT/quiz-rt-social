@@ -5,6 +5,7 @@ import {Store} from "../../boot/Store"
 import {updateFollow} from "../topics/topics.service"
 import {getFilteredDetails } from "../leader-board/leader-controller"
 import {getChallengeDetails} from "../leader-board/leader-board-service"
+import {showLoader, hideLoader} from "../loader/loader.controller"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -79,6 +80,7 @@ const render = (state, id,emailId) => {
 }
 
 const topicModalbtnClick = (event) => {
+  showLoader()
   const btnData = event.target.id.split("-")
   const topicId = btnData[1]
   const state = Store.getState()
@@ -107,8 +109,10 @@ const topicModalbtnClick = (event) => {
       Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
       document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
       render(topic, topicId,userid)
+      hideLoader()
     },error=>{
       console.log(error);
+      hideLoader()
     })
     
     break
@@ -125,9 +129,12 @@ const topicModalbtnClick = (event) => {
       Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
       render(topic, topicId,userid)
       document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      hideLoader()
     },error=>{
       console.log(error);
+      hideLoader()
     });    
     break
   }
+  
 }

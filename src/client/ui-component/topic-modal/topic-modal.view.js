@@ -43,7 +43,7 @@ export const getToipcModalBodyContent = (state, id,emailId) => {
     follow = `<button id="topic-${id}-follow" class="mar-btm-10px mdc-button mdc-button--raised">
     Follow</button>`
   }
-
+  
   const modalBodyContentStr = `  
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
@@ -51,7 +51,7 @@ export const getToipcModalBodyContent = (state, id,emailId) => {
         <div class="topicCardContainer">
             <div id="topic_${id}" class="mdc-card demo-card demo-card--photo">
               <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-                <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${state.topicImage}');">
+                <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png');">
                 </div>
               </a>  
             </div>   

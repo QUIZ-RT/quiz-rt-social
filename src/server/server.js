@@ -4,10 +4,9 @@ import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { challaneDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
 
-
+const  app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-const  app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -17,12 +16,6 @@ app.use(function(req, res, next) {
     next();
   });
 
-
-//  app.use("/api/firebase",(req,res)=>{
-//      var response =FirebaseOAuth();
-//      console.log(response.auth());
-//    res.send("Sucessfully Authentication");
-// });
 
 
 app.post("/api/challenge",(req, res)=> {
@@ -94,5 +87,6 @@ app.use("/api/topics/updatefollow", (req, res) => {
     topic.updateFollow(req.body.id,req.body.data);
     res.send({"status":"success"});
 });
- 
+
+
 app.listen(8080, () => console.log('Example app listening on port 8080!'));
