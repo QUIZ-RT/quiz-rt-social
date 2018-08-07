@@ -18,7 +18,14 @@ export const topicModalInitializeShow = (evt) => {
   const state = Store.getState();
   
   //.topics["" + targetId]
-  openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  //.topics["" + targetId]
+  if(state.menuReducer.currentView === "dashboard"){
+    openTopicModal(state.dashboardReducer.TopicList[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  
+  }
+  else if(state.menuReducer.currentView === "topics"){
+    openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  } 
   evt.preventDefault()
 }
 
@@ -84,7 +91,13 @@ const topicModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const topicId = btnData[1]
   const state = Store.getState()
-  const topicData = state.topicReducer.Topics
+  let topicData = ""
+  if(state.menuReducer.currentView === "dashboard"){
+    topicData = state.dashboardReducer.TopicList
+  }
+  else if(state.menuReducer.currentView === "topics"){
+    topicData = state.topicReducer.Topics
+  } 
   let data  = {"id":topicId,"data":[]}
   let topic = ""
   let userid = state.menuReducer.currentUserInfo.email
@@ -106,8 +119,10 @@ const topicModalbtnClick = (event) => {
       console.log(result)
       topic.users = data.data;      
       topicData["" + topicId]['users'] = topic.users
-      Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
-      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      } 
       render(topic, topicId,userid)
       hideLoader()
     },error=>{
@@ -126,9 +141,11 @@ const topicModalbtnClick = (event) => {
     data.data = topic.users
     updateFollow(data).then(result=>{        
       topicData["" + topicId]['users'] = topic.users
-      Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
       render(topic, topicId,userid)
-      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+     } 
       hideLoader()
     },error=>{
       console.log(error);
