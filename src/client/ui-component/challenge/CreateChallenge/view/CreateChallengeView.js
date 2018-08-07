@@ -8,8 +8,7 @@ function createChallengeSideBarView() {
     Challenge
     <nav class="mdl-navigation">
       <button class="mdl-navigation__link" id="createChallenge">Create Challenge</button>
-      <button class="mdl-navigation__link" id="playChallenge">Play Challenges</button>
-      <button class="mdl-navigation__link" id="shareChallenge">Share Challenge</button>
+      <button class="mdl-navigation__link" id="shareChallenge">Show Challenges</button>
     </nav>
   </div>`
 
@@ -23,9 +22,7 @@ function createChallengeSideBarView() {
 function callCreateChallenge(){
   Store.dispatch({type:"currentchallengeview",dataItem:"createChallenge"});
 }
-function callPlayChallenge(){
-  Store.dispatch({type:"currentchallengeview",dataItem:"playChallenge"});
-}
+
 function callShareChallenge(){
   Store.dispatch({type:"currentchallengeview",dataItem:"shareChallenge"});
 }
@@ -164,4 +161,4 @@ function createQuestion(challengeJsonObj, count) {
   document.getElementsByTagName('body')[0].className = ""
 }
 
-export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callPlayChallenge,callShareChallenge}
+export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callShareChallenge}

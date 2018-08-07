@@ -45,10 +45,9 @@ function app(user) {
 }
 
 export const goToLogout = () => {
-  
   firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-}).catch(function(error) {
+    console.log("successfully signed out")
+  }).catch(function(error) {
   // An error happened.
 })
 }

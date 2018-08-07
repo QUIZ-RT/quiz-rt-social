@@ -84,9 +84,9 @@ const createSearchUserItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>${user.firstName} ${user.lastName}</span>
+                <span>${user.displayName}</span>
               </span>
-              <a class="mdl-list__item-secondary-action sendFriendRequest" href="#" user_id=${user.id}><i class="material-icons" user_id=${user.id}>add</i></a>
+              <a class="mdl-list__item-secondary-action sendFriendRequest" href="#" user_id=${user.id} user_email=${user.email}><i class="material-icons" user_id=${user.userID}  user_email=${user.email}>add</i></a>
             </div>`)
   return item
 }
@@ -95,7 +95,7 @@ const createFriendItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>${user.firstName} ${user.lastName}</span>
+                <span>${user.displayName}</span>
               </span>
             </div>`)
   return item
@@ -105,13 +105,13 @@ const createFriendReqItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>${user.firstName} ${user.lastName}</span>
+                <span>${user.displayName}</span>
               </span>
               <span class="mdl-list__item-secondary-content" style="flex-direction: row;">
-              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored accept-Friend-Request" style="margin-right:10px;" req-id=${user.req_id}>
+              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored accept-Friend-Request" style="margin-right:10px;" req-id=${user.reqId}>
                 Accept
               </button>
-              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent reject-Friend-Request" req-id=${user.req_id}>
+              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent reject-Friend-Request" req-id=${user.reqId}>
                 Reject
               </button>
             </span>
@@ -123,17 +123,30 @@ const showProgressBar = () => {
     </div>`)
   return item
 }
-export const showSearchPageWithResult = (users) => {
+export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
   friendComponent.appendChild(createFriendHeaderWithSearchBox("Search and make friends"))
   const mainContent = createFriendMainContentContainer()
-  const usersContainer = createUserListContainer()
-  mainContent.appendChild(usersContainer)
+  // const usersContainer = createUserListContainer()
+  // mainContent.appendChild(usersContainer)
 
-  users.forEach((user) => {
-    usersContainer.appendChild(createSearchUserItem(user))
-  })
+  // users.forEach((user) => {
+  //   usersContainer.appendChild(createSearchUserItem(user))
+  // })
+
+  if (showProgress) {
+    mainContent.appendChild(showProgressBar())
+  }
+  else {
+    const usersContainer = createUserListContainer()
+    mainContent.appendChild(usersContainer)
+
+    users.forEach((user) => {
+      usersContainer.appendChild(createSearchUserItem(user))
+    })
+  }
+
   friendComponent.appendChild(mainContent)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
