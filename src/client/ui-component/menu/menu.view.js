@@ -22,8 +22,8 @@ export const getMenuTemplate = (menuData) => {
     <nav class="mdc-drawer__drawer" dir="rtl">
       <header class="mdc-drawer__header">
       <div class="mdc-drawer__header-content">
-      <div class="mdc-typography--headline6">Mail</div>
-      <div id="loggedInEmail" class="mdc-typography--subtitle2">k.sundar90@gmail.com</div>
+      <div class="mdc-typography--headline6"></div>
+      <div id="loggedInEmail" class="mdc-typography--subtitle2" style="font-weight: bold"></div>
       </div>
       </header>
       <nav class="mdc-drawer__content mdc-list-group">
