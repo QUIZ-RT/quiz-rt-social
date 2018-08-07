@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
-import { addChallengeToDB } from './FirebaseDb/challengesDb';
+import { addChallengeToDB,getUserDetail,updateUserTransaction } from './FirebaseDb/challengesDb';
 import { searchMasterUser, getUserByEmailId, getUserByUserId, sendFriendRequest, getPendingFriendRequest, getFriendRequest, acceptFriendReq, rejectFriendReq, getListOfFriend } from './FirebaseDb/Friends';
 import { getAllChallengesFromDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
@@ -28,7 +28,15 @@ app.use(function(req, res, next) {
 
 
 app.post("/api/challenge",(req, res)=> {
-    res.send(addChallengeToDB(req, res));
+    let data = addChallengeToDB(req, res);
+    data.then(
+         result=>{
+            res.send(result);
+             },
+        error=>{
+            res.send(error);
+            }     
+        )
 });
 
 //expose API to Question Generator
@@ -40,8 +48,23 @@ app.use("/api/allChallenges",(req, res)=> {
         },
         error=>{
             res.send(error);
-        })  
-    });
+        }        
+    )
+})
+
+//udate User Transaction
+app.use("/api/userTransaction",(req, res)=> {
+    console.log("inside api/userTransaction");
+    let data = updateUserTransaction(req, res);
+    data.then(
+        result=>{
+            res.send(result);
+        },
+        error=>{
+            res.send(error);
+        }        
+    )
+})
 
 app.get("/api/friends", (req, res) => {
     console.log(req.query.userName)
@@ -112,7 +135,7 @@ app.get("/api/friends/search", (req, res) => {
                 console.log(data.key)
                 const tempVal = val[data.key]
                 tempVal["key"] = data.key
-                if(tempVal['displayName'] &&  tempVal['displayName'].includes(req.query.value)){
+                if(tempVal['displayName'] &&  tempVal['displayName'].toLowerCase().includes(req.query.value.toLowerCase())){
                     users.push(tempVal)
                 }
             })
@@ -262,10 +285,12 @@ app.use("/api/topics/gettopics", (req, res) => {
     let data = topic.getTopics();
     data.then(
         result=>{
-            res.send(result);
+           console.log("result gettopics- ",result);
+           res.send({"status":"success","data":result});
         },
         error=>{
-            res.send(error);
+            console.log("result errors- ",error);
+            res.send({"status":"fail","data":error});
         }        
     )
 });
@@ -285,5 +310,17 @@ app.use("/api/topics/updatefollow", (req, res) => {
     topic.updateFollow(req.body.id,req.body.data);
     res.send({"status":"success"});
 });
+
+app.use("/api/getUserDetail",(req, res)=> {
+    let data = getUserDetail(req, res);
+    data.then(
+        result=>{
+            res.send(result);
+        },
+        error=>{
+            res.send(error);
+        }        
+    )
+})
  
 app.listen(8080, () => console.log('Example app listening on port 8080!'));

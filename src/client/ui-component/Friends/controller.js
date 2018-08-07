@@ -49,6 +49,12 @@ function searchUser(event) {
   return true;
 }
 
+function showSnackBar(msg){
+  var snackbarContainer = document.querySelector('#msg-snack-bar')
+  var data = {message: msg};
+  snackbarContainer.MaterialSnackbar.showSnackbar(data)
+}
+
 function render() {
   console.log("in friends new controller")
   const menuReducer = Store.getState().menuReducer
@@ -69,16 +75,25 @@ function render() {
       }
       else if (state.friendsAndChat.page === "SEARCH_FRIENDS_NOT_LOADED") {
         console.log("in friends controller DEFAULT page")
-        showSearchPageWithResult([])
+        showSearchPageWithResult([], true)
       }
       else if (state.friendsAndChat.page === "SEARCH_FRIENDS_LOADED")
       {
         console.log("in friends controller SEARCH_FRIENDS_LOADED page")
         showSearchPageWithResult(state.friendsAndChat.searchResult)
+        if(!state.friendsAndChat.searchResult || state.friendsAndChat.searchResult.length == 0){
+          showSnackBar("No user found ...")  
+        }
+      }
+      else if (state.friendsAndChat.page === "SEND_FRIEND_RES")
+      {
+        console.log("in friends controller SEND_FRIEND_RES page")
+        showSearchPageWithResult(state.friendsAndChat.searchResult)
+        showSnackBar("Friend request sent...")
       }
       else if (state.friendsAndChat.page === "FRIENDS_NOT_LOADED") {
         console.log("in friends controller FRIENDS not loaded page")
-        showFriendList(state.friendsAndChat.friends, true)
+        showFriendList([], true)
       }
       else if (state.friendsAndChat.page === "FRIENDS_LOADED") {
         console.log("in friends controller FRIENDS loaded page")

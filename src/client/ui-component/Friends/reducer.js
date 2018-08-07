@@ -91,6 +91,15 @@ export const friendReducer = (currentState = { }, action) => {
     console.log("inside SEND_FRIEND_REQ")
     sendFriendRequest(action.userName, action.reciever)
     break
+  case "SEND_FRIEND_RES":
+    console.log("inside SEND_FRIEND_RES")
+    newState.friendsAndChat = {
+      page: "SEND_FRIEND_RES",
+      friends: friends,
+      pendingFriendRequest: pendingFrndReq,
+      searchResult: searchResult,
+    }
+    break
   case "ACCEPT_FRINED_REQUEST":
     console.log("inside accept friend req")
     acceptFriendRequest(action.req_id)
