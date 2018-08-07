@@ -1,5 +1,5 @@
 // Reducer
-export const menuReducer = (state = { }, action) => {
+export const menuReducer = (state = {}, action) => {
     const statePrev = state
     const newState = Object.assign({}, statePrev)
     switch (action.type) {
