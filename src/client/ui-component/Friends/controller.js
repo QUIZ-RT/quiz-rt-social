@@ -1,6 +1,6 @@
 import {Store} from "../../boot/Store"
 import {showSearchPageWithResult, showFriendList, showPendingFriendRequests} from "./view"
-
+import {loadChatContainer} from "../chat/chat.controller";
 var userName = "";
 function addFriendLinkClicked(event) {
   console.log("add friend link clicked")
@@ -94,7 +94,12 @@ function render() {
     }
   }
 }
-
+function showChatBox(event) {
+  let user = {};
+  user.email = event.target.getAttribute("user_email")
+  user.displayName= event.target.getAttribute("user_displayName")
+  loadChatContainer(user);
+}
 Store.subscribe(render)
 
 $("body").on("click", "#add_friend", addFriendLinkClicked)
@@ -104,3 +109,4 @@ $("body").on("click", ".accept-Friend-Request", acceptFriendRequest)
 $("body").on("click", ".reject-Friend-Request", rejectFriendRequest)
 $("body").on('keydown', '#fixed-header-drawer-exp', searchUser);
 $("body").on("click", ".sendFriendRequest", sendFriendRequest)
+$("body").on("click", ".start_chat", showChatBox)

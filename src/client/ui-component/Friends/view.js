@@ -1,5 +1,6 @@
 var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
+
 const mainContainer = document.getElementById("quiz-maincontent")
 
 const htmlToTemplate = (htmlstr) => {
@@ -92,10 +93,10 @@ const createSearchUserItem = (user) => {
 }
 
 const createFriendItem = (user) => {
-  const item = htmlToTemplate(`<div class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>${user.firstName} ${user.lastName}</span>
+  const item = htmlToTemplate(`<div class="mdl-list__item start_chat" user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName} >
+              <span class="mdl-list__item-primary-content" user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName}>
+                <i class="material-icons mdl-list__item-avatar" user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName}>person</i>                
+                <span user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName}>${user.firstName} ${user.lastName}</span>
               </span>
             </div>`)
   return item
@@ -147,6 +148,7 @@ export const showFriendList = (users) => {
   friendComponent.appendChild(createFriendHeaderWithOutSearchBox("List of friends"))
   const mainContent = createFriendMainContentContainer()
   const usersContainer = createUserListContainer()
+  usersContainer.style.width = null;
   mainContent.appendChild(usersContainer)
 
   users.forEach((user) => {

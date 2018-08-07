@@ -17,14 +17,14 @@ export class Chat {
         return message;
     }
 
-    getMessages(name) {
+    getMessages(email) {
         let dbRef = firebase.database().ref();
         let unreadMessages = [];
         let messages = dbRef.child('messages');
         messages.orderByKey()
             .on('child_added', function (snapshot) {
                 
-                if (snapshot.val().rname === name && snapshot.val().readYn === 'no') {
+                if (snapshot.val().remail === email && snapshot.val().readYn === 'no') {
                     unreadMessages.push(snapshot.val());
 
                 }

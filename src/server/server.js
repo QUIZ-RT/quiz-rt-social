@@ -117,15 +117,15 @@ io.on('connection', function (socket) {
     });
 
     socket.on('notifyTyping', function (sender, receiver) {
-        io.to(receiver.id).emit('notifyTyping', sender, receiver);
+        io.to(receiver.socketId).emit('notifyTyping', sender, receiver);
     });
 
     socket.on('newUser', function (user) {
-        var newUser = { id: socket.id, name: user };
+        let newUser = { socketId: socket.id, user: user };
         onlineUsers.push(newUser);
         io.to(socket.id).emit('newUser', newUser);
         io.emit('onlineUsers', onlineUsers);
-        let allMessages = chat.getMessages(user);
+        let allMessages = chat.getMessages(user.email);
         allMessages.forEach(function (message) {
             message.receiver = socket.id;
             io.to(message.receiver).emit('chatMessage', message);
@@ -134,7 +134,7 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         onlineUsers.forEach(function (user, index) {
-            if (user.id === socket.id) {
+            if (user.socketId === socket.id) {
                 onlineUsers.splice(index, 1);
                 io.emit('userIsDisconnected', socket.id);
                 io.emit('onlineUsers', onlineUsers);

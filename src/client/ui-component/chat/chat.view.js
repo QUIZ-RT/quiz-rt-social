@@ -1,5 +1,5 @@
 
-import store from "./chat.reducer"
+import { Store } from '../../boot/Store'
 import { updateChat } from "./chat.service"
 function createHTMLElement(html) {
   const template = document.createElement("template")
@@ -7,15 +7,15 @@ function createHTMLElement(html) {
   return template.content.firstElementChild
 }
 
-function createOnlineUsersView() {
-  const onlineUsersView = `<div class="onlineUsersContainer">
-        <div class="onlineUsersWraper">
-            <ul id="onlineUsers" class="mdc-list" aria-orientation="vertical"></ul>
-        </div>
-    </div>`
+// function createOnlineUsersView() {
+//   const onlineUsersView = `<div class="onlineUsersContainer">
+//         <div class="onlineUsersWraper">
+//             <ul id="onlineUsers" class="mdc-list" aria-orientation="vertical"></ul>
+//         </div>
+//     </div>`
 
-  return createHTMLElement(onlineUsersView)
-}
+//   return createHTMLElement(onlineUsersView)
+// }
 
 function createchatSection() {
   const chatSection = `<section class="chat-module">
@@ -67,7 +67,7 @@ function loadChatBox(messages) {
   $(".chat-module").show()
   $("ol.discussion").html("").show()
   messages.forEach(function (message) {
-    var cssClass = (message.name === store.getState().myUser.name) ? "self mdc-list-item" : "other mdc-list-item"
+    var cssClass = (message.name === Store.getState().makeChat.myUser.name) ? "self mdc-list-item" : "other mdc-list-item"
     updateChat(message).then(function () {
 
     })
@@ -81,26 +81,30 @@ function clearChatNotificationCount(chatNotificationCount, userName) {
   $("#" + userName + " label.chatNotificationCount").hide()
 }
 
-function selectUerChatBox(evt) {
-  var myFriend = {}
-  myFriend.id = evt.target.userId
-  myFriend.name = evt.target.userName
-  store.dispatch({
-    type: "SELECT-FRIEND", myFriend: myFriend,
+function selectUerChatBox(selectedUser) {
+  let myFriend = {}
+  let user = {}
+  myFriend.socketId = selectedUser.socketId
+  user.email = selectedUser.email
+  user.displayName = selectedUser.displayName;
+  user.Photo = selectedUser.photoURL;
+  myFriend.user = user;
+  Store.dispatch({
+    type: "SELECT-FRIEND", myFriend: myFriend
   })
-  $(evt.target).addClass("active")
-  clearChatNotificationCount(store.getState().chatNotificationCount, myFriend.id)
+  //$(evt.target).addClass("active")
+  clearChatNotificationCount(Store.getState().makeChat.chatNotificationCount, myFriend.user.email)
 }
 
-function createLiElement(id, name) {
-  const dynamicLiElement = `<li id="${name}" class="mdc-list-item selectUerChatBox">
-    <span class="mdc-list-item__graphic material-icons green" aria-hidden="true">fiber_manual_record</span>${name}<label class="chatNotificationCount"></label></li>`
-  const liElement = createHTMLElement(dynamicLiElement)
-  liElement.addEventListener("click", selectUerChatBox)
-  liElement.userId = id
-  liElement.userName = name
-  return liElement
-}
+// function createLiElement(id, name) {
+//   const dynamicLiElement = `<li id="${name}" class="mdc-list-item selectUerChatBox">
+//     <span class="mdc-list-item__graphic material-icons green" aria-hidden="true">fiber_manual_record</span>${name}<label class="chatNotificationCount"></label></li>`
+//   const liElement = createHTMLElement(dynamicLiElement)
+//   liElement.addEventListener("click", selectUerChatBox)
+//   liElement.userId = id
+//   liElement.userName = name
+//   return liElement
+// }
 
 function createMsgLiElementSelf(msg, cssClass, name) {
   const dynamicMsgLiElement = `<li >
@@ -117,49 +121,57 @@ function createMsgLiElementSelf(msg, cssClass, name) {
 }
 
 function render() {
-  let state = store.getState();
+  let state = Store.getState();
   $("#onlineUsers").empty()
-  state.onlineUsers.forEach(function (user) {
-    if (user.name !== state.myUser.name) {
-      var liElement = createLiElement(user.id, user.name)
-      document.querySelector("#onlineUsers").appendChild(liElement)
-      if (state.chatNotificationCount[user.name] !== undefined &&
-        state.chatNotificationCount[user.name] !== 0) {
-        $("#" + user.name + " label.chatNotificationCount").html(state.chatNotificationCount[user.name])
-        $("#" + user.name + " label.chatNotificationCount").show()
+  state.makeChat.onlineUsers.forEach(function (user) {
+    if (user.user.email !== state.makeChat.myUser.user.email) {
+      //var liElement = createLiElement(user.id, user.name)
+      //document.querySelector("#onlineUsers").appendChild(liElement)
+      if (state.chatNotificationCount[user.user.email] !== undefined &&
+        state.chatNotificationCount[user.user.email] !== 0) {
+        $("#" + user.user.email + " label.chatNotificationCount").html(state.chatNotificationCount[user.user.email])
+        $("#" + user.user.email + " label.chatNotificationCount").show()
       }
-      if (state.myFriend.name === user.name) {
-        clearChatNotificationCount(state.chatNotificationCount, user.name)
+      if (state.makeChat.myFriend.user.email === user.user.email) {
+        clearChatNotificationCount(state.chatNotificationCount, user.user.email)
       }
     }
   })
-
-  if (state.onlineUsers.length >= 2 && state.myFriend.name !== undefined) {
-    $(".chat-module").show()
+  const body = document.querySelector(".demo-list-action")
+  if ($(".chat-module")[0] === undefined) {
+    body.appendChild(createchatSection())
+  }
+  $(".chat-module").show()
     $("ol.discussion").show()
     $(".chat-top-bar").html("").show()
-    document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.myFriend.name))
-  }
-  $("#onlineUsers li").removeClass("active")
+    document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.user.displayName))
+  // if (state.makeChat.onlineUsers.length >= 2 && state.makeChat.myFriend.name !== undefined) {
+  //   $(".chat-module").show()
+  //   $("ol.discussion").show()
+  //   $(".chat-top-bar").html("").show()
+  //   document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.name))
+  // }
+  //$("#onlineUsers li").removeClass("active")
   $("#notifyTyping").text("")
   $("#txtChatMessage").val("").focus()
 
-  if (state.allChatMessages[state.myFriend.name] !== undefined) {
-    loadChatBox(state.allChatMessages[state.myFriend.name])
+  if (state.makeChat.allChatMessages[state.makeChat.myFriend.user.email] !== undefined) {
+    loadChatBox(state.makeChat.allChatMessages[state.makeChat.myFriend.user.email])
   }
   else {
     $("ol.discussion").html("")
   }
 }
 
-export const createChatContainer = () => {
-  const body = document.querySelector("#quiz-maincontent")
-  if ($("#onlineUsers")[0] === undefined) {
-    body.appendChild(createOnlineUsersView())
-  }
-  if ($(".chat-module")[0] === undefined) {
-    body.appendChild(createchatSection())
-  }
-  store.subscribe(render)
+export const createChatContainer = (selectedUser) => {
+  let state = Store.getState();
+  state.makeChat.onlineUsers.forEach(function (user) {
+    if (selectedUser.email === user.user.email) {
+      selectedUser.socketId = user.socketId
+    }
+  })
+
+  selectUerChatBox(selectedUser);
+  Store.subscribe(render)
 }
 

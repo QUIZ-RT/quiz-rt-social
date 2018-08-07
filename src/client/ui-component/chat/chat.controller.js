@@ -1,39 +1,48 @@
 import $ from "jquery"
 import io from "socket.io-client"
-import store from "./chat.reducer"
-import {createChatContainer} from "./chat.view"
+import { Store } from '../../boot/Store'
+import { createChatContainer } from "./chat.view"
 
-var socket = io()
+let socket = io()
 
-export const loadChatContainer = () => {
-  createChatContainer()
-  $(".chat-module").hide()
-  $("#txtChatMessage").on("keyup", notifyTyping)
-
-  socket.on("newUser", function(newUser) {
-    store.dispatch({
+export const loadChatContainer = (user) => {
+  socket.on("newUser", function (newUser) {
+    Store.dispatch({
       type: "NEW-USER", myUser: newUser,
     })
   })
+  if (Store.getState().makeChat.myUser.user === undefined) {
+    const currentState = Store.getState();
+    let myUser = {};
+    myUser.email = currentState.menuReducer.currentUserInfo.email;
+    myUser.displayName = currentState.menuReducer.currentUserInfo.displayName;
+    myUser.Photo = currentState.menuReducer.currentUserInfo.photoURL;
+    socket.emit("newUser", myUser)
+  }
+  createChatContainer(user)
+  //$(".chat-module").hide()
+  $("#txtChatMessage").on("keyup", notifyTyping)
 
-  socket.on("notifyTyping", function(sender, recipient) {
-    if (store.getState().myFriend.id === sender.id) {
-      $("#notifyTyping").text(sender.name + " is typing ...")
+
+
+  socket.on("notifyTyping", function (sender, recipient) {
+    if (Store.getState().makeChat.myFriend.socketId === sender.socketId) {
+      $("#notifyTyping").text(sender.email + " is typing ...")
     }
-    setTimeout(function() {
+    setTimeout(function () {
       $("#notifyTyping").text("")
     }, 5000)
   })
 
-  socket.on("onlineUsers", function(onlineUsers) {
-    store.dispatch({
+  socket.on("onlineUsers", function (onlineUsers) {
+    Store.dispatch({
       type: "ONLINE-USERS", onlineUsers: onlineUsers,
     })
   })
 
-  socket.on("userIsDisconnected", function(userId) {
-    delete store.getState().allChatMessages[userId]
-    if (userId === store.getState().myFriend.id) {
+  socket.on("userIsDisconnected", function (socketId) {
+    delete Store.getState().makeChat.allChatMessages[socketId]
+    if (socketId === Store.getState().makeChat.myFriend.socketId) {
       $(".chat-module").hide()
       $("ol.discussion").html("").hide()
     }
@@ -46,18 +55,19 @@ export const loadChatContainer = () => {
     }
   })
 
-  socket.on("chatMessage", function(message) {
-    store.dispatch({
+  socket.on("chatMessage", function (message) {
+    Store.dispatch({
       type: "RECIEVE-MSG", message: message,
     })
   })
 
-  loginMe()
+
+  //loginMe()
 }
 
 // $(document).ready(function() {
 //
-// //   if (store.getState().myUser.id === undefined) {
+// //   if (Store.getState().myUser.id === undefined) {
 // //     loginMe()
 // //   }
 // })
@@ -65,7 +75,7 @@ export const loadChatContainer = () => {
 function loginMe() {
   var person = prompt("Please enter your name:", "Test")
   if (/([^\s])/.test(person) && person !== null && person !== "") {
-    socket.emit("newUser", person)
+
     document.title = person
   }
   else {
@@ -74,21 +84,21 @@ function loginMe() {
 }
 
 function notifyTyping() {
-  socket.emit("notifyTyping", store.getState().myUser, store.getState().myFriend)
+  socket.emit("notifyTyping", Store.getState().makeChat.myUser, Store.getState().makeChat.myFriend)
 }
 
 function submitfunction() {
   var message = {}; var text = $("#txtChatMessage").val()
 
   if (text !== "") {
-    let state = store.getState();
+    let state = Store.getState();
     message.type = "text"
     message.text = text
-    message.sender = state.myUser.id
-    message.receiver = state.myFriend.id
-    message.name = state.myUser.name
-    message.rname = state.myFriend.name
-    store.dispatch({
+    message.sender = state.makeChat.myUser.socketId
+    message.receiver = state.makeChat.myFriend.socketId
+    message.semail = state.makeChat.myUser.user.email
+    message.remail = state.makeChat.myFriend.user.email
+    Store.dispatch({
       type: "SEND-MSG", message: message,
     })
     socket.emit("chatMessage", message)
