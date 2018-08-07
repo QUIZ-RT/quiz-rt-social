@@ -40,13 +40,16 @@ export const updateUserTransaction = (req, resp) => {
     }
     console.log("inside updateUserTransaction");
  const challenges = firebase.database().ref("User_Transaction");
- let userTranKey ="";
+
  const promise = new Promise(function(resolve, reject) {
        challenges.once("value", function(userTranNode) {
           let requestBody = req.body;
-          userTranKey = requestBody.Created_By.replace( /[^a-zA-Z0-9-. ]/g,"").replace(/[.]/g,"");
-          console.log("userTranKey : ",userTranKey)
-          challenges.child(`${userTranKey}`).set(requestBody);
+          console.log("userTranNode val:",userTranNode);
+         let nextUserTranSeq = Math.max.apply(Math,(Object.keys(userTranNode.val())));
+          console.log("nextUserTranSeq before :",nextUserTranSeq);
+          nextUserTranSeq = +nextUserTranSeq+1;
+          console.log("nextUserTranSeq :",nextUserTranSeq);
+          challenges.child(`${nextUserTranSeq}`).set(requestBody);
         
           resolve(requestBody);
          });

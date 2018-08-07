@@ -72,6 +72,7 @@ export const getTopics = () => {
       res => res.json()
     ).then(result => {
       //Store.dispatch({ "type": "CHALLENGE_TOPICS", dataItem: result })
+      console.log("getTopics result",result);
       createChallengeHeaderTemplate(Object.values(result.data));
     }, error => {
       console.log(error)
