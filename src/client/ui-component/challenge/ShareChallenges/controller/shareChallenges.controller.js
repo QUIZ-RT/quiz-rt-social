@@ -1,7 +1,19 @@
 import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
 import {Store} from '../../../../boot/Store'
+import {getUserChallenges} from "../service/shareChallenges.service"
 
-const shareChallenges = [
+var shareChallenges
+export const createShareChallengesSection = (userId) => {
+  getUserChallenges(userId).then(function(userChallenges) {
+    //console.log("user challenges in controller" + JSON.stringify(userChallenges))
+    //Store.dispatch({type: "SHARE_CHALLENGE", dataItem: userChallenges})
+    shareChallenges = userChallenges
+    const shareChallengesData = getShareChallengeTemplate(userChallenges)
+    renderViewToContainer(shareChallengesData, "#challengeSection")
+  })
+}
+
+const shareChallengesDummy = [
   {
     "sharedBy": "ghouse",
     "challengeId": "ch1",
@@ -30,14 +42,14 @@ const shareChallenges = [
 
 const friends = ["TRavi", "TPrashanth", "TShyamal", "TSuresh", "TManju"]
 
-Store.subscribe(() => {
-  const currentState = Store.getState()
-  if(currentState.challengeReducer.currentView === 'shareChallenge'){
-    document.querySelector('#challengeSection').innerHTML = "";
-    const shareChallengesData = getShareChallengeTemplate(shareChallenges)
-     renderViewToContainer(shareChallengesData, "#challengeSection")
-  }
-})
+// Store.subscribe(() => {
+//   const currentState = Store.getState()
+//   if(currentState.challengeReducer.currentView === 'shareChallenge'){
+//     document.querySelector('#challengeSection').innerHTML = "";
+//     const shareChallengesData = getShareChallengeTemplate(shareChallenges)
+//      renderViewToContainer(shareChallengesData, "#challengeSection")
+//   }
+// })
 // export const createShareChallengesSection = () => {
 //   const shareChallengesData = getShareChallengeTemplate(shareChallenges)
 //   renderViewToContainer(shareChallengesData, "main")

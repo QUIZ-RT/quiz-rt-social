@@ -14,8 +14,8 @@ export const getShareChallengeTemplate = (dataList) => {
   const scTable = `<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="shareChallengesTable">
                         <thead>
                             <tr>
-                            <th class="mdl-data-table__cell--non-numeric">Challenge Name</th>
-                            <th>ChallengedBy</th>
+                            <th class="mdl-data-table__cell--non-numeric">Challenge Id</th>
+                            <th>Challenge Name</th>
                             <th>Option</th>
                             <th>Play</th>
                             </tr>
@@ -31,7 +31,7 @@ export const getShareChallengeTemplate = (dataList) => {
   `<tbody>
     <tr>
       <td class="mdl-data-table__cell--non-numeric">${item.challengeId}</td>
-      <td>${item.sharedBy}</td>
+      <td>${item.challengeName}</td>
       <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Share</button>
       <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id ="playChallenge">Play Challenge</button>
       </td>
