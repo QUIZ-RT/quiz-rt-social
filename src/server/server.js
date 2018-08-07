@@ -3,19 +3,19 @@ import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { challaneDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
+import { Chat } from './chat';
 
-
+const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-const  app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
 
 
 //  app.use("/api/firebase",(req,res)=>{
@@ -25,17 +25,18 @@ app.use(function(req, res, next) {
 // });
 
 
-app.post("/api/challenge",(req, res)=> {
+app.post("/api/challenge", (req, res) => {
     res.send(challaneDB(req, res));
 });
 
 
-
+const chat = new Chat();
 var onlineUsers = [];
 
 io.on('connection', function (socket) {
-
     socket.on('chatMessage', function (message) {
+        message.readYn = 'no';
+        message = chat.addMessage(message);
         io.to(message.receiver).emit('chatMessage', message);
     });
 
@@ -48,6 +49,11 @@ io.on('connection', function (socket) {
         onlineUsers.push(newUser);
         io.to(socket.id).emit('newUser', newUser);
         io.emit('onlineUsers', onlineUsers);
+        let allMessages = chat.getMessages(user);
+        allMessages.forEach(function (message) {
+            message.receiver = socket.id;
+            io.to(message.receiver).emit('chatMessage', message);
+        })
     });
 
     socket.on('disconnect', function () {
@@ -61,6 +67,10 @@ io.on('connection', function (socket) {
     });
 });
 
+app.use("/api/chat/updateMessage", (req, res) => {
+    res.send(chat.updateMessage(req.body));
+});
+
 const topic = new Topics();
 
 app.use("/api/topics/addtopics", (req, res) => {
@@ -70,12 +80,12 @@ app.use("/api/topics/addtopics", (req, res) => {
 app.use("/api/topics/gettopics", (req, res) => {
     let data = topic.getTopics();
     data.then(
-        result=>{
+        result => {
             res.send(result);
         },
-        error=>{
+        error => {
             res.send(error);
-        }        
+        }
     )
 });
 
@@ -91,8 +101,8 @@ app.use("/api/topics/deletetopics", (req, res) => {
 
 app.use("/api/topics/updatefollow", (req, res) => {
     console.log(req.body);
-    topic.updateFollow(req.body.id,req.body.data);
-    res.send({"status":"success"});
+    topic.updateFollow(req.body.id, req.body.data);
+    res.send({ "status": "success" });
 });
- 
-app.listen(8080, () => console.log('Example app listening on port 8080!'));
+
+http.listen(8080, () => console.log('Example app listening on port 8080!'));

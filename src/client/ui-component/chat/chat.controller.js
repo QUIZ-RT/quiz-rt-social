@@ -4,7 +4,6 @@ import store from "./chat.reducer"
 import {createChatContainer} from "./chat.view"
 
 var socket = io()
-var allChatMessages = []
 
 export const loadChatContainer = () => {
   createChatContainer()
@@ -33,7 +32,7 @@ export const loadChatContainer = () => {
   })
 
   socket.on("userIsDisconnected", function(userId) {
-    delete allChatMessages[userId]
+    delete store.getState().allChatMessages[userId]
     if (userId === store.getState().myFriend.id) {
       $(".chat-module").hide()
       $("ol.discussion").html("").hide()
@@ -82,11 +81,13 @@ function submitfunction() {
   var message = {}; var text = $("#txtChatMessage").val()
 
   if (text !== "") {
+    let state = store.getState();
     message.type = "text"
     message.text = text
-    message.sender = store.getState().myUser.id
-    message.receiver = store.getState().myFriend.id
-    message.name = store.getState().myUser.name
+    message.sender = state.myUser.id
+    message.receiver = state.myFriend.id
+    message.name = state.myUser.name
+    message.rname = state.myFriend.name
     store.dispatch({
       type: "SEND-MSG", message: message,
     })

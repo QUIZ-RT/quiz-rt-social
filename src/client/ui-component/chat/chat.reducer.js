@@ -27,11 +27,11 @@ action) {
   case "SEND-MSG":
   {
     const tempAllChatMessages = state.allChatMessages
-    if (tempAllChatMessages[state.myFriend.id] !== undefined) {
-      tempAllChatMessages[state.myFriend.id].push(action.message)
+    if (tempAllChatMessages[state.myFriend.name] !== undefined) {
+      tempAllChatMessages[state.myFriend.name].push(action.message)
     }
     else {
-      tempAllChatMessages[state.myFriend.id] = new Array(action.message)
+      tempAllChatMessages[state.myFriend.name] = new Array(action.message)
     }
     const s = {
       allChatMessages: tempAllChatMessages,
@@ -57,15 +57,15 @@ action) {
   case "RECIEVE-MSG":
   {
     const tempAllChatMessages = state.allChatMessages
-    if (tempAllChatMessages[action.message.sender] !== undefined) {
-      tempAllChatMessages[action.message.sender].push(action.message)
+    if (tempAllChatMessages[action.message.name] !== undefined) {
+      tempAllChatMessages[action.message.name].push(action.message)
     }
     else {
-      tempAllChatMessages[action.message.sender] = new Array(action.message)
+      tempAllChatMessages[action.message.name] = new Array(action.message)
     }
     const tempChatNotificationCount = state.chatNotificationCount
-    const count = (tempChatNotificationCount[action.message.sender] === undefined) ? 1 : tempChatNotificationCount[action.message.sender] + 1
-    tempChatNotificationCount[action.message.sender] = count
+    const count = (tempChatNotificationCount[action.message.name] === undefined) ? 1 : tempChatNotificationCount[action.message.name] + 1
+    tempChatNotificationCount[action.message.name] = count
 
     const s = {
       allChatMessages: tempAllChatMessages,

@@ -1,5 +1,6 @@
 
 import store from "./chat.reducer"
+import { updateChat } from "./chat.service"
 function createHTMLElement(html) {
   const template = document.createElement("template")
   template.innerHTML = html
@@ -49,11 +50,11 @@ function createChatHeaderLeft(name) {
 }
 
 function chatboxScrollBottom() {
-  $("ol.discussion").animate({scrollTop: $("ol.discussion").prop("scrollHeight")})
+  $("ol.discussion").animate({ scrollTop: $("ol.discussion").prop("scrollHeight") })
 }
 
 function appendMessage(message, cssClass) {
-  var messageTimestamp = new Date().toLocaleString("en-US", {hour: "numeric", minute: "numeric", hour12: true})
+  var messageTimestamp = new Date().toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
   var chatMessageTimestamp = "<label class=\"chatMessageTimestamp\">" + messageTimestamp + "</label>"
   if (message.type === "text") {
     const ol = document.querySelector("ol.discussion")
@@ -65,17 +66,19 @@ function appendMessage(message, cssClass) {
 function loadChatBox(messages) {
   $(".chat-module").show()
   $("ol.discussion").html("").show()
-  messages.forEach(function(message) {
-    var cssClass = (message.sender === store.getState().myUser.id) ? "self mdc-list-item" : "other mdc-list-item"
+  messages.forEach(function (message) {
+    var cssClass = (message.name === store.getState().myUser.name) ? "self mdc-list-item" : "other mdc-list-item"
+    updateChat(message).then(function () {
 
+    })
     appendMessage(message, cssClass, message.name)
   })
   chatboxScrollBottom()
 }
 
-function clearChatNotificationCount(chatNotificationCount, userId) {
-  chatNotificationCount[userId] = 0
-  $("#" + userId + " label.chatNotificationCount").hide()
+function clearChatNotificationCount(chatNotificationCount, userName) {
+  chatNotificationCount[userName] = 0
+  $("#" + userName + " label.chatNotificationCount").hide()
 }
 
 function selectUerChatBox(evt) {
@@ -90,7 +93,7 @@ function selectUerChatBox(evt) {
 }
 
 function createLiElement(id, name) {
-  const dynamicLiElement = `<li id="${id}" class="mdc-list-item selectUerChatBox">
+  const dynamicLiElement = `<li id="${name}" class="mdc-list-item selectUerChatBox">
     <span class="mdc-list-item__graphic material-icons green" aria-hidden="true">fiber_manual_record</span>${name}<label class="chatNotificationCount"></label></li>`
   const liElement = createHTMLElement(dynamicLiElement)
   liElement.addEventListener("click", selectUerChatBox)
@@ -114,42 +117,35 @@ function createMsgLiElementSelf(msg, cssClass, name) {
 }
 
 function render() {
-//   const body = document.getElementsByTagName("body")[0]
-//   if ($("#onlineUsers")[0] === undefined) {
-//     body.appendChild(createOnlineUsersView())
-//   }
-//   if ($(".chat-module")[0] === undefined) {
-//     body.appendChild(createchatSection())
-//   }
-
+  let state = store.getState();
   $("#onlineUsers").empty()
-  store.getState().onlineUsers.forEach(function(user) {
-    if (user.id !== store.getState().myUser.id) {
+  state.onlineUsers.forEach(function (user) {
+    if (user.name !== state.myUser.name) {
       var liElement = createLiElement(user.id, user.name)
       document.querySelector("#onlineUsers").appendChild(liElement)
-      if (store.getState().chatNotificationCount[user.id] !== undefined &&
-                store.getState().chatNotificationCount[user.id] !== 0) {
-        $("#" + user.id + " label.chatNotificationCount").html(store.getState().chatNotificationCount[user.id])
-        $("#" + user.id + " label.chatNotificationCount").show()
+      if (state.chatNotificationCount[user.name] !== undefined &&
+        state.chatNotificationCount[user.name] !== 0) {
+        $("#" + user.name + " label.chatNotificationCount").html(state.chatNotificationCount[user.name])
+        $("#" + user.name + " label.chatNotificationCount").show()
       }
-      if (store.getState().myFriend.id === user.id) {
-        clearChatNotificationCount(store.getState().chatNotificationCount, user.id)
+      if (state.myFriend.name === user.name) {
+        clearChatNotificationCount(state.chatNotificationCount, user.name)
       }
     }
   })
 
-  if (store.getState().onlineUsers.length >= 2 && store.getState().myFriend.name !== undefined) {
+  if (state.onlineUsers.length >= 2 && state.myFriend.name !== undefined) {
     $(".chat-module").show()
     $("ol.discussion").show()
     $(".chat-top-bar").html("").show()
-    document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(store.getState().myFriend.name))
+    document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.myFriend.name))
   }
   $("#onlineUsers li").removeClass("active")
   $("#notifyTyping").text("")
   $("#txtChatMessage").val("").focus()
 
-  if (store.getState().allChatMessages[store.getState().myFriend.id] !== undefined) {
-    loadChatBox(store.getState().allChatMessages[store.getState().myFriend.id])
+  if (state.allChatMessages[state.myFriend.name] !== undefined) {
+    loadChatBox(state.allChatMessages[state.myFriend.name])
   }
   else {
     $("ol.discussion").html("")
@@ -157,7 +153,7 @@ function render() {
 }
 
 export const createChatContainer = () => {
-  const body = document.getElementsByTagName("main")[0]
+  const body = document.querySelector("#quiz-maincontent")
   if ($("#onlineUsers")[0] === undefined) {
     body.appendChild(createOnlineUsersView())
   }
