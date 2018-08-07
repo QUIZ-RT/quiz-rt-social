@@ -1,3 +1,13 @@
+.login-hero-img{
+  background-image: url('../../assets/background.jpg');
+  height: 100vh;
+  width: 100vw;
+}
+#signin {
+  top: calc(50% - 18px);
+  left: calc(50% - 90px);
+}
+
 #quiz-loader {
     position: absolute;
     top: 40%;
@@ -95,6 +105,8 @@
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
+
+
 
 aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   .mdc-dialog__surface{
