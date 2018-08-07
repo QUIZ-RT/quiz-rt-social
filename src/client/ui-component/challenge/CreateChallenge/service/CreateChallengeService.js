@@ -1,6 +1,7 @@
 import {Store} from '../../../../boot/Store'
 import {createChallengeHeaderTemplate} from '../view/CreateChallengeView'
-
+import {showSnackBar} from "../../../snackbar/snackbar.controller"
+import {hideLoader} from "../../../loader/loader.controller"
 export const storeChallenge = (challengeJsonObj) => {
 
   var settings = {
@@ -37,6 +38,8 @@ export const storeChallenge = (challengeJsonObj) => {
             userTranObj.userName = userDetails.displayName;
             userTranObj.userID = userDetails.userID;
            updateUserTransaction(userTranObj);
+           showSnackBar("Challenge has been created successfully", "success")
+           Store.dispatch({type:"UPDATE_Dashboard_ChallengeData", dataItem:response})
         }, error => {
           console.log(error)
         }) 
@@ -74,8 +77,10 @@ export const getTopics = () => {
       //Store.dispatch({ "type": "CHALLENGE_TOPICS", dataItem: result })
       console.log("getTopics result",result);
       createChallengeHeaderTemplate(Object.values(result.data));
+      hideLoader()
     }, error => {
       console.log(error)
+      hideLoader()
     }) 
 }
 

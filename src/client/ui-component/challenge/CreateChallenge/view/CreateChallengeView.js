@@ -1,6 +1,7 @@
 import TemplateGenerator from "../../common/TemplateGenerator"
 import {Store} from '../../../../boot/Store';
 import {getTopics} from '../service/CreateChallengeService'
+import { showLoader } from "../../../loader/loader.controller";
 var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
 function createChallengeSideBarView() {
@@ -44,7 +45,9 @@ function createChallengeContainer() {
   document.getElementsByTagName('body')[0].className = ""
 }
 function createChallengeHeader() {
-  getTopics();
+  showLoader()
+  getTopics()
+  
   //createChallengeHeaderTemplate()
 }
 
