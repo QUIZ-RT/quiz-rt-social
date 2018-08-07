@@ -604,7 +604,7 @@ export const loadDashBoardData = () => {
     })
     getChallenges().then(challengedata => {
         challengedata.splice(0, 1)
-        const my_Challeges = challengedata
+        //const my_Challeges = challengedata
         // const my_Challeges = challengedata.filter((item) => {
         //     if ('users' in item){
         //         return (item.users.indexOf(curState.menuReducer.currentUserInfo.email) !== -1)
@@ -618,7 +618,7 @@ export const loadDashBoardData = () => {
         // console.log(my_Challeges)
         // console.log(ChallegeList)
 
-        Store.dispatch({ type: "GET_ChallengeData", dataItem: { Challeges: challengedata, MyChalleges: my_Challeges } })
+        Store.dispatch({ type: "GET_ChallengeData", dataItem: {Challeges: challengedata} })
     })
 }
 
@@ -688,8 +688,10 @@ export const createChallengesSection = (challengeDataList) => {
 }
 export const createMyChallengesSection = (challengeDataList) => {
     document.querySelector('#dashboard_mychallenge').innerHTML = ""
+    const curState = Store.getState()
     if (challengeDataList !== []) {
-        const mychallengestemp = getMyChallengesTemplate(challengeDataList, "My Challenges")
+        const mychallangeList = challengeDataList.filter((x) => { return x.Created_By == curState.menuReducer.currentUserInfo.email})
+        const mychallengestemp = getMyChallengesTemplate(mychallangeList, "My Challenges")
         const mychallengeitems = mychallengestemp.querySelectorAll(".mdc-card")
         mychallengeitems.forEach((item) => {
             item.addEventListener("click", (event) => {
@@ -727,20 +729,21 @@ Store.subscribe(() => {
                 createChallengesSection(currentState.dashboardReducer.ChallegeList)
             }
             
-            if (currentState.dashboardReducer.MyChallegeList && currentState.dashboardReducer.MyChallegeList !== []) {
-                createMyChallengesSection(currentState.dashboardReducer.MyChallegeList)
+            if (currentState.dashboardReducer.ChallegeList && currentState.dashboardReducer.ChallegeList !== []) {
+                createMyChallengesSection(currentState.dashboardReducer.ChallegeList)
             }
             
         }
         createTopicmodal()
         createChallengemodal();
         createLeaderBoardForChallenges()
-        if (document.querySelector('#dashboard_pTopic').innerHTML !== ""
-            && document.querySelector('#dashboard_fTopic').innerHTML !== ""
-            && document.querySelector('#dashboard_challenge').innerHTML !== ""
-            && document.querySelector('#dashboard_mychallenge').innerHTML !== "") {
-            hideLoader()
-        }
+        hideLoader()
+        // if (document.querySelector('#dashboard_pTopic').innerHTML !== ""
+        //     && document.querySelector('#dashboard_fTopic').innerHTML !== ""
+        //     && document.querySelector('#dashboard_challenge').innerHTML !== ""
+        //     && document.querySelector('#dashboard_mychallenge').innerHTML !== "") {
+            
+        // }
     }
 })
 

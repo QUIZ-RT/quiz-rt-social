@@ -103,7 +103,8 @@ const topicModalbtnClick = (event) => {
   let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
   case "play":
-    console.log("play" + topicId)
+    const url = "https://www.pokemon.com/us/"
+    window.open(url , '_blank');
     break
   case "leader":
     console.log("leader" + topicId)

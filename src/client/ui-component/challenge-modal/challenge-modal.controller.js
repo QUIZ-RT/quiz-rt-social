@@ -74,9 +74,20 @@ const openChallengeModal = (state, id, target) => {
 const challengeModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const challengeId = btnData[1]
+  const curState = Store.getState()
+  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {return x.challengeId.toString() === challengeId })[0]
+  let topicId = ""
+  for (const topickey in curState.dashboardReducer.TopicList) {
+    if(curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName){
+      topicId = curState.dashboardReducer.TopicList[topickey].id
+      break
+    }
+  }
   switch (btnData[2]) {
   case "play":
     console.log("play" + challengeId)
+    const url = "https://quiz-engine.herokuapp.com?topicId="+topicId+"&type=challenge"
+    window.open(url , '_blank');
     break
   case "leader":
     console.log("leader" + challengeId)
