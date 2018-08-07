@@ -1,6 +1,7 @@
 import TemplateGenerator from "../../common/TemplateGenerator"
 import {Store} from '../../../../boot/Store';
 import {getTopics} from '../service/CreateChallengeService'
+var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
 function createChallengeSideBarView() {
   const challenegSideBarTemp = `<div class="mdl-layout__drawer" id="sidebar">
@@ -15,6 +16,8 @@ function createChallengeSideBarView() {
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate);
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 
 function callCreateChallenge(){
@@ -40,6 +43,8 @@ function createChallengeContainer() {
   const container = document.querySelector("#quiz-maincontent")
 
   container.appendChild(challengeContainerTemp)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 function createChallengeHeader() {
   getTopics();
@@ -91,6 +96,8 @@ function createChallengeHeaderTemplate(topicsArray) {
 const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
 const challengeSection = document.getElementById("challengeSection")
 challengeSection.appendChild(challengeTemplt);
+componentHandler.upgradeAllRegistered()
+document.getElementsByTagName('body')[0].className = ""
   //}
   //})
   
@@ -156,6 +163,8 @@ function createQuestion(challengeJsonObj, count) {
   const formSection = document.getElementById("challengeSection")
   formSection.innerHTML = ""
   formSection.appendChild(challengeTemplt)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 
 export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callPlayChallenge,callShareChallenge}
