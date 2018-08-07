@@ -1,11 +1,11 @@
 import {createChallengeContainer, createQuestion, createChallengeHeader, createChallengeSideBarView} from "../view/CreateChallengeView"
-import {storeChallenge} from "../service/CreateChallengeService"
+import {storeChallenge,updateUserTransaction} from "../service/CreateChallengeService"
 import {Store} from '../../../../boot/Store';
 
 let count = 0
 
-const challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],"gameStatus":{"playedOn":"","playerId":"","playerName":"","score":""}}
-
+let challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],"Created_By":""}
+let userEmail ="";
 Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'challenges'){
@@ -18,6 +18,11 @@ Store.subscribe(() => {
     document.querySelector('#challengeSection').innerHTML = "";
     console.log("hello sushil")
     createChallengeHeader();
+  }
+  if (currentState.menuReducer.currentUserInfo) {
+      userEmail =  currentState.menuReducer.currentUserInfo.email ; 
+      
+      console.log("userEmail is :",userEmail);
   }
 })
 
@@ -78,12 +83,14 @@ function saveChallengeDetails(evnt) {
   const quesans = document.getElementById(`ques${count}ans`).value
   const questionObj = `{"qid":${count}","question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
   challenge.questions.push(questionObj)
-  console.log(`final challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
-
-  storeChallenge(challenge)
+  console.log(`final challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} and questions are  ${challenge.questions}`)
+  challenge.Created_By = userEmail;
+  storeChallenge(challenge);
   const formSection = document.getElementById("challengeSection")
-  formSection.innerHTML = ""
+  formSection.innerHTML = "";
   count = 0
+  challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],"Created_By":""}
+
 }
 
 // Store.subscribe(()=>{
