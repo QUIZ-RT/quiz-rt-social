@@ -106,8 +106,7 @@ const addEvents = () => {
 
 Store.subscribe(() => {
   const currentState = Store.getState()
-  if(currentState.menuReducer.currentView === 'topics'){  
-    
+  if(currentState.menuReducer.currentView === 'topics'){   
     if (topicCtr === 0) {
       document.querySelector('#quiz-maincontent').innerHTML = ""
       createTopics();      
@@ -116,8 +115,7 @@ Store.subscribe(() => {
       if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC'){
         loadTopic(currentState.topicReducer.Topics)
       }     
-    }
-   
+    }   
   }
 })
 
