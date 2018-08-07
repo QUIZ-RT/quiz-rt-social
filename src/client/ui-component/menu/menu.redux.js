@@ -1,5 +1,5 @@
 // Reducer
-export const menuReducer = (state = { menuReducer:{currentView: "login"} }, action) => {
+export const menuReducer = (state = { }, action) => {
     const statePrev = state
     const newState = Object.assign({}, statePrev)
     switch (action.type) {
@@ -11,9 +11,9 @@ export const menuReducer = (state = { menuReducer:{currentView: "login"} }, acti
       newState.currentView = action.dataItem.Name
       return newState
     default:
-      return state;
+      return newState;
     }
-    return state;
+    return newState;
 }
 
 
