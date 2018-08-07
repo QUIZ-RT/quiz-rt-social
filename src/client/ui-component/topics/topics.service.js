@@ -1,6 +1,6 @@
 const addtopics = (topics) => {
+  console.log("addtopics- ",topics);
     const promise = new Promise(function(resolve, reject) {
-      let obj = {};
       fetch("/api/topics/addtopics", {
         headers: {
           "Content-Type": "application/json",
@@ -10,11 +10,8 @@ const addtopics = (topics) => {
         body: JSON.stringify(topics),
       }).then(
         res => res.json()
-      ).then(data => {
-        data.forEach(element => {
-          obj[""+element.id]=element;
-        });
-        resolve(obj)
+      ).then(data => {                
+        resolve(data)
       }, error => {
         reject(error)
       })
@@ -43,7 +40,9 @@ const addtopics = (topics) => {
   }
   
   const getTopics = () => {
+   
     const promise = new Promise(function(resolve, reject) {
+      let topics ={};
       fetch("/api/topics/gettopics", {
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +52,14 @@ const addtopics = (topics) => {
       }).then(
         res => res.json()
       ).then(json => {
-        resolve(json)
+        if(json.data!==null){
+          json.data.forEach(item => {
+            console.log(item)
+            topics[''+item.id]= item;
+          });
+        }  
+        resolve(topics)
+
       }, error => {
         reject(error)
       })

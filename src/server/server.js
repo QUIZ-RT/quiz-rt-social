@@ -147,10 +147,12 @@ app.use("/api/topics/gettopics", (req, res) => {
     let data = topic.getTopics();
     data.then(
         result=>{
-            res.send(result);
+            console.log("result gettopics- ",result);
+            res.send({"status":"success","data":result});
         },
         error=>{
-            res.send(error);
+            console.log("result errors- ",error);
+            res.send({"status":"fail","data":error});
         }        
     )
 });

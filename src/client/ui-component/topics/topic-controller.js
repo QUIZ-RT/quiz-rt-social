@@ -17,7 +17,7 @@ export const createTopics = () => {
               let topicsDB = Object.keys(result);
               let topicFB = Object.keys(response)
               if (topicsDB.length !== topicFB.length) {
-                let newtopics = topicsDB.filter(function (obj) { return topicFB.indexOf(obj) == -1; });
+                let newtopics = topicFB.filter(function (obj) { return topicsDB.indexOf(obj) == -1; });
                 for (let id of newtopics) {
                   result['' + id] = response['' + id];
                 }

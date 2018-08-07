@@ -12,10 +12,12 @@ export const getTopics = () => {
         res => res.json()
       ).then(json => {
           console.log(json);
-          json.forEach(item => {
-              console.log(item)
-              topics[''+item.id]= item;
-          });
+          if(json.data!==null){
+            json.data.forEach(item => {
+                console.log(item)
+                topics[''+item.id]= item;
+            });
+          }
         resolve(topics)
       }, error => {
         reject(error)
