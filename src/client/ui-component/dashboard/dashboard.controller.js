@@ -2,7 +2,7 @@ import {renderViewToContainer, getDashboardContainerTemplate, getPopularTopicTem
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import {challengeModalInitializeShow, createChallengemodal} from "../challenge-modal/challenge-modal.controller"
 import {showLoader, hideLoader} from "../loader/loader.controller"
-import {getTopics} from "../topics/topics.service"
+import {getTopics, getChallenges} from "../dashboard/dashboard.service"
 import {Store} from "../../boot/Store"
 
 // const topicData = {
@@ -550,25 +550,28 @@ const challengeDataList = [
 }
 ]
 
-const getChallenges = () => {
-  let promise = new Promise((resolve, reject) => {
-    setTimeout(()=>{
-      resolve(challengeDataList)
-    }, 500)
-  })
-  return promise
-}
+// const getChallenges = () => {
+//   let promise = new Promise((resolve, reject) => {
+//     setTimeout(()=>{
+//       resolve(challengeDataList)
+//     }, 500)
+//   })
+//   return promise
+// }
 
 
 export const loadDashBoardData = () => {
+    const curState = Store.getState()
+    console.log("LogIn User"+curState.menuReducer.currentUserInfo.email)
   getTopics().then(topicdata => {
+    
     const pop_Topic = topicdata
     const fav_Topic = topicdata
     Store.dispatch({type: "GET_TopicData", dataItem: {Topics: topicdata, PopularTopics:pop_Topic, FavoriteTopics: fav_Topic }})
-    // Store.dispatch({ "type": "ADD_TOPIC", "payload": topicdata })
 
   })
   getChallenges().then(challengedata => {
+    challengedata.splice (0, 1)
     const my_Challeges = challengedata
     Store.dispatch({type: "GET_ChallengeData", dataItem: {Challeges:challengedata, MyChalleges: my_Challeges }})
   })

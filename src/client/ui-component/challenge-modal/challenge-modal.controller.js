@@ -12,7 +12,7 @@ export const challengeModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
   const state = Store.getState().dashboardReducer;
-  const dataItem = state.ChallegeList.filter((x) => {return x.challengeId === targetId})[0]
+  const dataItem = state.ChallegeList.filter((x) => {return x.challengeId.toString() === targetId})[0]
   openChallengeModal(dataItem, targetId, evt.target)
   evt.preventDefault()
 }
