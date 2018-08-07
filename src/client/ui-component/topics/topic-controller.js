@@ -8,6 +8,11 @@ import {showLoader, hideLoader} from "../loader/loader.controller"
 
 
 let topicCtr = 0;
+
+export const updateTopicCtr= ()=>{
+  topicCtr = 0
+}
+
 export const createTopics = () => { 
     getTopics()
       .then(result => {
@@ -113,7 +118,7 @@ Store.subscribe(() => {
       topicCtr++
     }else{
       if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC'){
-        loadTopic(currentState.topicReducer.Topics)
+        loadTopic(Store.getState().topicReducer.Topics)
       }     
     }   
   }
