@@ -1,3 +1,6 @@
+import {Store} from '../../../../boot/Store'
+import {createChallengeHeaderTemplate} from '../view/CreateChallengeView'
+
 export const storeChallenge = (challengeJsonObj) => {
   var settings = {
     "url": "/api/challenge",
@@ -15,8 +18,24 @@ export const storeChallenge = (challengeJsonObj) => {
   })
 }
 
+export const storeUserTransaction = (transactionJsonObj) => {
+  var settings = {
+    "url": "/api/challenge",
+    "type": "POST",
+    "mode": "no-cors",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache",
+    },
+    "data": JSON.stringify(transactionJsonObj),
+  }
+
+  $.ajax(settings).done(function(response) {
+    console.log(response)
+  })
+}
+
 export const getTopics = () => {
-  const promise = new Promise(function(resolve, reject) {
     fetch("/api/topics/gettopics", {
       headers: {
         "Content-Type": "application/json",
@@ -25,12 +44,11 @@ export const getTopics = () => {
       method: "get",
     }).then(
       res => res.json()
-    ).then(json => {
-      resolve(json)
+    ).then(result => {
+      //Store.dispatch({ "type": "CHALLENGE_TOPICS", dataItem: result })
+      createChallengeHeaderTemplate(Object.values(result));
     }, error => {
-      reject(error)
-    })
-  })
-  return promise  
+      console.log(error)
+    }) 
 }
 

@@ -631,6 +631,7 @@ Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'dashboard'){
     document.querySelector('#quiz-maincontent').innerHTML = ""
+    showLoader()
     loadDashboardContainer()
     if(!currentState.dashboardReducer.Action || currentState.dashboardReducer.Action == "Init"){
     loadDashBoardData()
@@ -651,7 +652,12 @@ Store.subscribe(() => {
     }
     createTopicmodal()
     createChallengemodal();
-    hideLoader()
+    if(document.querySelector('#dashboard_pTopic').innerHTML !== ""
+        && document.querySelector('#dashboard_fTopic').innerHTML !== ""
+        && document.querySelector('#dashboard_challenge').innerHTML !== ""
+        && document.querySelector('#dashboard_challenge').innerHTML !== ""){
+            hideLoader()
+        }
   }
 })
 
