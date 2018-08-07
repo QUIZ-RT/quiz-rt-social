@@ -75,7 +75,7 @@ var config = {
       }, { 
         test: /\.js$/, loader: 'exports-loader' 
       }, {
-        test: /\.(jpe?g|png|gif|svg)$/,
+        test: /\.(jpe?g|png|gif|svg|jpg)$/,
         use: [
             {
                 loader: 'file-loader',

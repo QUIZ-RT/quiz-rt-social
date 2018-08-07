@@ -1,6 +1,7 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
 import {Store} from "../../boot/Store"
+import {updateTopicCtr} from "../topics/topic-controller";
 
 
 
@@ -78,6 +79,10 @@ const menuNavigation = (evt) => {
   drawer.open = false
   const currentState = Store.getState()
   if (currentState.menuReducer.currentView !== menuItem.Name.toLowerCase()) {
+    document.querySelector('#quiz-maincontent').innerHTML = ""
+    if(menuItem.Name.toLowerCase()==="topics"){
+      updateTopicCtr()
+    }
     Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
   }
 }

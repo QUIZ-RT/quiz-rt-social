@@ -89,3 +89,4 @@ export const makeChat = (state = {
     default: { return state }
   }
 }
+

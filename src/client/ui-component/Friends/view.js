@@ -1,6 +1,5 @@
 var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
-
 const mainContainer = document.getElementById("quiz-maincontent")
 
 const htmlToTemplate = (htmlstr) => {
@@ -93,10 +92,10 @@ const createSearchUserItem = (user) => {
 }
 
 const createFriendItem = (user) => {
-  const item = htmlToTemplate(`<div class="mdl-list__item start_chat" user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName} >
-              <span class="mdl-list__item-primary-content" user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName}>
-                <i class="material-icons mdl-list__item-avatar" user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName}>person</i>                
-                <span user_email="quiz.socialrt@gmail.com" user_displayName=${user.firstName} ${user.lastName}>${user.firstName} ${user.lastName}</span>
+  const item = htmlToTemplate(`<div class="mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-avatar">person</i>
+                <span>${user.displayName}</span>
               </span>
             </div>`)
   return item
@@ -106,13 +105,13 @@ const createFriendReqItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>${user.firstName} ${user.lastName}</span>
+                <span>${user.displayName}</span>
               </span>
               <span class="mdl-list__item-secondary-content" style="flex-direction: row;">
-              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored accept-Friend-Request" style="margin-right:10px;" req-id=${user.req_id}>
+              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored accept-Friend-Request" style="margin-right:10px;" req-id=${user.reqId}>
                 Accept
               </button>
-              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent reject-Friend-Request" req-id=${user.req_id}>
+              <button class="mdl-list__item-secondary-action mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent reject-Friend-Request" req-id=${user.reqId}>
                 Reject
               </button>
             </span>
@@ -124,17 +123,30 @@ const showProgressBar = () => {
     </div>`)
   return item
 }
-export const showSearchPageWithResult = (users) => {
+export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
   friendComponent.appendChild(createFriendHeaderWithSearchBox("Search and make friends"))
   const mainContent = createFriendMainContentContainer()
-  const usersContainer = createUserListContainer()
-  mainContent.appendChild(usersContainer)
+  // const usersContainer = createUserListContainer()
+  // mainContent.appendChild(usersContainer)
 
-  users.forEach((user) => {
-    usersContainer.appendChild(createSearchUserItem(user))
-  })
+  // users.forEach((user) => {
+  //   usersContainer.appendChild(createSearchUserItem(user))
+  // })
+
+  if (showProgress) {
+    mainContent.appendChild(showProgressBar())
+  }
+  else {
+    const usersContainer = createUserListContainer()
+    mainContent.appendChild(usersContainer)
+
+    users.forEach((user) => {
+      usersContainer.appendChild(createSearchUserItem(user))
+    })
+  }
+
   friendComponent.appendChild(mainContent)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
