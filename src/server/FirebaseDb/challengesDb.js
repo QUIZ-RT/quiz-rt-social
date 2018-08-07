@@ -91,3 +91,40 @@ export const getUserDetail = (req, resp) => {
 });
   return promise;
 }
+
+
+// get user specific challenges
+export const getUserSpecificChallengesFromDB = (req, resp) => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
+  }
+  var userChallenges = []
+  const challengesRef = firebase.database().ref()
+  const promise = new Promise(function(resolve, reject) {
+    challengesRef.child("User_Transaction").orderByChild("userID").equalTo(req.body.userId).on("child_added", function(users) {
+      //console.log("Users DATA" + JSON.stringify(users))
+      userChallenges.push(users)
+      resolve(userChallenges)
+    }, function(errorObject) {
+      reject(errorObject)
+    })
+  })
+  return promise
+}
+
+export const getUserFromUserMasterDB = (req, resp) => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
+  }
+  const userMaster = firebase.database().ref()
+  const promise = new Promise(function(resolve, reject) {
+    userMaster.child("User_Master").orderByChild("email").equalTo(req.body.email).on("child_added", function(users) {
+      //console.log("users:", JSON.stringify(users))
+      resolve(users)
+    }, function(errorObject) {
+      reject(errorObject)
+    })
+  })
+  return promise
+}
+

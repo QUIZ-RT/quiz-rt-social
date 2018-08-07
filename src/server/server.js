@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
 import { addChallengeToDB,getUserDetail,updateUserTransaction } from './FirebaseDb/challengesDb';
 import { searchMasterUser, getUserByEmailId, getUserByUserId, sendFriendRequest, getPendingFriendRequest, getFriendRequest, acceptFriendReq, rejectFriendReq, getListOfFriend } from './FirebaseDb/Friends';
-import { getAllChallengesFromDB } from './FirebaseDb/challengesDb';
+import { getAllChallengesFromDB, getUserSpecificChallengesFromDB, getUserFromUserMasterDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
 
 
@@ -322,5 +322,30 @@ app.use("/api/getUserDetail",(req, res)=> {
         }        
     )
 })
+
+
+app.use("/api/userChallenges", (req, res) => {    
+    console.log("checking request val= ", req.body)
+    let data = getUserSpecificChallengesFromDB(req, res)
+    data.then(
+      result => {
+        res.send(result)
+      },
+      error => {
+        res.send(error)
+      })
+  })
+  
+  app.post("/api/getUserFromUserMaster", (req, res) => {
+    let data = getUserFromUserMasterDB(req, res)
+    data.then(
+      result => {
+        res.send(result)
+      },
+      error => {
+        res.send(error)
+      })
+  })
+  
  
 app.listen(8080, () => console.log('Example app listening on port 8080!'));
