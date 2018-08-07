@@ -100,8 +100,9 @@ function render() {
 }
 function showChatBox(event) {
   let user = {};
-  user.email = event.target.getAttribute("user_email")
-  user.displayName= event.target.getAttribute("user_displayName")
+  user.email = event.target.getAttribute("email")
+  user.displayName = event.target.getAttribute("displayName")
+  user.photoURL = event.target.getAttribute("photoURL")
   loadChatContainer(user);
 }
 Store.subscribe(render)

@@ -122,7 +122,7 @@ function createMsgLiElementSelf(msg, cssClass, name) {
 
 function render() {
   let state = Store.getState();
-  $("#onlineUsers").empty()
+  //$("#onlineUsers").empty()
   state.makeChat.onlineUsers.forEach(function (user) {
     if (user.user.email !== state.makeChat.myUser.user.email) {
       //var liElement = createLiElement(user.id, user.name)
