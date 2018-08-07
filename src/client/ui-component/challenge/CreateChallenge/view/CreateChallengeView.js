@@ -21,15 +21,12 @@ function createChallengeSideBarView() {
 }
 
 function callCreateChallenge(){
-  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"createChallenge"});
 }
 function callPlayChallenge(){
-  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"playChallenge"});
 }
 function callShareChallenge(){
-  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"shareChallenge"});
 }
 

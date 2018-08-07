@@ -1,10 +1,10 @@
-import {renderViewToContainer, getNoListMsg, getDashboardContainerTemplate, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
-import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
-import {challengeModalInitializeShow, createChallengemodal} from "../challenge-modal/challenge-modal.controller"
-import {showLoader, hideLoader} from "../loader/loader.controller"
-import {getTopics, getChallenges} from "../dashboard/dashboard.service"
-import {Store} from "../../boot/Store"
-import {createLeaderBoardForChallenges} from "../leader-board/leader-controller"
+import { renderViewToContainer, getNoListMsg, getDashboardContainerTemplate, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate } from "./dashboard.view"
+import { topicModalInitializeShow, createTopicmodal } from "../topic-modal/topic-modal.controller"
+import { challengeModalInitializeShow, createChallengemodal } from "../challenge-modal/challenge-modal.controller"
+import { showLoader, hideLoader } from "../loader/loader.controller"
+import { getTopics, getChallenges } from "../dashboard/dashboard.service"
+import { Store } from "../../boot/Store"
+import { createLeaderBoardForChallenges } from "../leader-board/leader-controller"
 
 // const topicData = {
 //   "test1": {
@@ -164,391 +164,426 @@ import {createLeaderBoardForChallenges} from "../leader-board/leader-controller"
 // ]
 
 const challengeDataList = [
-  {
-    "challengeId":"01",
-    "topicName": "sport",
-    "challengeName": "chall",
-    "questions":[
-        {"qId":'1',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+    {
+        "challengeId": "01",
+        "topicName": "sport",
+        "challengeName": "chall",
+        "questions": [
+            {
+                "qId": '1',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '2',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'2',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '3',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '4',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'3',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '5',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '6',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'4',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'5',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'6',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'7',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
+            {
+                "qId": '7',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             }
-    ]
-},
-{
-    "challengeId":"06",
-    "topicName": "sport",
-    "challengeName": "ch2",
-    "questions":[
-        {"qId":'1',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+        ]
+    },
+    {
+        "challengeId": "06",
+        "topicName": "sport",
+        "challengeName": "ch2",
+        "questions": [
+            {
+                "qId": '1',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '2',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'2',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '3',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '4',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'3',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '5',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '6',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'4',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'5',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'6',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'7',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
+            {
+                "qId": '7',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             }
-    ]
-},
-{
-    "challengeId":"02",
-    "topicName": "sport",
-    "challengeName": "ch2",
-    "questions":[
-        {"qId":'1',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+        ]
+    },
+    {
+        "challengeId": "02",
+        "topicName": "sport",
+        "challengeName": "ch2",
+        "questions": [
+            {
+                "qId": '1',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '2',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'2',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '3',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '4',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'3',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '5',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '6',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'4',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'5',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'6',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'7',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
+            {
+                "qId": '7',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             }
-    ]
-},
-{
-    "challengeId":"03",
-    "topicName": "sport",
-    "challengeName": "ch2",
-    "questions":[
-        {"qId":'1',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+        ]
+    },
+    {
+        "challengeId": "03",
+        "topicName": "sport",
+        "challengeName": "ch2",
+        "questions": [
+            {
+                "qId": '1',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '2',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'2',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '3',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '4',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'3',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '5',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '6',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'4',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'5',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'6',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'7',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
+            {
+                "qId": '7',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             }
-    ]
-},
-{
-    "challengeId":"04",
-    "topicName": "sport",
-    "challengeName": "ch2",
-    "questions":[
-        {"qId":'1',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+        ]
+    },
+    {
+        "challengeId": "04",
+        "topicName": "sport",
+        "challengeName": "ch2",
+        "questions": [
+            {
+                "qId": '1',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '2',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'2',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '3',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '4',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'3',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
+            {
+                "qId": '5',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-        "answer": "Bangalore"
+            {
+                "qId": '6',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             },
-            {"qId":'4',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'5',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'6',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
-            },
-            {"qId":'7',
-            "question": "where are you from ?",
-            "options":{
-                    "optionA" : "Bangalore",
-                    "optionB" : "Delhi",
-                    "optionC" : "Kolkata",
-                    "optionD" : "Mumbai",
-            },
-        "answer": "Bangalore"
+            {
+                "qId": '7',
+                "question": "where are you from ?",
+                "options": {
+                    "optionA": "Bangalore",
+                    "optionB": "Delhi",
+                    "optionC": "Kolkata",
+                    "optionD": "Mumbai",
+                },
+                "answer": "Bangalore"
             }
-    ]
-}
+        ]
+    }
 ]
 
 // const getChallenges = () => {
@@ -562,13 +597,13 @@ const challengeDataList = [
 
 
 export const loadDashBoardData = () => {
-    
+
     getTopics().then(topicdata => {
-        Store.dispatch({type: "GET_TopicData", dataItem: {Topics: topicdata}})
+        Store.dispatch({ type: "GET_TopicData", dataItem: { Topics: topicdata } })
 
     })
     getChallenges().then(challengedata => {
-        challengedata.splice (0, 1)
+        challengedata.splice(0, 1)
         const my_Challeges = challengedata
         // const my_Challeges = challengedata.filter((item) => {
         //     if ('users' in item){
@@ -583,129 +618,129 @@ export const loadDashBoardData = () => {
         // console.log(my_Challeges)
         // console.log(ChallegeList)
 
-        Store.dispatch({type: "GET_ChallengeData", dataItem: {Challeges:challengedata, MyChalleges: my_Challeges }})
+        Store.dispatch({ type: "GET_ChallengeData", dataItem: { Challeges: challengedata, MyChalleges: my_Challeges } })
     })
 }
 
 const loadDashboardContainer = () => {
-  const dashboardContainerTemp = getDashboardContainerTemplate();
-  renderViewToContainer(dashboardContainerTemp, "#quiz-maincontent")
+    const dashboardContainerTemp = getDashboardContainerTemplate();
+    renderViewToContainer(dashboardContainerTemp, "#quiz-maincontent")
 }
 
 
 export const createPopularTopicSection = (topicData) => {
-  document.querySelector('#dashboard_pTopic').innerHTML = ""
-  if(Object.keys(topicData).length > 0){
-    const pTopictemp = getPopularTopicTemplate(topicData, "Popular Topic")
-    const pTopicitems = pTopictemp.querySelectorAll(".mdc-card")
-    pTopicitems.forEach((item) => {
-        item.addEventListener("click", (event) => {
-        topicModalInitializeShow(event)
+    document.querySelector('#dashboard_pTopic').innerHTML = ""
+    if (Object.keys(topicData).length > 0) {
+        const pTopictemp = getPopularTopicTemplate(topicData, "Popular Topic")
+        const pTopicitems = pTopictemp.querySelectorAll(".mdc-card")
+        pTopicitems.forEach((item) => {
+            item.addEventListener("click", (event) => {
+                topicModalInitializeShow(event)
+            })
         })
-    })
-    renderViewToContainer(pTopictemp, "#dashboard_pTopic")
-  }
-  else
-  {
-    renderViewToContainer(getNoListMsg("Popular Topic", "No Popular Topic List"), "#dashboard_pTopic")
-  }
+        renderViewToContainer(pTopictemp, "#dashboard_pTopic")
+    }
+    else {
+        renderViewToContainer(getNoListMsg("Popular Topic", "No Popular Topic List"), "#dashboard_pTopic")
+    }
 }
 export const createFavoriteTopicSection = (topicData) => {
-  document.querySelector('#dashboard_fTopic').innerHTML = ""
-  const curState = Store.getState()
-  let fav_Topic = {}
-  for (const topickey in topicData) {
-      if ('users' in topicData[topickey]){
-          if(topicData[topickey].users.indexOf(curState.menuReducer.currentUserInfo.email) !== -1){
-              fav_Topic[''+topicData[topickey].id]= topicData[topickey];
-          }
-      }  
-  }
-  if(Object.keys(fav_Topic).length > 0){
-    const fTopictemp = getFavTopicTemplate(fav_Topic, "Favorite Topic")
-    const fTopicitems = fTopictemp.querySelectorAll(".mdc-card")
-    fTopicitems.forEach((item) => {
-        item.addEventListener("click", (event) => {
-        topicModalInitializeShow(event)
+    document.querySelector('#dashboard_fTopic').innerHTML = ""
+    const curState = Store.getState()
+    let fav_Topic = {}
+    for (const topickey in topicData) {
+        if ('users' in topicData[topickey]) {
+            if (topicData[topickey].users.indexOf(curState.menuReducer.currentUserInfo.email) !== -1) {
+                fav_Topic['' + topicData[topickey].id] = topicData[topickey];
+            }
+        }
+    }
+    if (Object.keys(fav_Topic).length > 0) {
+        const fTopictemp = getFavTopicTemplate(fav_Topic, "Favorite Topic")
+        const fTopicitems = fTopictemp.querySelectorAll(".mdc-card")
+        fTopicitems.forEach((item) => {
+            item.addEventListener("click", (event) => {
+                topicModalInitializeShow(event)
+            })
         })
-    })
-  renderViewToContainer(fTopictemp, "#dashboard_fTopic")
-  }
-  else
-  {
-    renderViewToContainer(getNoListMsg("Favorite Topic", "No Favorite Topic List"), "#dashboard_fTopic")
-  }
-    
-  
+        renderViewToContainer(fTopictemp, "#dashboard_fTopic")
+    }
+    else {
+        renderViewToContainer(getNoListMsg("Favorite Topic", "No Favorite Topic List"), "#dashboard_fTopic")
+    }
+
+
 }
 export const createChallengesSection = (challengeDataList) => {
-  document.querySelector('#dashboard_challenge').innerHTML = ""
-  const challengestemp = getChallengesTemplate(challengeDataList, "Challenges")
-  const challengeitems = challengestemp.querySelectorAll(".mdc-card")
-  challengeitems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      challengeModalInitializeShow(event)
-    })
-  })
-  renderViewToContainer(challengestemp, "#dashboard_challenge")
+    document.querySelector('#dashboard_challenge').innerHTML = ""
+    if (challengeDataList !== []) {
+        const challengestemp = getChallengesTemplate(challengeDataList, "Challenges")
+        const challengeitems = challengestemp.querySelectorAll(".mdc-card")
+        challengeitems.forEach((item) => {
+            item.addEventListener("click", (event) => {
+                challengeModalInitializeShow(event)
+            })
+        })
+        renderViewToContainer(challengestemp, "#dashboard_challenge")
+    } else {
+        renderViewToContainer(getNoListMsg("Challenges", "No Challenge List"), "#dashboard_challenge")
+    }
 }
 export const createMyChallengesSection = (challengeDataList) => {
-  document.querySelector('#dashboard_mychallenge').innerHTML = ""
-  const mychallengestemp = getMyChallengesTemplate(challengeDataList, "My Challenges")
-  const mychallengeitems = mychallengestemp.querySelectorAll(".mdc-card")
-  mychallengeitems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      challengeModalInitializeShow(event)
-    })
-  })
-  renderViewToContainer(mychallengestemp, "#dashboard_mychallenge")
+    document.querySelector('#dashboard_mychallenge').innerHTML = ""
+    if (challengeDataList !== []) {
+        const mychallengestemp = getMyChallengesTemplate(challengeDataList, "My Challenges")
+        const mychallengeitems = mychallengestemp.querySelectorAll(".mdc-card")
+        mychallengeitems.forEach((item) => {
+            item.addEventListener("click", (event) => {
+                challengeModalInitializeShow(event)
+            })
+        })
+        renderViewToContainer(mychallengestemp, "#dashboard_mychallenge")
+    }
+    else {
+        renderViewToContainer(getNoListMsg("My Challenges", "No My Challenge List"), "#dashboard_mychallenge")
+    }
+
 }
 
 
 Store.subscribe(() => {
-  const currentState = Store.getState()
-  if(currentState.menuReducer.currentView === 'dashboard'){
-    document.querySelector('#quiz-maincontent').innerHTML = ""
-    showLoader()
-    loadDashboardContainer()
-    if(!currentState.dashboardReducer.Action || currentState.dashboardReducer.Action == "Init"){
-    loadDashBoardData()
-    }
-    else
-    {
-      if (currentState.dashboardReducer.TopicList && Object.keys(currentState.dashboardReducer.TopicList).length > 0){
-        createPopularTopicSection(currentState.dashboardReducer.TopicList)
-      }
-      
+    const currentState = Store.getState()
+    if (currentState.menuReducer.currentView === 'dashboard') {
+        document.querySelector('#quiz-maincontent').innerHTML = ""
+        showLoader()
+        loadDashboardContainer()
+        if (!currentState.dashboardReducer.Action || currentState.dashboardReducer.Action == "Init") {
+            loadDashBoardData()
+        }
+        else {
+            if (currentState.dashboardReducer.TopicList && Object.keys(currentState.dashboardReducer.TopicList).length > 0) {
+                createPopularTopicSection(currentState.dashboardReducer.TopicList)
+            }
 
-      if (currentState.dashboardReducer.TopicList && Object.keys(currentState.dashboardReducer.TopicList).length > 0){
-        createFavoriteTopicSection(currentState.dashboardReducer.TopicList)
-      }
-      
-      if (currentState.dashboardReducer.ChallegeList && currentState.dashboardReducer.ChallegeList !== []){
-        createChallengesSection(currentState.dashboardReducer.ChallegeList)
-      }
-    //   else{
-    //     document.querySelector('#dashboard_challenge').innerHTML = ""
-    //     renderViewToContainer(getNoListMsg("Challenges", "No Challenge List"), "#dashboard_challenge")
-    //   }
-      if (currentState.dashboardReducer.MyChallegeList && currentState.dashboardReducer.MyChallegeList !== []){
-        createMyChallengesSection(currentState.dashboardReducer.MyChallegeList)
-      }
-    //   else{
-    //     document.querySelector('#dashboard_mychallenge').innerHTML = ""
-    //     renderViewToContainer(getNoListMsg("My Challenges", "No My Challenge List"), "#dashboard_mychallenge")
-    //   }
-    }
-    createTopicmodal()
-    createChallengemodal();
-    createLeaderBoardForChallenges()
-    if(document.querySelector('#dashboard_pTopic').innerHTML !== ""
-        && document.querySelector('#dashboard_fTopic').innerHTML !== ""
-        && document.querySelector('#dashboard_challenge').innerHTML !== ""
-        && document.querySelector('#dashboard_mychallenge').innerHTML !== ""){
+            if (currentState.dashboardReducer.TopicList && Object.keys(currentState.dashboardReducer.TopicList).length > 0) {
+                createFavoriteTopicSection(currentState.dashboardReducer.TopicList)
+            }
+
+            if (currentState.dashboardReducer.ChallegeList && currentState.dashboardReducer.ChallegeList !== []) {
+                createChallengesSection(currentState.dashboardReducer.ChallegeList)
+            }
+            
+            if (currentState.dashboardReducer.MyChallegeList && currentState.dashboardReducer.MyChallegeList !== []) {
+                createMyChallengesSection(currentState.dashboardReducer.MyChallegeList)
+            }
+            
+        }
+        createTopicmodal()
+        createChallengemodal();
+        createLeaderBoardForChallenges()
+        if (document.querySelector('#dashboard_pTopic').innerHTML !== ""
+            && document.querySelector('#dashboard_fTopic').innerHTML !== ""
+            && document.querySelector('#dashboard_challenge').innerHTML !== ""
+            && document.querySelector('#dashboard_mychallenge').innerHTML !== "") {
             hideLoader()
         }
-  }
+    }
 })
 
