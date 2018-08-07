@@ -17,6 +17,26 @@ const addtopics = (topics) => {
     })
     return promise
   }
+ 
+  const addNewTopics = (topics) => {
+    const promise = new Promise(function(resolve, reject) {
+      fetch("/api/topics/addNewTopics", {
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
+        method: "post",
+        body: JSON.stringify(topics),
+      }).then(
+        res => res.json()
+      ).then(json => {
+        resolve(json)
+      }, error => {
+        reject(error)
+      })
+    })
+    return promise
+  }
   
   const getTopics = () => {
     const promise = new Promise(function(resolve, reject) {
@@ -57,7 +77,7 @@ const addtopics = (topics) => {
     return promise 
   }
   
-  const getTopicsFromFireBase = () => {
+  const getTopicsFromQAGEN = () => {
     const promise = new Promise(function(resolve) {
       const obj = {
         "test1": {
@@ -69,7 +89,6 @@ const addtopics = (topics) => {
           "modifiedBy": 1,
           "modifiedDate": "11/11/2018",
           "published": true,
-          "follow": true,
           "users":[]
         },
         "test2": {
@@ -81,7 +100,6 @@ const addtopics = (topics) => {
           "modifiedBy": 1,
           "modifiedDate": "11/11/2018",
           "published": true,
-          "follow": true,
           "users":[]
         },
         "test3": {
@@ -93,7 +111,6 @@ const addtopics = (topics) => {
           "modifiedBy": 1,
           "modifiedDate": "11/11/2018",
           "published": true,
-          "follow": true,
           "users":[]
         },
       }
@@ -106,6 +123,6 @@ const addtopics = (topics) => {
     addtopics,
     getTopics,
     updateFollow,
-    getTopicsFromFireBase,
+    getTopicsFromQAGEN,
   
   }

@@ -3,6 +3,8 @@ import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
 import {Store} from "../../boot/Store"
 import {updateFollow} from "../topics/topics.service"
+import {getFilteredDetails } from "../leader-board/leader-controller"
+import {getChallengeDetails} from "../leader-board/leader-board-service"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -12,19 +14,25 @@ export const topicModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
   //const state = topicDataList[targetId]
-  const state = Store.getState().topicReducer;
+  const state = Store.getState();
   
   //.topics["" + targetId]
-  openTopicModal(state[''+targetId], targetId, evt.target)
+  if(state.menuReducer.currentView === "dashboard"){
+    openTopicModal(state.dashboardReducer.TopicList[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+
+  }
+  else if(state.menuReducer.currentView === "topics"){
+    openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  }
   evt.preventDefault()
 }
 
-const openTopicModal = (state, id, target) => {
+const openTopicModal = (state, id, target, emailId) => {
   const dialogElement = document.querySelector("#topic-mdc-dialog")
   const dialog = new MDCDialog(dialogElement)
   const dialogHeader = dialogElement.querySelector("#topic-mdc-dialog-label")
   dialogHeader.innerHTML = `Topic : ${state.topicText}`
-  render(state, id)
+  render(state, id,emailId)
   dialog.listen("MDCDialog:cancel", function() {
     console.log("canceled")
   })
@@ -63,9 +71,9 @@ const openTopicModal = (state, id, target) => {
   dialog.show()
 }
 
-const render = (state, id) => {
+const render = (state, id,emailId) => {
   const dialogBody = document.querySelector("#topic-mdc-dialog-description")
-  const topicModalBodyTemp = getToipcModalBodyContent(state, id)
+  const topicModalBodyTemp = getToipcModalBodyContent(state, id,emailId)
   const modalBtnList = topicModalBodyTemp.querySelectorAll("button")
   modalBtnList.forEach((item) => {
     item.addEventListener("click", (event) => {
@@ -79,10 +87,18 @@ const render = (state, id) => {
 const topicModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const topicId = btnData[1]
-  const state = Store.getState().topicReducer
+  const state = Store.getState()
+  let topicData = {}
+  if(state.menuReducer.currentView === "dashboard"){
+    topicData = state.dashboardReducer.TopicList
+  }
+  else if(state.menuReducer.currentView === "topics"){
+    topicData = state.topicReducer.Topics
+  }
+  
   let data  = {"id":topicId,"data":[]}
   let topic = ""
-  let userid ="ranjitjena199@gmail.com"
+  let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
   case "play":
     console.log("play" + topicId)
@@ -91,8 +107,7 @@ const topicModalbtnClick = (event) => {
     console.log("leader" + topicId)
     break
   case "unfollow":
-    topic = state["" + topicId]
-    //topic.follow = !topic.follow
+    topic = topicData["" + topicId]
     let ind = topic.users.indexOf(userid)
     if(ind>-1){
       topic.users.splice(ind,1)
@@ -100,26 +115,36 @@ const topicModalbtnClick = (event) => {
     data.data = topic.users;
     updateFollow(data).then(result=>{
       console.log(result)
-      topic.users = data.data;
-      render(topic, topicId)
+      topic.users = data.data;      
+      topicData["" + topicId]['users'] = topic.users
+      if(state.menuReducer.currentView !== "dashboard"){
+      Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      }
+      render(topic, topicId,userid)
     },error=>{
       console.log(error);
     })
+    
     break
   case "follow":
-    topic = state["" + topicId]     
+    topic = topicData["" + topicId]     
     if(topic.users!==undefined){
-      data.data = [userid];
+      topic.users.push(userid)
     }else{
-      data.data.push(userid);
+      topic.users = [userid];
     }
-    updateFollow(data).then(result=>{
-      topic.users = data.data;
-      render(topic, topicId)
+    data.data = topic.users
+    updateFollow(data).then(result=>{        
+      topicData["" + topicId]['users'] = topic.users
+      render(topic, topicId,userid)
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      }
     },error=>{
       console.log(error);
-    });
-    
+    });    
     break
   }
 }

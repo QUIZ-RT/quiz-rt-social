@@ -3,27 +3,40 @@ import {storeChallenge} from "../service/CreateChallengeService"
 import {Store} from '../../../../boot/Store';
 
 let count = 0
-const challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],}
+
+const challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],"gameStatus":{"playedOn":"","playerId":"","playerName":"","score":""}}
 
 Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'challenges'){
-    document.querySelector('#quiz-maincontent').innerHTML = "";
-    createChallengeSideBarView();
-    createChallengeContainer();
+   
+        if(currentState.challengeReducer.challengeSec ===undefined){
+            document.querySelector('#quiz-maincontent').innerHTML = "";
+            createChallengeSideBarView();
+            createChallengeContainer();
+            Store.dispatch({"type":"ChallengeScreenStat","dataItem":"yes"});
+        }
+         
+   } else{
+    Store.dispatch({"type":"ChallengeScreenStatReset","dataItem":"no"});
+   }
+  if(currentState.challengeReducer.currentView === 'createChallenge'){
+    document.querySelector('#challengeSection').innerHTML = "";
+    console.log("hello sushil")
     createChallengeHeader();
   }
 })
 
 
-Store.subscribe(() => {
-  const currentState = Store.getState()
-  if(currentState.challengeReducer.currentView === 'createChallenge'){
-    document.querySelector('#challengeSection').innerHTML = "";
-    createChallengeContainer()
-    createChallengeHeader()
-  }
-})
+// Store.subscribe(() => {
+//   const currentState = Store.getState()
+//   if(currentState.challengeReducer.currentView === 'createChallenge'){
+//     document.querySelector('#quiz-maincontent').innerHTML = "";
+//     createChallengeSideBarView();
+//     createChallengeContainer()
+//     createChallengeHeader()
+//   }
+// })
 
 // function createChallengeSideBar() {
 //   createChallengeSideBarView()
@@ -69,7 +82,7 @@ function saveChallengeDetails(evnt) {
   const quesopt3 = document.getElementById(`ques${count}opt3`).value
   const quesopt4 = document.getElementById(`ques${count}opt4`).value
   const quesans = document.getElementById(`ques${count}ans`).value
-  const questionObj = `{"qid":${currentQuesCount}","question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
+  const questionObj = `{"qid":${count}","question": ${ques},"options":["optionA": ${quesopt1},"optionB": ${quesopt2},"optionC" ${quesopt3},"optionD": ${quesopt4}],"answer": ${quesans}}`
   challenge.questions.push(questionObj)
   console.log(`final challenge obj: challengeName:${challenge.challengeName} , topic name : ${challenge.topicName} , questions are  ${challenge.questions}`)
 

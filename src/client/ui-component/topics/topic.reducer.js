@@ -1,21 +1,16 @@
 export const topicReducer = (state = {}, action) => {
-
-  const statePrev = {...state}
-  const newState = Object.assign({}, statePrev)
   switch (action.type) {
-  case "GET_TOPIC":
-    newState.TopicList = action.dataItem.topicList
-    return newState
-    break
-  case "ADD_TOPIC":
-  console.log(state)
-    const data = Object.assign({}, state, action.payload)
-    console.log(data)
-    // return Object.assign({}, state.topics, action.payload)
-    return data
-  default:
-    return newState
+    case "GET_TOPIC":
+      return state
+      break
+    case "ADD_TOPIC":
+      return Object.assign({}, state,{'Topic_Action':'ADD_TOPIC'},{"Topics":action.payload})
+    case "UPDATE_TOPIC":
+      return Object.assign({}, state,{'Topic_Action':'UPDATE_TOPIC'}, {"Topics":action.payload})
+    default:   
+      return state
   }
+  return state;
 }
 
 

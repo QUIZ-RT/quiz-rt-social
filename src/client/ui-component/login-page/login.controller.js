@@ -5,17 +5,17 @@ import {Store} from "../../boot/Store"
 export const createUserLogin = () => {
   const userContent = getUserTemplate()
   const signInBtn = userContent.querySelector("#signin")
-  const signUpBtn = userContent.querySelector("#signup")
+  //const signUpBtn = userContent.querySelector("#signup")
   signInBtn.addEventListener("click", (event) => {
-    const username = document.getElementById("username")
-    const password = document.getElementById("password")
-    goToSignin(username.value, password.value)
+    // const username = document.getElementById("username")
+    // const password = document.getElementById("password")
+    goToSignin()
   })
-  signUpBtn.addEventListener("click", (event) => {
-    const username = document.getElementById("username")
-    const password = document.getElementById("password")
-    goToSignup(username.value, password.value)
-  })
+  // signUpBtn.addEventListener("click", (event) => {
+  //   const username = document.getElementById("username")
+  //   const password = document.getElementById("password")
+  //   goToSignup(username.value, password.value)
+  // })
   renderViewToContainer(userContent, "#quiz-maincontent")
 }
 

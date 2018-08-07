@@ -94,3 +94,21 @@
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
+
+aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
+  .mdc-dialog__surface{
+    border: 2px solid #ccc;
+    max-width: 30em;
+  }
+  .mdc-dialog__header{
+    background: #220748;
+    padding-bottom: 1.2em;
+    color: #fff;
+  }
+  .mdc-dialog__body .mdc-button{
+    min-width: 20em;
+  }
+  .mdc-dialog__footer{
+    background: #220748;
+  }
+}
