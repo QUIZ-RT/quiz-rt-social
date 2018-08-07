@@ -3,17 +3,26 @@ import {storeChallenge} from "../service/CreateChallengeService"
 import {Store} from '../../../../boot/Store';
 
 let count = 0
+
 const challenge ={"challengeId": "", "topicName": "", "challengeName": "", "questions": [],"gameStatus":{"playedOn":"","playerId":"","playerName":"","score":""}}
 
 Store.subscribe(() => {
   const currentState = Store.getState()
   if(currentState.menuReducer.currentView === 'challenges'){
-        document.querySelector('#quiz-maincontent').innerHTML = "";
-        createChallengeSideBarView();
-        createChallengeContainer();
-       
-  }
-  if((currentState.challengeReducer.currentView === 'createChallenge') || (currentState.challengeReducer.currentView === undefined)){
+   
+        if(currentState.challengeReducer.challengeSec ===undefined){
+            document.querySelector('#quiz-maincontent').innerHTML = "";
+            createChallengeSideBarView();
+            createChallengeContainer();
+            Store.dispatch({"type":"ChallengeScreenStat","dataItem":"yes"});
+        }
+         
+   } else{
+    Store.dispatch({"type":"ChallengeScreenStatReset","dataItem":"no"});
+   }
+  if(currentState.challengeReducer.currentView === 'createChallenge'){
+    document.querySelector('#challengeSection').innerHTML = "";
+    console.log("hello sushil")
     createChallengeHeader();
   }
 })

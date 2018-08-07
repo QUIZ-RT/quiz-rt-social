@@ -1,7 +1,15 @@
+var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
+
+const mainContainer = document.getElementById("quiz-maincontent")
+
 const htmlToTemplate = (htmlstr) => {
   const template = document.createElement("template")
   template.innerHTML = htmlstr
-  return template.content.firstElementChild
+  const retElement = template.content.firstElementChild
+  console.log("Inside HTML to Template")
+  // console.log(componentHandler)
+  // componentHandler.upgradeElement(retElement)
+  return retElement
 }
 
 const createFriendsComponent = () => {
@@ -78,7 +86,7 @@ const createSearchUserItem = (user) => {
                 <i class="material-icons mdl-list__item-avatar">person</i>
                 <span>${user.firstName} ${user.lastName}</span>
               </span>
-              <a class="mdl-list__item-secondary-action" href="#" user_id=${user.id}><i class="material-icons" user_id=${user.id}>add</i></a>
+              <a class="mdl-list__item-secondary-action sendFriendRequest" href="#" user_id=${user.id}><i class="material-icons" user_id=${user.id}>add</i></a>
             </div>`)
   return item
 }
@@ -127,8 +135,10 @@ export const showSearchPageWithResult = (users) => {
     usersContainer.appendChild(createSearchUserItem(user))
   })
   friendComponent.appendChild(mainContent)
-  document.getElementsByTagName("body")[0].innerHTML = ""
-  document.getElementsByTagName("body")[0].appendChild(friendComponent)
+  mainContainer.innerHTML = ""
+  mainContainer.appendChild(friendComponent)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 
 export const showFriendList = (users) => {
@@ -143,8 +153,10 @@ export const showFriendList = (users) => {
     usersContainer.appendChild(createFriendItem(user))
   })
   friendComponent.appendChild(mainContent)
-  document.getElementsByTagName("body")[0].innerHTML = ""
-  document.getElementsByTagName("body")[0].appendChild(friendComponent)
+  mainContainer.innerHTML = ""
+  mainContainer.appendChild(friendComponent)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 
 export const showPendingFriendRequests = (users, showProgress) => {
@@ -166,6 +178,8 @@ export const showPendingFriendRequests = (users, showProgress) => {
   }
 
   friendComponent.appendChild(mainContent)
-  document.getElementsByTagName("body")[0].innerHTML = ""
-  document.getElementsByTagName("body")[0].appendChild(friendComponent)
+  mainContainer.innerHTML = ""
+  mainContainer.appendChild(friendComponent)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }

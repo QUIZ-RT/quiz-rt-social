@@ -4,6 +4,7 @@
 import {Store} from "./boot/Store"
 import "./boot/subscribe"
 import "./styles/scss/main.scss"
+var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 import {} from "../../node_modules/material-design-lite/material.min"
 
 // import CreateChallengeController from "./ui-component/challenge/controller/CreateChallengeController"
@@ -20,6 +21,11 @@ import {createShareChallengesSection, ShareChallengesWithSelectedFriendsSection}
 import {createUserLogin} from "./ui-component/login-page/login.controller"
 import {createTopics} from "./ui-component/topics/topic-controller"
 
+import "./ui-component/Friends/controller"
+import "./ui-component/Friends/reducer"
+import "./ui-component/Friends/service"
+import "./ui-component/Friends/view"
+
 createLoader()
 createSnackBar()
 
@@ -28,6 +34,8 @@ createSnackBar()
 createUserLogin()
 CreatePlayChallengeController.displayPlaySideBar();
 
+console.log("inside app")
+console.log(Material)
 
 $("body").on("click", "#create", createNextQuestion)
 $("body").on("click", "#nextQuestion", createNextQuestion)

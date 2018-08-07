@@ -41,6 +41,70 @@ app.use("/api/allChallenges",(req, res)=> {
             res.send(error);
         }        
     )
+})
+
+app.get("/api/friends", (req, res) => {
+    console.log(req.query.userName)
+    const friends = []
+    for (let i = 0; i < 10; i++) {
+      friends.push({
+        userName: "userName_" + i,
+        firstName: "FirstName_" + i,
+        lastName: "LastName_" + i,
+        id: i,
+      })
+    }
+    res.send(friends);
+});
+
+app.get("/api/friends/pendingReq", (req, res) => {
+    console.log(req.query.userName)
+    const friends = []
+    for (let i = 0; i < 10; i++) {
+      friends.push({
+        userName: "userName_" + i,
+        firstName: "P_FirstName_" + i,
+        lastName: "P_LastName_" + i,
+        id: i,
+      })
+    }
+    res.send(friends);
+});
+
+app.get("/api/friends/search", (req, res) => {
+    console.log(req.query.value)
+    const val = req.query.value
+    const friends = []
+    for (let i = 0; i < 10; i++) {
+      friends.push({
+        userName: val+"_userName_" + i,
+        firstName: val+"_FirstName_" + i,
+        lastName: val+"_LastName_" + i,
+        id: i,
+      })
+    }
+    res.send(friends);
+});
+
+
+
+app.post("/api/friends/accept", (req, res) => {
+    console.log(req.body.req_id)
+    console.log("Friend request accpeted")
+    res.sendStatus(200)
+});
+
+app.post("/api/friends/reject", (req, res) => {
+    console.log(req.body.req_id)
+    console.log("Friend request rejected")
+    res.sendStatus(200)
+});
+
+app.post("/api/friends/sendFrndReq", (req, res) => {
+    console.log(req.body.sender)
+    console.log(req.body.reciever)
+    console.log("Friend request recieved")
+    res.sendStatus(200)
 });
 
 var onlineUsers = [];
