@@ -41,6 +41,7 @@ app.use("/api/allChallenges",(req, res)=> {
             res.send(error);
         }        
     )
+})
 
 app.get("/api/friends", (req, res) => {
     console.log(req.query.userName)
