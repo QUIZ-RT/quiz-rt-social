@@ -122,7 +122,9 @@ const topicModalbtnClick = (event) => {
       if(state.menuReducer.currentView !== "dashboard"){
         Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
         document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
-      } 
+      }else{
+        Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
+      }
       render(topic, topicId,userid)
       hideLoader()
     },error=>{
@@ -145,7 +147,9 @@ const topicModalbtnClick = (event) => {
       if(state.menuReducer.currentView !== "dashboard"){
         Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
         document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
-     } 
+     }else{
+      Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
+     }
       hideLoader()
     },error=>{
       console.log(error);

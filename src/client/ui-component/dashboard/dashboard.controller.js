@@ -1,4 +1,4 @@
-import {renderViewToContainer, getDashboardContainerTemplate, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
+import {renderViewToContainer, getNoListMsg, getDashboardContainerTemplate, getPopularTopicTemplate, getFavTopicTemplate, getChallengesTemplate, getMyChallengesTemplate} from "./dashboard.view"
 import {topicModalInitializeShow, createTopicmodal} from "../topic-modal/topic-modal.controller"
 import {challengeModalInitializeShow, createChallengemodal} from "../challenge-modal/challenge-modal.controller"
 import {showLoader, hideLoader} from "../loader/loader.controller"
@@ -562,21 +562,29 @@ const challengeDataList = [
 
 
 export const loadDashBoardData = () => {
-    const curState = Store.getState()
-    console.log("LogIn User"+curState.menuReducer.currentUserInfo.email)
-  getTopics().then(topicdata => {
     
-    const pop_Topic = topicdata
-    const fav_Topic = topicdata
-    Store.dispatch({type: "GET_TopicData", dataItem: {Topics: topicdata, PopularTopics:pop_Topic, FavoriteTopics: fav_Topic }})
+    getTopics().then(topicdata => {
+        Store.dispatch({type: "GET_TopicData", dataItem: {Topics: topicdata}})
 
-  })
-  getChallenges().then(challengedata => {
-    challengedata.splice (0, 1)
-    const my_Challeges = challengedata
-    Store.dispatch({type: "GET_ChallengeData", dataItem: {Challeges:challengedata, MyChalleges: my_Challeges }})
-  })
+    })
+    getChallenges().then(challengedata => {
+        challengedata.splice (0, 1)
+        const my_Challeges = challengedata
+        // const my_Challeges = challengedata.filter((item) => {
+        //     if ('users' in item){
+        //         return (item.users.indexOf(curState.menuReducer.currentUserInfo.email) !== -1)
+        //     }       
+        // })
+        // const ChallegeList = challengedata.filter((item) => {
+        //     if ('users' in item){
+        //         return (item.users.indexOf(curState.menuReducer.currentUserInfo.email) === -1)
+        //     }       
+        // })
+        // console.log(my_Challeges)
+        // console.log(ChallegeList)
 
+        Store.dispatch({type: "GET_ChallengeData", dataItem: {Challeges:challengedata, MyChalleges: my_Challeges }})
+    })
 }
 
 const loadDashboardContainer = () => {
@@ -587,25 +595,48 @@ const loadDashboardContainer = () => {
 
 export const createPopularTopicSection = (topicData) => {
   document.querySelector('#dashboard_pTopic').innerHTML = ""
-  const pTopictemp = getPopularTopicTemplate(topicData, "Popular Topic")
-  const pTopicitems = pTopictemp.querySelectorAll(".mdc-card")
-  pTopicitems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      topicModalInitializeShow(event)
+  if(Object.keys(topicData).length > 0){
+    const pTopictemp = getPopularTopicTemplate(topicData, "Popular Topic")
+    const pTopicitems = pTopictemp.querySelectorAll(".mdc-card")
+    pTopicitems.forEach((item) => {
+        item.addEventListener("click", (event) => {
+        topicModalInitializeShow(event)
+        })
     })
-  })
-  renderViewToContainer(pTopictemp, "#dashboard_pTopic")
+    renderViewToContainer(pTopictemp, "#dashboard_pTopic")
+  }
+  else
+  {
+    renderViewToContainer(getNoListMsg("Popular Topic", "No Popular Topic List"), "#dashboard_pTopic")
+  }
 }
 export const createFavoriteTopicSection = (topicData) => {
   document.querySelector('#dashboard_fTopic').innerHTML = ""
-  const fTopictemp = getFavTopicTemplate(topicData, "Favorite Topic")
-  const fTopicitems = fTopictemp.querySelectorAll(".mdc-card")
-  fTopicitems.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      topicModalInitializeShow(event)
+  const curState = Store.getState()
+  let fav_Topic = {}
+  for (const topickey in topicData) {
+      if ('users' in topicData[topickey]){
+          if(topicData[topickey].users.indexOf(curState.menuReducer.currentUserInfo.email) !== -1){
+              fav_Topic[''+topicData[topickey].id]= topicData[topickey];
+          }
+      }  
+  }
+  if(Object.keys(fav_Topic).length > 0){
+    const fTopictemp = getFavTopicTemplate(fav_Topic, "Favorite Topic")
+    const fTopicitems = fTopictemp.querySelectorAll(".mdc-card")
+    fTopicitems.forEach((item) => {
+        item.addEventListener("click", (event) => {
+        topicModalInitializeShow(event)
+        })
     })
-  })
   renderViewToContainer(fTopictemp, "#dashboard_fTopic")
+  }
+  else
+  {
+    renderViewToContainer(getNoListMsg("Favorite Topic", "No Favorite Topic List"), "#dashboard_fTopic")
+  }
+    
+  
 }
 export const createChallengesSection = (challengeDataList) => {
   document.querySelector('#dashboard_challenge').innerHTML = ""
@@ -639,20 +670,32 @@ Store.subscribe(() => {
     loadDashboardContainer()
     if(!currentState.dashboardReducer.Action || currentState.dashboardReducer.Action == "Init"){
     loadDashBoardData()
-    }else{
-      if (currentState.dashboardReducer.PopularTopicList && currentState.dashboardReducer.PopularTopicList !== []){
-        createPopularTopicSection(currentState.dashboardReducer.PopularTopicList)
+    }
+    else
+    {
+      if (currentState.dashboardReducer.TopicList && Object.keys(currentState.dashboardReducer.TopicList).length > 0){
+        createPopularTopicSection(currentState.dashboardReducer.TopicList)
       }
-      if (currentState.dashboardReducer.FavoriteTopicList && currentState.dashboardReducer.FavoriteTopicList !== []){
-        createFavoriteTopicSection(currentState.dashboardReducer.FavoriteTopicList)
+      
+
+      if (currentState.dashboardReducer.TopicList && Object.keys(currentState.dashboardReducer.TopicList).length > 0){
+        createFavoriteTopicSection(currentState.dashboardReducer.TopicList)
       }
       
       if (currentState.dashboardReducer.ChallegeList && currentState.dashboardReducer.ChallegeList !== []){
         createChallengesSection(currentState.dashboardReducer.ChallegeList)
       }
+    //   else{
+    //     document.querySelector('#dashboard_challenge').innerHTML = ""
+    //     renderViewToContainer(getNoListMsg("Challenges", "No Challenge List"), "#dashboard_challenge")
+    //   }
       if (currentState.dashboardReducer.MyChallegeList && currentState.dashboardReducer.MyChallegeList !== []){
         createMyChallengesSection(currentState.dashboardReducer.MyChallegeList)
       }
+    //   else{
+    //     document.querySelector('#dashboard_mychallenge').innerHTML = ""
+    //     renderViewToContainer(getNoListMsg("My Challenges", "No My Challenge List"), "#dashboard_mychallenge")
+    //   }
     }
     createTopicmodal()
     createChallengemodal();
@@ -660,7 +703,7 @@ Store.subscribe(() => {
     if(document.querySelector('#dashboard_pTopic').innerHTML !== ""
         && document.querySelector('#dashboard_fTopic').innerHTML !== ""
         && document.querySelector('#dashboard_challenge').innerHTML !== ""
-        && document.querySelector('#dashboard_challenge').innerHTML !== ""){
+        && document.querySelector('#dashboard_mychallenge').innerHTML !== ""){
             hideLoader()
         }
   }
