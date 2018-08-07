@@ -32,13 +32,19 @@ function app(user) {
   UserMaster.once("value", function(userNode) {
     let NodeName = user.email
     NodeName = NodeName.replace(/[^a-zA-Z0-9-. ]/g, "").replace(/[.]/g, "")
-    nextUserID = lastUserId + 1
-    var myUser = {}
-    myUser.userID = nextUserID
-    myUser.email = user.email
-    myUser.displayName = user.displayName
-    myUser.Photo = user.photoURL
-    UserMaster.child(NodeName).set(myUser)    
+
+    UserMaster.child(NodeName).once("value", function(myNode) {
+      console.log("value of this node:", myNode.val())
+      if (!myNode.val()) {
+        nextUserID = lastUserId + 1
+        var myUser = {}
+        myUser.userID = nextUserID
+        myUser.email = user.email
+        myUser.displayName = user.displayName
+        myUser.Photo = user.photoURL
+        UserMaster.child(NodeName).set(myUser)
+      }
+    })
   }, function(errorObject) {
     console.log("The read failed: " + errorObject.code);
   })
