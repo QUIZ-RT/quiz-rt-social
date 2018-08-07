@@ -46,9 +46,23 @@ export const getFavTopicTemplate = (dataList, headingText) => {
 }
 
 export const getChallengesTemplate = (dataList, headingText) => {
-  return createDashboardContent(dataList, headingText, "mychall", false)
+  return createDashboardContent(dataList, headingText, "chall", false)
 }
 
 export const getMyChallengesTemplate = (dataList, headingText) => {
-  return createDashboardContent(dataList, headingText, "chall", false)
+  return createDashboardContent(dataList, headingText, "mychall", false)
+}
+export const getNoListMsg = (headingText, msg) => {
+  const NolistStr = `<section class="card-section">
+  <h6 class="mdc-typography--headline6">
+    ${headingText}
+    </h6>
+    </section>
+    <div>
+    <h6 class="mdc-typography--headline6">
+      ${msg}
+      </h6>
+      </div>`
+
+      return htmlToTemplate(NolistStr)
 }

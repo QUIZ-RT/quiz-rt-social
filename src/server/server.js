@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
-import { addChallengeToDB } from './FirebaseDb/challengesDb';
+import { addChallengeToDB,getUserDetail,updateUserTransaction } from './FirebaseDb/challengesDb';
+import { searchMasterUser, getUserByEmailId, getUserByUserId, sendFriendRequest, getPendingFriendRequest, getFriendRequest, acceptFriendReq, rejectFriendReq, getListOfFriend } from './FirebaseDb/Friends';
 import { getAllChallengesFromDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
 
@@ -27,7 +28,15 @@ app.use(function(req, res, next) {
 
 
 app.post("/api/challenge",(req, res)=> {
-    res.send(addChallengeToDB(req, res));
+    let data = addChallengeToDB(req, res);
+    data.then(
+         result=>{
+            res.send(result);
+             },
+        error=>{
+            res.send(error);
+            }     
+        )
 });
 
 //expose API to Question Generator
@@ -43,47 +52,98 @@ app.use("/api/allChallenges",(req, res)=> {
     )
 })
 
+//udate User Transaction
+app.use("/api/userTransaction",(req, res)=> {
+    console.log("inside api/userTransaction");
+    let data = updateUserTransaction(req, res);
+    data.then(
+        result=>{
+            res.send(result);
+        },
+        error=>{
+            res.send(error);
+        }        
+    )
+})
+
 app.get("/api/friends", (req, res) => {
     console.log(req.query.userName)
-    const friends = []
-    for (let i = 0; i < 10; i++) {
-      friends.push({
-        userName: "userName_" + i,
-        firstName: "FirstName_" + i,
-        lastName: "LastName_" + i,
-        id: i,
-      })
-    }
-    res.send(friends);
+    const frndPromise = getListOfFriend(req.query.userName)
+    frndPromise.then(
+        result => {
+            console.log("recieved pending req")
+            console.log(result.val())
+            const frnList = []
+            const val = result.val()
+            result.forEach(function(data) {
+                frnList.push(val[data.key]['friend'])
+            })
+            console.log("Printing friend list ", frnList)
+            res.send(frnList)
+        },
+        error => {
+            console.log("/api/frined")
+            console.log(error)
+            res.sendStatus(500)
+        })
 });
 
 app.get("/api/friends/pendingReq", (req, res) => {
+    console.log("inside /api/friends/pendingReq")
     console.log(req.query.userName)
-    const friends = []
-    for (let i = 0; i < 10; i++) {
-      friends.push({
-        userName: "userName_" + i,
-        firstName: "P_FirstName_" + i,
-        lastName: "P_LastName_" + i,
-        id: i,
-      })
-    }
-    res.send(friends);
+    let frndReq = []
+    const frndRequest = getPendingFriendRequest(req.query.userName)
+    frndRequest.then(
+        result => {
+            console.log("recieved pending req")
+            console.log(result.val())
+            let frndReq = []
+            const val = result.val()
+            result.forEach(function(data){
+                console.log("----------------")
+                console.log(val[data.key])
+                const tempVal =  {}
+                tempVal['displayName'] = val[data.key]['sender']['displayName']
+                tempVal['reqId'] = data.key
+                console.log(tempVal)
+
+                if(val[data.key]["status"] && val[data.key]["status"] === 'P'){
+                    console.log("temp val is getting added")
+                    frndReq.push(tempVal)
+                }
+            })
+            console.log(frndReq)
+            res.send(frndReq)
+        },
+        error => {
+            console.log("error in pending req")
+            console.log(error)
+            res.sendStatus(500)
+        })
 });
 
 app.get("/api/friends/search", (req, res) => {
+    console.log("in api friends search")
     console.log(req.query.value)
-    const val = req.query.value
-    const friends = []
-    for (let i = 0; i < 10; i++) {
-      friends.push({
-        userName: val+"_userName_" + i,
-        firstName: val+"_FirstName_" + i,
-        lastName: val+"_LastName_" + i,
-        id: i,
-      })
-    }
-    res.send(friends);
+    const friendPromise = searchMasterUser(req.query.value)
+    friendPromise.then(
+        result => {
+            const users = []
+            const val = result.val()
+            result.forEach(function(data) {
+                console.log("----------")
+                console.log(data.key)
+                const tempVal = val[data.key]
+                tempVal["key"] = data.key
+                if(tempVal['displayName'] &&  tempVal['displayName'].includes(req.query.value)){
+                    users.push(tempVal)
+                }
+            })
+            res.send(users)
+        },
+        error => {
+            res.send(error)
+        })
 });
 
 
@@ -91,20 +151,98 @@ app.get("/api/friends/search", (req, res) => {
 app.post("/api/friends/accept", (req, res) => {
     console.log(req.body.req_id)
     console.log("Friend request accpeted")
-    res.sendStatus(200)
+    const reqDetails = getFriendRequest(req.body.req_id)
+    reqDetails.then(
+        result => {
+            console.log(result.val())
+            const val = result.val()
+            result.forEach(function(data) {
+                const tempVal = val[data.key]
+                console.log("*********")
+                console.log(tempVal)
+                console.log("*********")
+                const ret = acceptFriendReq(data.key, tempVal['sender'], tempVal['receiver'])
+                ret.then(
+                    result => {
+                        res.sendStatus(200)
+                    },
+                    error => {
+                        console.log("/api/friends/accept 22")
+                        console.log(error)
+                        res.sendStatus(500)            
+                    })
+            })
+        },
+        error => {
+            console.log("/api/friends/accept")
+            console.log(error)
+            res.sendStatus(500)
+        });
+    
 });
 
 app.post("/api/friends/reject", (req, res) => {
+    console.log("/api/friends/reject")
     console.log(req.body.req_id)
-    console.log("Friend request rejected")
-    res.sendStatus(200)
+    const reject = rejectFriendReq(req.body.req_id)
+    reject.then(
+        result => {
+            res.sendStatus(200)
+        },
+        error => {
+            console.log("/api/friends/reject")
+            console.log(error)
+            res.sendStatus(500)
+        })
 });
 
 app.post("/api/friends/sendFrndReq", (req, res) => {
     console.log(req.body.sender)
     console.log(req.body.reciever)
-    console.log("Friend request recieved")
-    res.sendStatus(200)
+    const searchSender = getUserByEmailId(req.body.sender)
+    let sender
+    let reciver
+    searchSender.then(
+        result => {
+            const val = result.val()
+
+            result.forEach(function(data) {
+                const tempVal = val[data.key]
+                sender = tempVal
+                console.log("Yeee")
+                //break
+            })
+
+            const searchReciever = getUserByEmailId(req.body.reciever)
+            searchReciever.then(
+                result => {
+                    const val = result.val()
+
+                    result.forEach(function(data) {
+                        const tempVal = val[data.key]
+                        reciver = tempVal
+                        console.log("Yeee")
+                        //break
+                    })
+                    if(sender && reciver){
+                        console.log("adding frnd req")
+                        sendFriendRequest(sender, reciver)
+                        res.sendStatus(200)    
+                    }
+                    else{
+                        console.log("Some value is missing ",sender, reciver)
+                    }
+                    
+
+                },
+                error => {
+                    res.send(error)
+                })
+        },
+        error => {
+            res.send(error)
+        })
+    
 });
 
 var onlineUsers = [];
@@ -147,10 +285,12 @@ app.use("/api/topics/gettopics", (req, res) => {
     let data = topic.getTopics();
     data.then(
         result=>{
-            res.send(result);
+           console.log("result gettopics- ",result);
+           res.send({"status":"success","data":result});
         },
         error=>{
-            res.send(error);
+            console.log("result errors- ",error);
+            res.send({"status":"fail","data":error});
         }        
     )
 });
@@ -170,5 +310,17 @@ app.use("/api/topics/updatefollow", (req, res) => {
     topic.updateFollow(req.body.id,req.body.data);
     res.send({"status":"success"});
 });
+
+app.use("/api/getUserDetail",(req, res)=> {
+    let data = getUserDetail(req, res);
+    data.then(
+        result=>{
+            res.send(result);
+        },
+        error=>{
+            res.send(error);
+        }        
+    )
+})
  
 app.listen(8080, () => console.log('Example app listening on port 8080!'));

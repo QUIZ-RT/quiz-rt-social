@@ -4,21 +4,25 @@ import { topicModalInitializeShow, createTopicmodal } from "../topic-modal/topic
 import $ from "jquery"
 import { getTopicsFromQAGEN, addtopics, getTopics } from "./topics.service"
 import {createLeaderBoardForChallenges} from "../leader-board/leader-controller"
+import {showLoader, hideLoader} from "../loader/loader.controller"
 
 
 let topicCtr = 0;
-export const createTopics = () => { 
-      getTopics()
-        .then(result => {
-        console.log(result);
 
+export const updateTopicCtr= ()=>{
+  topicCtr = 0
+}
+
+export const createTopics = () => { 
+    getTopics()
+      .then(result => {
         getTopicsFromQAGEN()
           .then(
             response => {
               let topicsDB = Object.keys(result);
               let topicFB = Object.keys(response)
               if (topicsDB.length !== topicFB.length) {
-                let newtopics = topicsDB.filter(function (obj) { return topicFB.indexOf(obj) == -1; });
+                let newtopics = topicFB.filter(function (obj) { return topicsDB.indexOf(obj) == -1; });
                 for (let id of newtopics) {
                   result['' + id] = response['' + id];
                 }
@@ -38,7 +42,7 @@ export const createTopics = () => {
             });
 
       }, errors => {
-        console("getTopics error ", errors)
+        console.log("getTopics error ", errors)
         getTopicsFromQAGEN()
           .then(
             result => {
@@ -59,6 +63,7 @@ export const createTopics = () => {
 }
 
 const loadTopic = (state) => {
+  showLoader()
   let topics = ""
   for (const newTopic in state) {
     topics += topicView(state[newTopic], newTopic)
@@ -66,6 +71,7 @@ const loadTopic = (state) => {
   render(topics)
   addEvents()
   createTopicmodal()
+  createLeaderBoardForChallenges()     
 }
 
 const render = (topics) => {
@@ -80,6 +86,7 @@ const render = (topics) => {
             </div>`
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(htmlToTemplate(html))
+  hideLoader()
 }
 
 const addEvents = () => {
@@ -104,16 +111,16 @@ const addEvents = () => {
 
 Store.subscribe(() => {
   const currentState = Store.getState()
-  if(currentState.menuReducer.currentView === 'topics'){    
+  if(currentState.menuReducer.currentView === 'topics'){   
     if (topicCtr === 0) {
       document.querySelector('#quiz-maincontent').innerHTML = ""
-      createTopics();
-      createLeaderBoardForChallenges()
+      createTopics();      
       topicCtr++
     }else{
-      if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC')
-      loadTopic(currentState.topicReducer.Topics)
-    }
+      if(currentState.topicReducer.Topic_Action!=='UPDATE_TOPIC'){
+        loadTopic(Store.getState().topicReducer.Topics)
+      }     
+    }   
   }
 })
 

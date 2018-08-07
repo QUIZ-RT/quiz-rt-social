@@ -1,36 +1,30 @@
 import TemplateGenerator from "../../common/TemplateGenerator"
 import {Store} from '../../../../boot/Store';
 import {getTopics} from '../service/CreateChallengeService'
+import { showLoader } from "../../../loader/loader.controller";
+var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
 function createChallengeSideBarView() {
   const challenegSideBarTemp = `<div class="mdl-layout__drawer" id="sidebar">
     Challenge
     <nav class="mdl-navigation">
       <button class="mdl-navigation__link" id="createChallenge">Create Challenge</button>
-      <button class="mdl-navigation__link" id="playChallenge">Play Challenges</button>
-      <button class="mdl-navigation__link" id="shareChallenge">Share Challenge</button>
+      <button class="mdl-navigation__link" id="shareChallenge">Show Challenges</button>
     </nav>
   </div>`
 
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate);
-
-  $("#quiz-maincontent").off("click").on("click", "#createChallenge", callCreateChallenge);
-  $("#quiz-maincontent").off("click").on("click", "#playChallenge", callPlayChallenge);
-  $("#quiz-maincontent").off("click").on("click", "#shareChallenge", callShareChallenge);
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 
 function callCreateChallenge(){
-  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"createChallenge"});
 }
-function callPlayChallenge(){
-  debugger;
-  Store.dispatch({type:"currentchallengeview",dataItem:"playChallenge"});
-}
+
 function callShareChallenge(){
-  debugger;
   Store.dispatch({type:"currentchallengeview",dataItem:"shareChallenge"});
 }
 
@@ -44,9 +38,13 @@ function createChallengeContainer() {
   const container = document.querySelector("#quiz-maincontent")
 
   container.appendChild(challengeContainerTemp)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 function createChallengeHeader() {
-  getTopics();
+  showLoader()
+  getTopics()
+  
   //createChallengeHeaderTemplate()
 }
 
@@ -95,6 +93,8 @@ function createChallengeHeaderTemplate(topicsArray) {
 const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
 const challengeSection = document.getElementById("challengeSection")
 challengeSection.appendChild(challengeTemplt);
+componentHandler.upgradeAllRegistered()
+document.getElementsByTagName('body')[0].className = ""
   //}
   //})
   
@@ -160,6 +160,8 @@ function createQuestion(challengeJsonObj, count) {
   const formSection = document.getElementById("challengeSection")
   formSection.innerHTML = ""
   formSection.appendChild(challengeTemplt)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName('body')[0].className = ""
 }
 
-export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate}
+export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callShareChallenge}

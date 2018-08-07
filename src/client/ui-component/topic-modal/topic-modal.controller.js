@@ -5,6 +5,7 @@ import {Store} from "../../boot/Store"
 import {updateFollow} from "../topics/topics.service"
 import {getFilteredDetails } from "../leader-board/leader-controller"
 import {getChallengeDetails} from "../leader-board/leader-board-service"
+import {showLoader, hideLoader} from "../loader/loader.controller"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -17,13 +18,14 @@ export const topicModalInitializeShow = (evt) => {
   const state = Store.getState();
   
   //.topics["" + targetId]
-  if(state.menuReducer.currentView === "dashboard"){
-    openTopicModal(state.dashboardReducer.TopicList[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
-
+  //.topics["" + targetId]
+  if(state.menuReducer.currentView === "dashboard"){
+    openTopicModal(state.dashboardReducer.TopicList[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  
   }
-  else if(state.menuReducer.currentView === "topics"){
-    openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
-  }
+  else if(state.menuReducer.currentView === "topics"){
+    openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  } 
   evt.preventDefault()
 }
 
@@ -85,23 +87,24 @@ const render = (state, id,emailId) => {
 }
 
 const topicModalbtnClick = (event) => {
+  showLoader()
   const btnData = event.target.id.split("-")
   const topicId = btnData[1]
   const state = Store.getState()
-  let topicData = {}
-  if(state.menuReducer.currentView === "dashboard"){
-    topicData = state.dashboardReducer.TopicList
+  let topicData = ""
+  if(state.menuReducer.currentView === "dashboard"){
+    topicData = state.dashboardReducer.TopicList
   }
-  else if(state.menuReducer.currentView === "topics"){
-    topicData = state.topicReducer.Topics
-  }
-  
+  else if(state.menuReducer.currentView === "topics"){
+    topicData = state.topicReducer.Topics
+  } 
   let data  = {"id":topicId,"data":[]}
   let topic = ""
   let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
   case "play":
-    console.log("play" + topicId)
+    const url = "https://www.pokemon.com/us/"
+    window.open(url , '_blank');
     break
   case "leader":
     console.log("leader" + topicId)
@@ -117,13 +120,17 @@ const topicModalbtnClick = (event) => {
       console.log(result)
       topic.users = data.data;      
       topicData["" + topicId]['users'] = topic.users
-      if(state.menuReducer.currentView !== "dashboard"){
-      Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
-      document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      }else{
+        Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
       }
       render(topic, topicId,userid)
+      hideLoader()
     },error=>{
       console.log(error);
+      hideLoader()
     })
     
     break
@@ -138,13 +145,18 @@ const topicModalbtnClick = (event) => {
     updateFollow(data).then(result=>{        
       topicData["" + topicId]['users'] = topic.users
       render(topic, topicId,userid)
-      if(state.menuReducer.currentView !== "dashboard"){
-        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
-        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
-      }
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+     }else{
+      Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
+     }
+      hideLoader()
     },error=>{
       console.log(error);
+      hideLoader()
     });    
     break
   }
+  
 }

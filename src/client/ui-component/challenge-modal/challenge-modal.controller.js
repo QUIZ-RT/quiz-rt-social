@@ -2,7 +2,8 @@ import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
-
+import {getFilteredDetails } from "../leader-board/leader-controller"
+import {getChallengeDetails} from "../leader-board/leader-board-service"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -12,7 +13,7 @@ export const challengeModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
   const state = Store.getState().dashboardReducer;
-  const dataItem = state.ChallegeList.filter((x) => {return x.challengeId === targetId})[0]
+  const dataItem = state.ChallegeList.filter((x) => {return x.challengeId.toString() === targetId})[0]
   openChallengeModal(dataItem, targetId, evt.target)
   evt.preventDefault()
 }
@@ -54,6 +55,9 @@ const openChallengeModal = (state, id, target) => {
       document.getElementById("leaderBody").innerHTML = ""
       const select2 = new MDCSelect(document.querySelector(".mdc-select"))
       select2.value = "1"
+    //   const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
+    // const dialog1 = new MDCDialog(dialogElement1)
+    dialog1.close()
     })
     const select = new MDCSelect(document.querySelector(".mdc-select"))
     select.listen("change", () => {
@@ -70,9 +74,20 @@ const openChallengeModal = (state, id, target) => {
 const challengeModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const challengeId = btnData[1]
+  const curState = Store.getState()
+  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {return x.challengeId.toString() === challengeId })[0]
+  let topicId = ""
+  for (const topickey in curState.dashboardReducer.TopicList) {
+    if(curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName){
+      topicId = curState.dashboardReducer.TopicList[topickey].id
+      break
+    }
+  }
   switch (btnData[2]) {
   case "play":
     console.log("play" + challengeId)
+    const url = "https://quiz-engine.herokuapp.com?topicId="+topicId+"&type=challenge"
+    window.open(url , '_blank');
     break
   case "leader":
     console.log("leader" + challengeId)
