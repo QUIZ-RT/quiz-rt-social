@@ -1,15 +1,14 @@
 import {Store} from "../../boot/Store"
 import {showSearchPageWithResult, showFriendList, showPendingFriendRequests} from "./view"
-import {loadChatContainer, subsribeRenderCtrl} from "../chat/chat.controller";
+import {loadChatContainer} from "../chat/chat.controller";
 var userName = "";
 function addFriendLinkClicked(event) {
   console.log("add friend link clicked")
   Store.dispatch({type: "SHOW_FRIENDS_CHAT"})
 }
 
-function listOfFriendsClicked(event) {
+export const  listOfFriendsClicked = function (event) {
   console.log("list of friend link clicked")
-  subsribeRenderCtrl();
   Store.dispatch({type: "FETCH_FRIENDS_REQ", userName: userName})
 }
 
@@ -119,7 +118,6 @@ function showChatBox(event) {
   user.email = event.target.getAttribute("email")
   let temdisplayName =  event.target.getAttribute("displayName");
   user.displayName = temdisplayName.replace('___', ' ');
-  console.log( "===============================" + user.displayName)
   user.photoURL = event.target.getAttribute("photoURL")
   loadChatContainer(user);
 }
