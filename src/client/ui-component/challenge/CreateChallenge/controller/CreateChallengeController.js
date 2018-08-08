@@ -21,7 +21,7 @@ Store.subscribe(() => {
               //console.log("myEmail: " + email)         
               getUserFromUserMaster(email).then(function(currentUser) {
                 userId = currentUser.userID
-                //console.log("This is userid:" + userId)
+                console.log("This is userid:" + userId)
                 createShareChallengesSection(userId)
               })
               

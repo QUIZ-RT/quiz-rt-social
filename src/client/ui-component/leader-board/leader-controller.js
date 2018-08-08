@@ -1,4 +1,6 @@
 import {getLeaderBoardTemplate, renderViewToContainer} from "./leader-view"
+import {Store} from './../../boot/Store';
+import {getUserFromUserMaster} from "../challenge/ShareChallenges/service/shareChallenges.service"
 
 export const createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
@@ -90,13 +92,18 @@ export const getFilteredDetails = (arry, days) => {
  
   for (const item of filteredArray) {
     rank++
-    html = html + `<tr id="${item.userId}">
+    html = html + `<tr id="${item.userName.replace(' ','').toLowerCase()}">
                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
                      <td class="mdl-data-table__cell--non-numeric material">${item.userName}</td>
                      <td>${item.score}</td>
                    </tr>`
   }
 
-  document.getElementById("leaderBody").innerHTML = html
- // document.querySelector("tr[id='8']").className = "selectedRow"
+  document.getElementById("leaderBody").innerHTML = html  
+  const currentState = Store.getState();
+  const userName = currentState.menuReducer.currentUserInfo.displayName.replace(' ','').toLowerCase();
+  let selection = document.querySelector(`tr[id=${userName}]`);
+  if(selection)
+     selection.className = "selectedRow"; 
+
 }
