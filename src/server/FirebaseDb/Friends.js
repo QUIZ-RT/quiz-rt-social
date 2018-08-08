@@ -108,11 +108,18 @@ export const acceptFriendReq = (reqId, owner, friend) => {
     friend: friend,
   }
   const newFriendKey = firebase.database().ref("Frnd_List").push().key
-  console.log("new Friends key",  newFriendKey)
+  console.log("new Friends key", newFriendKey)
+
+  const frndRow2 = {
+    owner: friend,
+    friend: owner,
+  }
+  const newFriendKey2 = firebase.database().ref("Frnd_List").push().key
 
   const updates = {}
-  updates["/Frnd_Req/"+reqId+"/status"] = 'A'
-  updates["/Frnd_List/"+newFriendKey] = frndRow
+  updates["/Frnd_Req/" + reqId + "/status"] = "A"
+  updates["/Frnd_List/" + newFriendKey] = frndRow
+  updates["/Frnd_List/" + newFriendKey2] = frndRow2
   return firebase.database().ref().update(updates)
 }
 
