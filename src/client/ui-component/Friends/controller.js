@@ -1,13 +1,13 @@
 import {Store} from "../../boot/Store"
 import {showSearchPageWithResult, showFriendList, showPendingFriendRequests} from "./view"
-
+import {loadChatContainer} from "../chat/chat.controller";
 var userName = "";
 function addFriendLinkClicked(event) {
   console.log("add friend link clicked")
   Store.dispatch({type: "SHOW_FRIENDS_CHAT"})
 }
 
-function listOfFriendsClicked(event) {
+export const  listOfFriendsClicked = function (event) {
   console.log("list of friend link clicked")
   Store.dispatch({type: "FETCH_FRIENDS_REQ", userName: userName})
 }
@@ -49,6 +49,12 @@ function searchUser(event) {
   return true;
 }
 
+function showSnackBar(msg){
+  var snackbarContainer = document.querySelector('#msg-snack-bar')
+  var data = {message: msg};
+  snackbarContainer.MaterialSnackbar.showSnackbar(data)
+}
+
 function render() {
   console.log("in friends new controller")
   const menuReducer = Store.getState().menuReducer
@@ -69,16 +75,25 @@ function render() {
       }
       else if (state.friendsAndChat.page === "SEARCH_FRIENDS_NOT_LOADED") {
         console.log("in friends controller DEFAULT page")
-        showSearchPageWithResult([])
+        showSearchPageWithResult([], true)
       }
       else if (state.friendsAndChat.page === "SEARCH_FRIENDS_LOADED")
       {
         console.log("in friends controller SEARCH_FRIENDS_LOADED page")
         showSearchPageWithResult(state.friendsAndChat.searchResult)
+        if(!state.friendsAndChat.searchResult || state.friendsAndChat.searchResult.length == 0){
+          showSnackBar("No user found ...")  
+        }
+      }
+      else if (state.friendsAndChat.page === "SEND_FRIEND_RES")
+      {
+        console.log("in friends controller SEND_FRIEND_RES page")
+        showSearchPageWithResult(state.friendsAndChat.searchResult)
+        showSnackBar("Friend request sent...")
       }
       else if (state.friendsAndChat.page === "FRIENDS_NOT_LOADED") {
         console.log("in friends controller FRIENDS not loaded page")
-        showFriendList(state.friendsAndChat.friends, true)
+        showFriendList([], true)
       }
       else if (state.friendsAndChat.page === "FRIENDS_LOADED") {
         console.log("in friends controller FRIENDS loaded page")
@@ -98,7 +113,14 @@ function render() {
     }
   }
 }
-
+function showChatBox(event) {
+  let user = {};
+  user.email = event.target.getAttribute("email")
+  let temdisplayName =  event.target.getAttribute("displayName");
+  user.displayName = temdisplayName.replace('___', ' ');
+  user.photoURL = event.target.getAttribute("photoURL")
+  loadChatContainer(user);
+}
 Store.subscribe(render)
 
 $("body").on("click", "#add_friend", addFriendLinkClicked)
@@ -108,3 +130,4 @@ $("body").on("click", ".accept-Friend-Request", acceptFriendRequest)
 $("body").on("click", ".reject-Friend-Request", rejectFriendRequest)
 $("body").on('keydown', '#fixed-header-drawer-exp', searchUser);
 $("body").on("click", ".sendFriendRequest", sendFriendRequest)
+$("body").on("click", ".start_chat", showChatBox)

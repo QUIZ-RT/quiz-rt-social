@@ -43,7 +43,8 @@ export const getLeaderBoardTemplate = () => {
         </div> 
         <div class="rankingTable mdl-shadow--2dp mdl-color--customTheme display-row justify-content-center" >       
             <div class="mdl-card__actions mdl-card--border">
-                <div id="mdl-table" class="mdl-table">
+        <div class="rankingTable mdl-shadow--2dp mdl-color--customTheme display-row justify-content-center" >       
+        <div id="mdl-table" class="mdl-table display-flex justify-content-center">
                     <table id='mdl-table' class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead>
                             <tr class="mdl-color--grey-400">
@@ -60,7 +61,10 @@ export const getLeaderBoardTemplate = () => {
             </div>
         </div>
     </div>
-        </section>      
+        </section>
+        <footer class="mdc-dialog__footer">
+        <button type="button" class="mdc-button mdc-button--raised close-btn  mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
+      </footer>          
       </div>
       <div class="mdc-dialog__backdrop"></div>
     </aside>`

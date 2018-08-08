@@ -1,3 +1,5 @@
+import {playChallengeOnPlayButton} from '../controller/shareChallenges.controller';
+
 const htmlToTemplate = (htmlstr) => {
   const template = document.createElement("template")
   template.innerHTML = htmlstr
@@ -33,15 +35,15 @@ export const getShareChallengeTemplate = (dataList) => {
       <td class="mdl-data-table__cell--non-numeric">${item.challengeId}</td>
       <td>${item.challengeName}</td>
       <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Share</button>
-      <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id ="playChallenge">Play Challenge</button>
+      <td><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored playChallengeBtnCls" id ="playChallengeComp-${item.challengeId}-play">Play Challenge</button>
       </td>
     </tr>   
   </tbody>
-</div>`
+</div>`;
   })
   const scContentTemp = htmlToTemplate(shareChallengesContentStr)
   appendShareChellengesTableContainer.appendChild(scContentTemp)
-  appendShareChellengesListContainer.appendChild(appendShareChellengesTableContainer)
+  appendShareChellengesListContainer.appendChild(appendShareChellengesTableContainer);
   return scContainerTemp
 }
 

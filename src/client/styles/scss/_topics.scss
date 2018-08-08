@@ -24,3 +24,8 @@
     border: 1px solid #ddd;
     margin-bottom: 12px;
   }
+ 
+  .topic-scroll{
+    overflow: auto;
+    max-height: 50em;
+  }

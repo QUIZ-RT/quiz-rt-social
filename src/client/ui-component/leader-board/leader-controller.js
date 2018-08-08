@@ -1,4 +1,6 @@
 import {getLeaderBoardTemplate, renderViewToContainer} from "./leader-view"
+import {Store} from './../../boot/Store';
+import {getUserFromUserMaster} from "../challenge/ShareChallenges/service/shareChallenges.service"
 
 export const createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
@@ -41,10 +43,10 @@ export const getFilteredGameDetails = (arry) => {
       const scoreB = +b.score
 
       let comparison = 0
-      if (scoreA > scoreB) {
+      if (scoreB > scoreA) {
         comparison = 1
       }
-      else if (scoreA < scoreB) {
+      else if (scoreB < scoreA) {
         comparison = -1
       }
       return comparison
@@ -70,19 +72,19 @@ export const getFilteredDetails = (arry, days) => {
   let rank = 0
 
   const filteredArray = arry.filter(item => {
-    const markerDate = new Date(item.challengeDatePlayed
+    const markerDate = new Date(item.playedOn
     )
     return (markerDate.getTime() <= startValue.getTime() && markerDate.getTime() >= endValue.getTime())
   }).sort((a, b) => {
-    const scoreA = +a.challengeScore
+    const scoreA = +a.score
 
-    const scoreB = +b.challengeScore
+    const scoreB = +b.score
 
     let comparison = 0
-    if (scoreA > scoreB) {
+    if (scoreB > scoreA) {
       comparison = 1
     }
-    else if (scoreA < scoreB) {
+    else if (scoreB < scoreA) {
       comparison = -1
     }
     return comparison
@@ -90,13 +92,18 @@ export const getFilteredDetails = (arry, days) => {
  
   for (const item of filteredArray) {
     rank++
-    html = html + `<tr id="${item.userId}">
+    html = html + `<tr id="${item.userName.replace(' ','').toLowerCase()}">
                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
                      <td class="mdl-data-table__cell--non-numeric material">${item.userName}</td>
-                     <td>${item.challengeScore}</td>
+                     <td>${item.score}</td>
                    </tr>`
   }
 
-  document.getElementById("leaderBody").innerHTML = html
- // document.querySelector("tr[id='8']").className = "selectedRow"
+  document.getElementById("leaderBody").innerHTML = html  
+  const currentState = Store.getState();
+  const userName = currentState.menuReducer.currentUserInfo.displayName.replace(' ','').toLowerCase();
+  let selection = document.querySelector(`tr[id=${userName}]`);
+  if(selection)
+     selection.className = "selectedRow"; 
+
 }

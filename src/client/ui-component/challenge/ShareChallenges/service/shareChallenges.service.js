@@ -1,3 +1,4 @@
+import {hideLoader} from "../../../loader/loader.controller"
 export const getUserChallenges = (userId) => {
     const promise = new Promise(function(resolve, reject) {
       fetch("/api/userChallenges", {
@@ -10,8 +11,10 @@ export const getUserChallenges = (userId) => {
       }).then(
         res => res.json()
       ).then(json => {
+         hideLoader()
         resolve(json)
       }, error => {
+         hideLoader()
         reject(error)
       })
     })

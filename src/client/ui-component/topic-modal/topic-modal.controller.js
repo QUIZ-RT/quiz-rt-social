@@ -102,8 +102,9 @@ const topicModalbtnClick = (event) => {
   let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
   case "play":
-    const url = "https://www.pokemon.com/us/"
+    const url = "https://quiz-engine.herokuapp.com/?topicId="+topicId
     window.open(url , '_blank');
+    hideLoader()
     break
   case "leader":
     console.log("leader" + topicId)

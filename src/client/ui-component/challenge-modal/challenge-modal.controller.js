@@ -3,6 +3,7 @@ import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
 import { getFilteredDetails } from "../leader-board/leader-controller"
+import {serviceCall} from "../leader-board/service-methods"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -43,7 +44,7 @@ const openChallengeModal = (state, id, target) => {
     const challengeId = btnData[1];
     sessionStorage.setItem("challengeId",challengeId);
     serviceCall("/api/getChallengesByTopic")
-      .then(function (data) {
+      .then(function (data) {        
         let array = new Array();
         for (let item of data) {
           if(item)
@@ -67,6 +68,7 @@ const openChallengeModal = (state, id, target) => {
           select2.value = "1"
           sessionStorage.removeItem("challengeId");
           dialog1.close()
+          document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
         })
         const select = new MDCSelect(document.querySelector(".mdc-select"))
         select.listen("change", (event) => {

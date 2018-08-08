@@ -1,31 +1,27 @@
-import {signIn, signUp, logout} from "../../../server/FirebaseAuth/emailAuthentication"
-import {showSnackBar} from "../snackbar/snackbar.controller"
 import {config} from "../../../server/config"
 import firebase from "firebase"
 import {Store} from "../../boot/Store"
-export const goToSignin = () => {
-  function newLogin(user) {
-    if(user) {
-      Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo :user, Name: 'dashboard'}})
-      app(user)
-    }
-    else {
-      Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: 'login'}})
-      var provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithPopup(provider).then(function(user) {
-        console.log("result", user)
-      }
-      )
-    }
+const firebaseAp = firebase.initializeApp(config)
+export const goToSignin = (user) => {
+  if (user) {
+    Store.dispatch({type: "LoggedInUserInfo", dataItem: {UserInfo: user, Name: "dashboard"}})
+    app(user)
   }
-  firebase.auth().onAuthStateChanged(newLogin);
+  else {
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: "login"}})
+    var provider = new firebase.auth.GoogleAuthProvider()
+    firebaseAp.auth().signInWithPopup(provider).then(function(user) {
+      console.log("result aa gya =>", user)
+    }
+    )
+  }
 }
 function app(user) {
   console.log("user display name:", user.displayName)
   let nextUserID = 0
   let lastUserId = 0
-  var UserMaster = firebase.database().ref('User_Master');
-  UserMaster.orderByChild('userID').limitToLast(1)
+  var UserMaster = firebase.database().ref("User_Master")
+  UserMaster.orderByChild("userID").limitToLast(1)
     .on("child_added", function(snapshot) {
       lastUserId = snapshot.val().userID
     })
@@ -51,9 +47,24 @@ function app(user) {
 }
 
 export const goToLogout = () => {
-  firebase.auth().signOut().then(function() {
+  // window.location.href = "https://accounts.google.com/logout"
+  window.open(
+    "https://accounts.google.com/logout",
+    "_blank" // <- This is what makes it open in a new window.
+  )
+  firebaseAp.auth().signOut().then(function() {
     console.log("successfully signed out")
   }).catch(function(error) {
-  // An error happened.
-})
+    console.log(error)
+  })
 }
+
+firebaseAp.auth().onAuthStateChanged(firebaseUser => {
+  if (firebaseUser) {
+    goToSignin(firebaseUser)
+  }
+  else {
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: "login"}})
+  }
+})
+

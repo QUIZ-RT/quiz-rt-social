@@ -3,12 +3,22 @@ import {getHeaderTemplate, renderViewToContainer} from "./header.view"
 import {createMenu} from "../menu/menu.controller"
 import {goToLogout} from "../login-page/login.service"
 import {Store} from "../../boot/Store"
+import {listOfFriendsClicked} from "../friends/controller";
 
 export const createHeader = () => {
   const headerContent = getHeaderTemplate()
   const logoutBtn = headerContent.querySelector("#logout")
   logoutBtn.addEventListener("click", function() {
     goToLogout()
+    if(document.querySelector('#quiz-maincontent').classList.contains("mainContainer")){
+      document.querySelector('#quiz-maincontent').classList.remove("mainContainer")
+  }
+  })
+
+  const chatIconBtn = headerContent.querySelector(".chatIcon")
+  chatIconBtn.addEventListener("click", function() {
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: "friends"}})
+    listOfFriendsClicked()
   })
 
   renderViewToContainer(headerContent, "#quiz-header")
@@ -26,3 +36,5 @@ Store.subscribe(() => {
     
   }
 })
+
+
