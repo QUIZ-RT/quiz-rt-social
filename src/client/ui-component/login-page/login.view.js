@@ -7,11 +7,14 @@ const htmlToTemplate = (htmlstr) => {
 // first
 export const getUserTemplate = () => {
   const userHtmlContent = `
-  </div>
+  <div>
   <div class="mdl-card__supporting-text login-hero-img" style="padding:20px">
+  <div class="login-form">
+  <div class="lbl_login">Quizzapp</div>
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="signin">
   Signin  With  Google &nbsp; <i class="fas fa-sign-in-alt"></i>
   </button> 
+  </div>
   </div>
   `
 
