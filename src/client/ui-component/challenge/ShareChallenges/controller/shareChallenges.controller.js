@@ -1,6 +1,6 @@
 import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
 import {Store} from '../../../../boot/Store'
-import {getUserChallenges} from "../service/shareChallenges.service"
+import {getUserChallenges} from "../services/shareChallenges.service"
 
 var shareChallenges
 export const createShareChallengesSection = (userId) => {
