@@ -182,3 +182,16 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     background-color: #442e63 !important;
   }
 }
+
+.challFormValidator{
+  color: red;
+}
+
+#challengeSection{
+  .mdl-color--grey-100{
+    width :60%;
+  }
+  .mdl-layout__content,.mdl-card{
+  width:100%;
+  }
+}
