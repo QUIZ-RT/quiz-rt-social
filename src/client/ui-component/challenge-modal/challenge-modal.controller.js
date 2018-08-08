@@ -3,6 +3,7 @@ import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
 import { getFilteredDetails } from "../leader-board/leader-controller"
+import {serviceCall} from "../leader-board/service-methods"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -44,6 +45,7 @@ const openChallengeModal = (state, id, target) => {
     sessionStorage.setItem("challengeId",challengeId);
     serviceCall("/api/getChallengesByTopic")
       .then(function (data) {
+        debugger;
         let array = new Array();
         for (let item of data) {
           if(item)

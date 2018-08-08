@@ -70,13 +70,13 @@ export const getFilteredDetails = (arry, days) => {
   let rank = 0
 
   const filteredArray = arry.filter(item => {
-    const markerDate = new Date(item.challengeDatePlayed
+    const markerDate = new Date(item.playedOn
     )
     return (markerDate.getTime() <= startValue.getTime() && markerDate.getTime() >= endValue.getTime())
   }).sort((a, b) => {
-    const scoreA = +a.challengeScore
+    const scoreA = +a.score
 
-    const scoreB = +b.challengeScore
+    const scoreB = +b.score
 
     let comparison = 0
     if (scoreA > scoreB) {
@@ -93,7 +93,7 @@ export const getFilteredDetails = (arry, days) => {
     html = html + `<tr id="${item.userId}">
                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
                      <td class="mdl-data-table__cell--non-numeric material">${item.userName}</td>
-                     <td>${item.challengeScore}</td>
+                     <td>${item.score}</td>
                    </tr>`
   }
 
