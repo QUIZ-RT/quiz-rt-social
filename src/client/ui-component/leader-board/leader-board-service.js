@@ -1,3 +1,6 @@
+import {serviceCall} from './service-methods'
+
+
 const challengeData = {
   challengeId: "",
   topicName: "",
@@ -66,6 +69,87 @@ const challengeData = {
        ],
   createdBy: "userId",
 }
-export const getChallengeDetails = () => {
+
+const gameData = {
+  games: [{
+    heldOn: "",
+    id: "",
+    players: [
+      {
+        id: "1",
+        name: "abc",
+        score: "123",
+      },
+      {
+        id: "2",
+        name: "bcd",
+        score: "120",
+      },
+      {
+        id: "3",
+        name: "cde",
+        score: "142",
+      },
+      {
+        id: "4",
+        name: "def",
+        score: "150",
+      }],
+  },
+  {
+    heldOn: "",
+    id: "",
+    players: [
+      {
+        id: "5",
+        name: "aaa",
+        score: "121",
+      },
+      {
+        id: "2",
+        name: "bcd",
+        score: "520",
+      },
+      {
+        id: "3",
+        name: "cde",
+        score: "140",
+      },
+      {
+        id: "7",
+        name: "ghi",
+        score: "150",
+      }],
+  },
+  {
+    heldOn: "",
+    id: "",
+    players: [
+      {
+        id: "5",
+        name: "aaa",
+        score: "121",
+      },
+      {
+        id: "2",
+        name: "bcd",
+        score: "520",
+      },
+      {
+        id: "3",
+        name: "cde",
+        score: "140",
+      },
+      {
+        id: "7",
+        name: "ghi",
+        score: "150",
+      }],
+  }],
+}
+
+export const getGameDetails = () => JSON.stringify(gameData)
+
+export const getChallengeDetails = () => { 
   return JSON.stringify(challengeData)
 }

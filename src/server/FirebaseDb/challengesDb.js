@@ -128,3 +128,17 @@ export const getUserFromUserMasterDB = (req, resp) => {
   return promise
 }
 
+export const getChallengeDetails = (req, resp) => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
+  }  
+  const challengesRef = firebase.database().ref()
+  const promise = new Promise(function(resolve, reject) {
+    challengesRef.child("User_Transaction").once("value", function(users) { 
+      resolve(users.val())
+    }, function(errorObject) {
+      reject(errorObject)
+    })
+  })
+  return promise
+ }
