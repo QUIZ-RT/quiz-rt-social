@@ -9,6 +9,9 @@ export const createHeader = () => {
   const logoutBtn = headerContent.querySelector("#logout")
   logoutBtn.addEventListener("click", function() {
     goToLogout()
+    if(document.querySelector('#quiz-maincontent').classList.contains("mainContainer")){
+      document.querySelector('#quiz-maincontent').classList.remove("mainContainer")
+  }
   })
 
   renderViewToContainer(headerContent, "#quiz-header")

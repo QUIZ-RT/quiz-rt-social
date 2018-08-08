@@ -2,7 +2,6 @@
 // import "./boot/reducer"
 //import $ from "jquery"
 import {Store} from "./boot/Store"
-import "./boot/subscribe"
 import "./styles/scss/main.scss"
 var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 import {} from "../../node_modules/material-design-lite/material.min"

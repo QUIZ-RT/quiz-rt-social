@@ -60,7 +60,10 @@ export const getLeaderBoardTemplate = () => {
             </div>
         </div>
     </div>
-        </section>      
+        </section>
+        <footer class="mdc-dialog__footer">
+        <button type="button" class="mdc-button mdc-button--raised close-btn  mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
+      </footer>          
       </div>
       <div class="mdc-dialog__backdrop"></div>
     </aside>`

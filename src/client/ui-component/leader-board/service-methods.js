@@ -1,27 +1,17 @@
 
-export const serviceCall = (url, data, header) => {
-  if ("fetch" in window) {
+export const serviceCall = (url) => {  
     return fetch(url, {
       method: "GET",
-      headers: new Headers(header),
-    }).then(function(response) {
-      if (response.ok) {
-        return response.json()
-      }
+      headers: {
+        "Content-Type": "application/json"
+        //"Cache-Control": "no-cache",
+      }  
+    }).then(
+      res => res.json()
+    ).then(function(response) {       
+      return response;
     }).catch(function(error) {
       console.log("Request failure: ", error)
-    })
-  }
-  else {
-    return $.ajax({
-      url: url,
-      method: "GET",
-      headers: header,
-      data: JSON.stringify(data),
-    }).done(function(data) {
-      return data
-    }).fail(function(xhr) {
-      console.log("error", xhr)
-    })
-  }
+      reject(error)     
+    })   
 }

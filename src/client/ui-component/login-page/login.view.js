@@ -7,22 +7,14 @@ const htmlToTemplate = (htmlstr) => {
 // first
 export const getUserTemplate = () => {
   const userHtmlContent = `
-  <div class="mdl-layout mdl-js-layout">
-  <main class="mdl-layout__content" style = "margin: auto">
-  <div class="mdl-card mdl-shadow--6dp">
-  <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-  <h6 class="mdl-card__title-text">Quiz RT Login</h6>
-  <!-- <div style="text-align: right; width: 20%;">
-  <img src = "src/client/assets/google-logo.png" style="width:40%" />
-  </div> -->
-  </div>
-  <div class="mdl-card__supporting-text" style="padding:20px">
+  <div>
+  <div class="mdl-card__supporting-text login-hero-img" style="padding:20px">
+  <div class="login-form">
+  <div class="lbl_login">Quizzapp</div>
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="signin">
-  Signin  With  Google 
+  Signin  With  Google &nbsp; <i class="fas fa-sign-in-alt"></i>
   </button> 
   </div>
-  </div>
-  </main>
   </div>
   `
 

@@ -2,8 +2,8 @@ import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
-import {getFilteredDetails } from "../leader-board/leader-controller"
-import {getChallengeDetails} from "../leader-board/leader-board-service"
+import { getFilteredDetails } from "../leader-board/leader-controller"
+import {serviceCall} from "../leader-board/service-methods"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -38,34 +38,57 @@ const openChallengeModal = (state, id, target) => {
     console.log("canceled")
   })
 
-  // ///////////////////////// Leader Board Related Code///////////////////////////////
-  document.querySelector(".btnLeaderBoard").addEventListener("click", function(event) {
-    const result = JSON.parse(getChallengeDetails())
-    getFilteredDetails(result.gameStatus, 1)
+  /////////////////////////// Leader Board Related Code///////////////////////////////
+  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
+    const btnData = event.target.id.split("-")
+    const challengeId = btnData[1];
+    sessionStorage.setItem("challengeId",challengeId);
+    serviceCall("/api/getChallengesByTopic")
+      .then(function (data) {        
+        let array = new Array();
+        for (let item of data) {
+          if(item)
+          array.push(item);
+        }        
+        const filteredArray = array.filter(item => {          
+          return (item.challengeId == challengeId)
+        })
+        getFilteredDetails(filteredArray, 1)
+        const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
+        const dialog1 = new MDCDialog(dialogElement1)
+        dialog1.close()
 
-    const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
-    const dialog1 = new MDCDialog(dialogElement1)
-    dialog1.close()
+        const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
+        const dialog2 = new MDCDialog(dialogElement2)
+        dialog2.show()
 
-    const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
-    const dialog2 = new MDCDialog(dialogElement2)
-    dialog2.show()
-
-    dialog2.listen("MDCDialog:cancel", function() {
-      document.getElementById("leaderBody").innerHTML = ""
-      const select2 = new MDCSelect(document.querySelector(".mdc-select"))
-      select2.value = "1"
-    //   const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
-    // const dialog1 = new MDCDialog(dialogElement1)
-    dialog1.close()
-    })
-    const select = new MDCSelect(document.querySelector(".mdc-select"))
-    select.listen("change", () => {
-      const result = JSON.parse(getChallengeDetails())
-      getFilteredDetails(result.gameStatus, select.value)
-    })
+        dialog2.listen("MDCDialog:cancel", function () {
+          document.getElementById("leaderBody").innerHTML = ""
+          const select2 = new MDCSelect(document.querySelector(".mdc-select"))
+          select2.value = "1"
+          sessionStorage.removeItem("challengeId");
+          dialog1.close()
+          document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
+        })
+        const select = new MDCSelect(document.querySelector(".mdc-select"))
+        select.listen("change", (event) => {
+          let challengeId = sessionStorage.getItem("challengeId");
+          serviceCall("/api/getChallengesByTopic")
+          .then(function (data) {
+            let array = new Array();
+            for (let item of data) {
+              if(item)
+              array.push(item);
+            }                
+            const filteredArray = array.filter(item => {          
+              return (item.challengeId == challengeId)
+            })
+            getFilteredDetails(filteredArray, select.value);
+          });          
+        });
+      });
   })
-  // ////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
 
   dialog.lastFocusedTarget = target
   dialog.show()
@@ -74,9 +97,20 @@ const openChallengeModal = (state, id, target) => {
 const challengeModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const challengeId = btnData[1]
+  const curState = Store.getState()
+  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {return x.challengeId.toString() === challengeId })[0]
+  let topicId = ""
+  for (const topickey in curState.dashboardReducer.TopicList) {
+    if(curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName){
+      topicId = curState.dashboardReducer.TopicList[topickey].id
+      break
+    }
+  }
   switch (btnData[2]) {
   case "play":
     console.log("play" + challengeId)
+    const url = "https://quiz-engine.herokuapp.com?topicId="+topicId+"&type=challenge"
+    window.open(url , '_blank');
     break
   case "leader":
     console.log("leader" + challengeId)

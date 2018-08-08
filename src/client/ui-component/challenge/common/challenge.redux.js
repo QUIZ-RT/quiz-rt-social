@@ -2,7 +2,7 @@ import {Store} from "../../../boot/Store"
 
 
 export const challengeReducer = (state = {}, action) => {
-    const statePrev = {...state}
+    const statePrev = Object.assign({}, state)
     const newState = Object.assign({}, statePrev)
     switch (action.type) {
     case "currentchallengeview":

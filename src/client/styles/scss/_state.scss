@@ -32,12 +32,19 @@
 }
 
 .rankingTable {
-    width: 19vw;   
+    min-width: 36vw;   
 }
 
 .mdl-table{
-   max-height: 50vh;
+   max-height: 43vh;
    overflow-y: scroll;
+}
+
+mdc-select.mdc-select--outline{
+    min-width:36vw;
+}
+.mdl-table {
+    min-width: 33vw !important;
 }
 
 .selectedRow {

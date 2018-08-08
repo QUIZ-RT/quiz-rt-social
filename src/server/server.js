@@ -1,9 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { FirebaseOAuth } from './FirebaseAuth/firebaseOAuth';
-import { addChallengeToDB,getUserDetail,updateUserTransaction } from './FirebaseDb/challengesDb';
+import { addChallengeToDB,getUserDetail,updateUserTransaction,getChallengeDetails } from './FirebaseDb/challengesDb';
 import { searchMasterUser, getUserByEmailId, getUserByUserId, sendFriendRequest, getPendingFriendRequest, getFriendRequest, acceptFriendReq, rejectFriendReq, getListOfFriend } from './FirebaseDb/Friends';
-import { getAllChallengesFromDB } from './FirebaseDb/challengesDb';
+import { getAllChallengesFromDB, getUserSpecificChallengesFromDB, getUserFromUserMasterDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
 import { Chat } from './Chat';
 
@@ -135,7 +135,7 @@ app.get("/api/friends/search", (req, res) => {
                 console.log(data.key)
                 const tempVal = val[data.key]
                 tempVal["key"] = data.key
-                if(tempVal['displayName'] &&  tempVal['displayName'].includes(req.query.value)){
+                if(tempVal['displayName'] &&  tempVal['displayName'].toLowerCase().includes(req.query.value.toLowerCase())){
                     users.push(tempVal)
                 }
             })
@@ -333,5 +333,39 @@ app.use("/api/getUserDetail",(req, res)=> {
         }        
     )
 })
- 
+
+app.use("/api/userChallenges", (req, res) => {    
+    console.log("checking request val= ", req.body)
+    let data = getUserSpecificChallengesFromDB(req, res)
+    data.then(
+      result => {
+        res.send(result)
+      },
+      error => {
+        res.send(error)
+      })
+  })
+  
+  app.post("/api/getUserFromUserMaster", (req, res) => {
+    let data = getUserFromUserMasterDB(req, res)
+    data.then(
+      result => {
+        res.send(result)
+      },
+      error => {
+        res.send(error)
+      })
+  })
+  
+  app.use("/api/getChallengesByTopic",(req, res)=> {
+    let data = getChallengeDetails(req, res)
+    data.then(
+      result => {          
+        res.send(result)
+      },
+      error => {
+        res.send(error)
+      })
+   })
+
 http.listen(8080, () => console.log('Example app listening on port 8080!'));
