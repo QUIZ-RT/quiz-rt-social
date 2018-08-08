@@ -41,10 +41,10 @@ export const getFilteredGameDetails = (arry) => {
       const scoreB = +b.score
 
       let comparison = 0
-      if (scoreA > scoreB) {
+      if (scoreB > scoreA) {
         comparison = 1
       }
-      else if (scoreA < scoreB) {
+      else if (scoreB < scoreA) {
         comparison = -1
       }
       return comparison
@@ -79,10 +79,10 @@ export const getFilteredDetails = (arry, days) => {
     const scoreB = +b.score
 
     let comparison = 0
-    if (scoreA > scoreB) {
+    if (scoreB > scoreA) {
       comparison = 1
     }
-    else if (scoreA < scoreB) {
+    else if (scoreB < scoreA) {
       comparison = -1
     }
     return comparison
