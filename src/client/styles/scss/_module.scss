@@ -3,27 +3,40 @@
   height: 100vh;
   width: 100vw;
 }
+
+.login-form{
+  position: relative;
+  top: calc(50% - 50px);
+  .lbl_login{
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    margin: 1em;
+  }
+}
 #signin {
   cursor: pointer;
-    margin: 0;
-    border-radius: 5px;
-    font-size: 0.8em;
-    position: relative;
-    left: 50%;
-    min-height: 60px;
-    transform: translate(-50%);
-    background-color: #550f5c;
-    border: none;
-    color: var(--form-background);
-    font-family: "Roboto", sans-serif;
-    font-weight: bold;
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    box-sizing: border-box;
-    border: 2px solid #fbffff;
-    top: calc(50% - 30px);
-    color: #f0f0f1;
+  margin: 0;
+  border-radius: 5px;
+  font-size: 0.8em;
+  position: relative;
+  left: 50%;
+  min-height: 4em;
+  transform: translate(-50%);
+  background-color: #550f5c;
+  border: none;
+  color: var(--form-background);
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  box-sizing: border-box;
+  border: 2px solid #fbffff;
+  /* top: calc(50% - 30px); */
+  color: #f0f0f1;
   i{
-  font-size: 1.2em
+  font-size: 1.2em;
+  
   }
 }
 #signin:hover{
@@ -161,5 +174,11 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
       background-color:#442e63 !important;
 
     }
+  }
+}
+
+#quiz-header{
+  .mdc-top-app-bar{
+    background-color: #442e63 !important;
   }
 }
