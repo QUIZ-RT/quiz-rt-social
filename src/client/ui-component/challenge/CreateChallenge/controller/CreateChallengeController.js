@@ -2,7 +2,7 @@ import {createChallengeContainer, createQuestion, createChallengeHeader, createC
 import {storeChallenge,updateUserTransaction} from "../service/CreateChallengeService"
 import {Store} from '../../../../boot/Store';
 import {createShareChallengesSection} from "../../ShareChallenges/controller/shareChallenges.controller"
-import {getUserFromUserMaster} from "../../ShareChallenges/services/shareChallenges.service"
+import {getUserFromUserMaster} from "../../ShareChallenges/service/shareChallenges.service"
 
 let count = 0
 
