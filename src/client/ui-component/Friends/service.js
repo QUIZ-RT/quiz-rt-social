@@ -123,7 +123,7 @@ function sendFriendRequest(currentUser, reciever) {
     console.log("Response.recieved from server")
     console.log(response)
     //const friends = JSON.parse(response.data)
-    //Store.dispatch({type: "SEARCH_FRIENDS_RES", users: response})
+    Store.dispatch({type: "SEND_FRIEND_RES"})
   })
 }
 

@@ -135,7 +135,7 @@ app.get("/api/friends/search", (req, res) => {
                 console.log(data.key)
                 const tempVal = val[data.key]
                 tempVal["key"] = data.key
-                if(tempVal['displayName'] &&  tempVal['displayName'].includes(req.query.value)){
+                if(tempVal['displayName'] &&  tempVal['displayName'].toLowerCase().includes(req.query.value.toLowerCase())){
                     users.push(tempVal)
                 }
             })
@@ -323,7 +323,6 @@ app.use("/api/getUserDetail",(req, res)=> {
     )
 })
 
-
 app.use("/api/userChallenges", (req, res) => {    
     console.log("checking request val= ", req.body)
     let data = getUserSpecificChallengesFromDB(req, res)
@@ -357,5 +356,5 @@ app.use("/api/userChallenges", (req, res) => {
         res.send(error)
       })
    })
- 
+
 app.listen(8080, () => console.log('Example app listening on port 8080!'));

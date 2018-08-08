@@ -12,6 +12,14 @@ const htmlToTemplate = (htmlstr) => {
   return retElement
 }
 
+const createSnackBar = (msg) => {
+  const messageContainer = htmlToTemplate(`<div id="msg-snack-bar" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>`)
+  return messageContainer
+}
+
 const createFriendsComponent = () => {
   const friendContainer = htmlToTemplate(`<div class="mdl-js-layout mdl-layout--fixed-drawer">
     </div>`)
@@ -128,13 +136,7 @@ export const showSearchPageWithResult = (users, showProgress) => {
   friendComponent.appendChild(createFriendsSideNav())
   friendComponent.appendChild(createFriendHeaderWithSearchBox("Search and make friends"))
   const mainContent = createFriendMainContentContainer()
-  // const usersContainer = createUserListContainer()
-  // mainContent.appendChild(usersContainer)
-
-  // users.forEach((user) => {
-  //   usersContainer.appendChild(createSearchUserItem(user))
-  // })
-
+  
   if (showProgress) {
     mainContent.appendChild(showProgressBar())
   }
@@ -150,24 +152,39 @@ export const showSearchPageWithResult = (users, showProgress) => {
   friendComponent.appendChild(mainContent)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
+  mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName('body')[0].className = ""
 }
 
-export const showFriendList = (users) => {
+export const showFriendList = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
-  friendComponent.appendChild(createFriendHeaderWithOutSearchBox("List of friends"))
-  const mainContent = createFriendMainContentContainer()
-  const usersContainer = createUserListContainer()
-  mainContent.appendChild(usersContainer)
 
-  users.forEach((user) => {
-    usersContainer.appendChild(createFriendItem(user))
-  })
+  let count = 0
+
+  if ( users && users.length > 0) {
+    count = users.length
+  }
+
+  friendComponent.appendChild(createFriendHeaderWithOutSearchBox(`You have ${count} friends`))
+  const mainContent = createFriendMainContentContainer()
+  
+  if (showProgress) {
+    mainContent.appendChild(showProgressBar())
+  }
+  else {
+    const usersContainer = createUserListContainer()
+    mainContent.appendChild(usersContainer)
+
+    users.forEach((user) => {
+      usersContainer.appendChild(createFriendItem(user))
+    })
+  }
   friendComponent.appendChild(mainContent)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
+  mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName('body')[0].className = ""
 }
@@ -175,7 +192,13 @@ export const showFriendList = (users) => {
 export const showPendingFriendRequests = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
-  friendComponent.appendChild(createFriendHeaderWithOutSearchBox("List of friends"))
+  let count = 0
+
+  if ( users && users.length > 0) {
+    count = users.length
+  }
+
+  friendComponent.appendChild(createFriendHeaderWithOutSearchBox(`You have ${count} pending friend requests`))
   const mainContent = createFriendMainContentContainer()
 
   if (showProgress) {
@@ -193,6 +216,7 @@ export const showPendingFriendRequests = (users, showProgress) => {
   friendComponent.appendChild(mainContent)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
+  mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName('body')[0].className = ""
 }
