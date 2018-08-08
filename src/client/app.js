@@ -10,6 +10,7 @@ import {} from "../../node_modules/material-design-lite/material.min"
 import {createLoader} from "./ui-component/loader/loader.controller"
 import {createSnackBar} from "./ui-component/snackbar/snackbar.controller"
 import {createHeader} from "./ui-component/header/header.controller"
+import {createFooter} from "./ui-component/footer/footer.controller"
 import {createMenu} from "./ui-component/menu/menu.controller"
 import {createMainContainer} from "./ui-component/main/main.controlller"
 import {createPopularTopicSection, createFavoriteTopicSection, createChallengesSection, createMyChallengesSection} from "./ui-component/dashboard/dashboard.controller"
@@ -30,7 +31,7 @@ createSnackBar()
 
 //Login Page
 
-createUserLogin()
+//createUserLogin()
 
 console.log("inside app")
 console.log(Material)

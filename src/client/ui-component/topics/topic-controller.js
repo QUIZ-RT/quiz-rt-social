@@ -79,7 +79,7 @@ const render = (topics) => {
   <div>
     <input type="text" id="myInput" placeholder="Search for topics.." title="Type in a topic">
   </div>
-  <div class="mdc-grid-list">
+  <div class="mdc-grid-list topic-scroll">
                 <ul class="mdc-grid-list__tiles">
                     ${topics}
                 </ul>
