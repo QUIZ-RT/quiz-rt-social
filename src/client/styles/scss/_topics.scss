@@ -24,3 +24,13 @@
     border: 1px solid #ddd;
     margin-bottom: 12px;
   }
+
+  .topicListContainer{
+      overflow: auto;
+      overflow-x: hidden;
+  }
+
+  .topic-scroll{
+    overflow: auto;
+    max-height: 50em;
+  }

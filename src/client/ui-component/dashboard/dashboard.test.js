@@ -24,6 +24,20 @@ describe('Dashboard', function() {
         "follow": true,
       }
     }
+
+    const challenges= {
+      "test001": {
+        "topicText": "Politics",
+        "topicUrl": "",
+        "topicImage": "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png",
+        "createdDate": "11/11/2018",
+        "createdBy": 1,
+        "modifiedBy": 1,
+        "modifiedDate": "11/11/2018",
+        "published": true,
+        "follow": true,
+      }
+    }
    
     store.dispatch({
       type: 'GET_TopicData',
