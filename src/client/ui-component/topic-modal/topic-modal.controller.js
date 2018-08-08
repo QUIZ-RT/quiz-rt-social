@@ -3,8 +3,7 @@ import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getTopicModalbox, getToipcModalBodyContent} from "./topic-modal.view"
 import {Store} from "../../boot/Store"
 import {updateFollow} from "../topics/topics.service"
-import {getFilteredDetails } from "../leader-board/leader-controller"
-import {getChallengeDetails} from "../leader-board/leader-board-service"
+import { getFilteredDetails } from "../leader-board/leader-controller"
 import {showLoader, hideLoader} from "../loader/loader.controller"
 
 export const createTopicmodal = () => {
