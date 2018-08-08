@@ -1,15 +1,42 @@
 import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
 import {Store} from '../../../../boot/Store'
-import {getUserChallenges} from "../service/shareChallenges.service"
+import {getUserChallenges, getFriendsToShareChallenges} from "../service/shareChallenges.service"
 import { showLoader } from "../../../loader/loader.controller";
+import {loadFriends} from "../../../../ui-component/Friends/service"
+import {updateUserTransaction} from "../../CreateChallenge/service/CreateChallengeService"
+import {MDCDialog} from "@material/dialog"
+
 var shareChallenges
 export const createShareChallengesSection = (userId) => {
-   showLoader();
+  showLoader()
   getUserChallenges(userId).then(function(userChallenges) {
-    //console.log("user challenges in controller" + JSON.stringify(userChallenges))
-    //Store.dispatch({type: "SHARE_CHALLENGE", dataItem: userChallenges})
     shareChallenges = userChallenges
-    const shareChallengesData = getShareChallengeTemplate(userChallenges);
+    const currentState = Store.getState()
+    const shareChallengesData = getShareChallengeTemplate(userChallenges)
+    const shareBtnList = shareChallengesData.querySelectorAll(".shareChalBtn")
+    shareBtnList.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        const curChallengeId = event.currentTarget.id.split("_")[1]
+        const curChallengeItem = userChallenges.filter((x) => {
+          return x.challengeId.toString() === curChallengeId
+        })[0]
+        const email = currentState.menuReducer.currentUserInfo.email
+        getFriendsToShareChallenges(email).then(function(friends) {
+          fetchFriendsToShareChallenges(friends, userId, curChallengeItem)
+        })
+      })
+    })
+    // TODO - for play challenge button
+    // const playBtnList = shareChallengesData.querySelectorAll(".sharePlayBtn")
+    // playBtnList.forEach((item) => {
+    //   item.addEventListener("click", (event) => {
+    //     const curChallengeId = event.currentTarget.id.split("_")[1]
+    //     const curChallengeItem = userChallenges.filter((x) => {
+    //       return x.challengeId.toString() === curChallengeId
+    //     })[0]
+    //     console.log(curChallengeItem)
+    //   })
+    // })
     let challengeBtnList = shareChallengesData.querySelectorAll(".playChallengeBtnCls");
     challengeBtnList.forEach((item) => {
     item.addEventListener("click", (event) => {
@@ -17,55 +44,40 @@ export const createShareChallengesSection = (userId) => {
     })
   })
     renderViewToContainer(shareChallengesData, "#challengeSection");
-
   })
 }
 
-const shareChallengesDummy = [
-  {
-    "sharedBy": "ghouse",
-    "challengeId": "ch1",
-    "shareToIds": ["raju", "ravi"],
-    "timestamp": "today",
-  },
-  {
-    "sharedBy": "govind",
-    "challengeId": "ch2",
-    "shareToIds": ["ram", "rajesh"],
-    "timestamp": "today",
-  },
-  {
-    "sharedBy": "ashok",
-    "challengeId": "ch3",
-    "shareToIds": ["raki", "remo"],
-    "timestamp": "today",
-  },
-  {
-    "sharedBy": "suri",
-    "challengeId": "ch4",
-    "shareToIds": ["ramesh", "suresh"],
-    "timestamp": "today",
-  },
-]
-
-const friends = ["TRavi", "TPrashanth", "TShyamal", "TSuresh", "TManju"]
-
-// Store.subscribe(() => {
-//   const currentState = Store.getState()
-//   if(currentState.challengeReducer.currentView === 'shareChallenge'){
-//     document.querySelector('#challengeSection').innerHTML = "";
-//     const shareChallengesData = getShareChallengeTemplate(shareChallenges)
-//      renderViewToContainer(shareChallengesData, "#challengeSection")
-//   }
-// })
-// export const createShareChallengesSection = () => {
-//   const shareChallengesData = getShareChallengeTemplate(shareChallenges)
-//   renderViewToContainer(shareChallengesData, "main")
-// }
-
-export const ShareChallengesWithSelectedFriendsSection = () => {
+export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem) => {
   const shareChallengesWithFriendsData = getFriendsToShareChallengeTemplate(friends)
-  renderViewToContainer(shareChallengesWithFriendsData, "main")
+  shareChallengesWithFriendsData.getElementById("submitSharedChallenge").onclick = function() {
+    var friendsListUL = document.querySelector("#friendsUl")
+    var frnds = friendsListUL.querySelectorAll("#friendsLi")
+    let selectedFriends = []
+    const shareUserTranObj={"challengeId": "","challengeName": "","Created_By":"","shared_by":"","playedOn":"","score":"","userID":"","userName":""};
+    for (let item of frnds) {
+      if (item.querySelector(".mdl-checkbox__input").checked) {
+        const friendUserId = item.children[1].children[1].id.split("_")[1]
+        const friendDisplayName = item.children[1].children[1].id.split("_")[2]
+        selectedFriends.push({"userID": friendUserId, "displayName": friendDisplayName, "email": item.children[1].children[1].innerText})
+      }
+    }
+    for (let selFriend of selectedFriends) {
+      shareUserTranObj.Created_By = curChallengeItem.Created_By
+      shareUserTranObj.challengeId = curChallengeItem.challengeId
+      shareUserTranObj.challengeName = curChallengeItem.challengeName
+      shareUserTranObj.shared_by = userId
+      shareUserTranObj.userID = selFriend.userID
+      shareUserTranObj.userName = selFriend.displayName
+      updateUserTransaction(shareUserTranObj)
+    }
+    console.log("selectedFriends" + JSON.stringify(selectedFriends))
+  }
+  renderViewToContainer(shareChallengesWithFriendsData, "#challengeSection")
+  const dialogElement = document.querySelector("#shareChall-mdc-dialog")
+  const dialog = new MDCDialog(dialogElement)
+  const target = document.querySelector("#shareChallengeButton")
+  dialog.lastFocusedTarget = target
+  dialog.show()
 }
 
 const playChallengeOnPlayButton = (event) => {
