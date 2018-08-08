@@ -58,7 +58,7 @@ function appendMessage(message, cssClass) {
   var chatMessageTimestamp = "<label class=\"chatMessageTimestamp\">" + messageTimestamp + "</label>"
   if (message.type === "text") {
     const ol = document.querySelector("ol.discussion")
-    ol.appendChild(createMsgLiElementSelf(message.text + chatMessageTimestamp, cssClass, message.name))
+    ol.appendChild(createMsgLiElementSelf(message.text + chatMessageTimestamp, cssClass, message.sdisplayName))
   }
   chatboxScrollBottom()
 }
@@ -67,9 +67,8 @@ function loadChatBox(messages) {
   $(".chat-module").show()
   $("ol.discussion").html("").show()
   messages.forEach(function (message) {
-    var cssClass = (message.name === Store.getState().makeChat.myUser.name) ? "self mdc-list-item" : "other mdc-list-item"
+    var cssClass = (message.sdisplayName === Store.getState().makeChat.myUser.user.displayName) ? "self mdc-list-item" : "other mdc-list-item"
     updateChat(message).then(function () {
-
     })
     appendMessage(message, cssClass, message.name)
   })
@@ -78,7 +77,9 @@ function loadChatBox(messages) {
 
 function clearChatNotificationCount(chatNotificationCount, userName) {
   chatNotificationCount[userName] = 0
-  $("#" + userName + " label.chatNotificationCount").hide()
+  let temdisplayName =  userName;
+  let replaced = temdisplayName.replace(' ', '___');
+  $("#" + replaced + " label.chatNotificationCount").hide()
 }
 
 function selectUerChatBox(selectedUser) {
@@ -93,7 +94,7 @@ function selectUerChatBox(selectedUser) {
     type: "SELECT-FRIEND", myFriend: myFriend
   })
   //$(evt.target).addClass("active")
-  clearChatNotificationCount(Store.getState().makeChat.chatNotificationCount, myFriend.user.email)
+  clearChatNotificationCount(Store.getState().makeChat.chatNotificationCount, myFriend.user.displayName)
 }
 
 // function createLiElement(id, name) {
@@ -108,9 +109,6 @@ function selectUerChatBox(selectedUser) {
 
 function createMsgLiElementSelf(msg, cssClass, name) {
   const dynamicMsgLiElement = `<li >
-      <div class="avatar">
-          <img src=""  alt="${name}"/>
-      </div>
       <div class="messages">
           <p>${msg}</p>
       </div>
@@ -124,27 +122,43 @@ function render() {
   let state = Store.getState();
   //$("#onlineUsers").empty()
   state.makeChat.onlineUsers.forEach(function (user) {
-    if (user.user.email !== state.makeChat.myUser.user.email) {
+    if (user.user.displayName !== state.makeChat.myUser.user.displayName) {
       //var liElement = createLiElement(user.id, user.name)
       //document.querySelector("#onlineUsers").appendChild(liElement)
-      if (state.chatNotificationCount[user.user.email] !== undefined &&
-        state.chatNotificationCount[user.user.email] !== 0) {
-        $("#" + user.user.email + " label.chatNotificationCount").html(state.chatNotificationCount[user.user.email])
-        $("#" + user.user.email + " label.chatNotificationCount").show()
+      let temdisplayName =  user.user.displayName;
+      let replaced = temdisplayName.replace(' ', '___');
+      if (state.makeChat.chatNotificationCount[user.user.displayName] !== undefined &&
+        state.makeChat.chatNotificationCount[user.user.displayName] !== 0) {  
+        $("#" + replaced + " label.chatNotificationCount").html(state.makeChat.chatNotificationCount[user.user.displayName])
+        $("#" + replaced + " label.chatNotificationCount").show()
       }
-      if (state.makeChat.myFriend.user.email === user.user.email) {
-        clearChatNotificationCount(state.chatNotificationCount, user.user.email)
+      $("#" + replaced + " span.chatOnline").html('fiber_manual_record')
+        $("#" + replaced + " span.chatOnline").show()
+      
+      if (state.makeChat.myFriend && state.makeChat.myFriend.user 
+        && state.makeChat.myFriend.user.displayName === user.user.displayName) {
+        clearChatNotificationCount(state.makeChat.chatNotificationCount, user.user.displayName)
       }
     }
   })
-  const body = document.querySelector(".demo-list-action")
-  if ($(".chat-module")[0] === undefined) {
-    body.appendChild(createchatSection())
+  if(state.makeChat.myFriend && state.makeChat.myFriend.user 
+  && state.makeChat.myFriend.user.displayName){
+    const body = document.querySelector(".chatSection")
+    if ($(".chat-module")[0] === undefined) {
+      body.appendChild(createchatSection())
+    }
+    $(".chat-module").show()
+      $("ol.discussion").show()
+      $(".chat-top-bar").html("").show()
+      document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.user.displayName))
+      if (state.makeChat.allChatMessages[state.makeChat.myFriend.user.displayName] !== undefined) {
+        loadChatBox(state.makeChat.allChatMessages[state.makeChat.myFriend.user.displayName])
+      }
+      else {
+        $("ol.discussion").html("")
+      }
   }
-  $(".chat-module").show()
-    $("ol.discussion").show()
-    $(".chat-top-bar").html("").show()
-    document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.user.displayName))
+ 
   // if (state.makeChat.onlineUsers.length >= 2 && state.makeChat.myFriend.name !== undefined) {
   //   $(".chat-module").show()
   //   $("ol.discussion").show()
@@ -154,24 +168,19 @@ function render() {
   //$("#onlineUsers li").removeClass("active")
   $("#notifyTyping").text("")
   $("#txtChatMessage").val("").focus()
+}
 
-  if (state.makeChat.allChatMessages[state.makeChat.myFriend.user.email] !== undefined) {
-    loadChatBox(state.makeChat.allChatMessages[state.makeChat.myFriend.user.email])
-  }
-  else {
-    $("ol.discussion").html("")
-  }
+export const subsribeRender = () =>{
+  Store.subscribe(render)
 }
 
 export const createChatContainer = (selectedUser) => {
   let state = Store.getState();
   state.makeChat.onlineUsers.forEach(function (user) {
-    if (selectedUser.email === user.user.email) {
+    if (selectedUser.displayName === user.user.displayName) {
       selectedUser.socketId = user.socketId
     }
   })
-
   selectUerChatBox(selectedUser);
-  Store.subscribe(render)
 }
 

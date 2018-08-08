@@ -8,7 +8,7 @@ const updateChat = (message) => {
         method: "post",
         body: JSON.stringify(message),
       }).then(
-        res => res.json()
+        //res => res.json()
       ).then(json => {
         resolve(json)
       }, error => {
