@@ -5,10 +5,8 @@ import { createChatContainer, subsribeRender } from "./chat.view"
 
 let socket = io()
 
-export const subsribeRenderCtrl = () => {
-  subsribeRender();
-}
 export const emitCurrentUser = () => {  
+  subsribeRender();
   socket.on("newUser", function (newUser) {
     Store.dispatch({
       type: "NEW-USER", myUser: newUser,

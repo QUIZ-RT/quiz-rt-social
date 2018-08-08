@@ -33,7 +33,6 @@ const createFriendsSideNav = () => {
     <a class="mdl-navigation__link" id="add_friend" href="#">Add a Friend</a>
     <a class="mdl-navigation__link" id="list_of_friend" href="#">List of Friends</a>
     <a class="mdl-navigation__link" id="frnd_req" href="#">Friend Requests</a>
-    <a class="mdl-navigation__link" id="chat" href="#">Chat</a>
     </nav>
     </div>`)
   return friendSideNav

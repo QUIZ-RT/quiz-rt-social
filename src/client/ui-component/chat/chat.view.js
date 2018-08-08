@@ -121,6 +121,7 @@ function createMsgLiElementSelf(msg, cssClass, name) {
 function render() {
   let state = Store.getState();
   //$("#onlineUsers").empty()
+  let chatCount = 0; 
   state.makeChat.onlineUsers.forEach(function (user) {
     if (user.user.displayName !== state.makeChat.myUser.user.displayName) {
       //var liElement = createLiElement(user.id, user.name)
@@ -128,7 +129,8 @@ function render() {
       let temdisplayName =  user.user.displayName;
       let replaced = temdisplayName.replace(' ', '___');
       if (state.makeChat.chatNotificationCount[user.user.displayName] !== undefined &&
-        state.makeChat.chatNotificationCount[user.user.displayName] !== 0) {  
+        state.makeChat.chatNotificationCount[user.user.displayName] !== 0) { 
+          chatCount = chatCount + state.makeChat.chatNotificationCount[user.user.displayName] 
         $("#" + replaced + " label.chatNotificationCount").html(state.makeChat.chatNotificationCount[user.user.displayName])
         $("#" + replaced + " label.chatNotificationCount").show()
       }
@@ -141,6 +143,9 @@ function render() {
       }
     }
   })
+  if(chatCount > 0){
+    $(".chatIcon").attr("data-badge", chatCount)
+  }
   if(state.makeChat.myFriend && state.makeChat.myFriend.user 
   && state.makeChat.myFriend.user.displayName){
     const body = document.querySelector(".chatSection")
