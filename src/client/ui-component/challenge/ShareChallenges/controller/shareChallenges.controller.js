@@ -1,9 +1,10 @@
 import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
 import {Store} from '../../../../boot/Store'
 import {getUserChallenges} from "../service/shareChallenges.service"
-
+import { showLoader } from "../../../loader/loader.controller";
 var shareChallenges
 export const createShareChallengesSection = (userId) => {
+   showLoader();
   getUserChallenges(userId).then(function(userChallenges) {
     //console.log("user challenges in controller" + JSON.stringify(userChallenges))
     //Store.dispatch({type: "SHARE_CHALLENGE", dataItem: userChallenges})
