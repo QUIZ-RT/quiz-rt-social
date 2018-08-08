@@ -100,11 +100,15 @@ const createSearchUserItem = (user) => {
 }
 
 const createFriendItem = (user) => {
-  const item = htmlToTemplate(`<div class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">person</i>
-                <span>${user.displayName}</span>
+  let temdisplayName =  user.displayName;
+let replaced = temdisplayName.replace(' ', '___');
+  const item = htmlToTemplate(`<div id= ${replaced} class="mdl-list__item start_chat" email=${user.email} displayName=${replaced} photoURL=${user.photoURL} >
+              <span class="mdc-list-item__graphic material-icons green chatOnline" aria-hidden="true" email=${user.email} displayName=${replaced} photoURL=${user.photoURL}></span>
+              <span class="mdl-list__item-primary-content" email=${user.email} displayName=${replaced} photoURL=${user.photoURL} >
+                <i class="material-icons mdl-list__item-avatar" email=${user.email} displayName=${replaced} photoURL=${user.photoURL} >person</i>
+                <span email=${user.email} displayName=${replaced} photoURL=${user.photoURL} >${user.displayName}</span>
               </span>
+              <label class="chatNotificationCount"></label></li>
             </div>`)
   return item
 }
@@ -131,12 +135,26 @@ const showProgressBar = () => {
     </div>`)
   return item
 }
+
+const createchatSectionContainer = () => {
+  const chatSectionContainer = htmlToTemplate(`<div class="chatSection" style="width:50%;">
+          </div>`)
+  return chatSectionContainer
+}
+
+
 export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
   friendComponent.appendChild(createFriendHeaderWithSearchBox("Search and make friends"))
   const mainContent = createFriendMainContentContainer()
-  
+  // const usersContainer = createUserListContainer()
+  // mainContent.appendChild(usersContainer)
+
+  // users.forEach((user) => {
+  //   usersContainer.appendChild(createSearchUserItem(user))
+  // })
+
   if (showProgress) {
     mainContent.appendChild(showProgressBar())
   }
@@ -175,18 +193,20 @@ export const showFriendList = (users, showProgress) => {
   }
   else {
     const usersContainer = createUserListContainer()
+    usersContainer.style.width = "50%"
     mainContent.appendChild(usersContainer)
 
-    users.forEach((user) => {
-      usersContainer.appendChild(createFriendItem(user))
-    })
-  }
+  users.forEach((user) => {
+    usersContainer.appendChild(createFriendItem(user))
+  })
+  mainContent.appendChild(createchatSectionContainer())
   friendComponent.appendChild(mainContent)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
   mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName('body')[0].className = ""
+}
 }
 
 export const showPendingFriendRequests = (users, showProgress) => {

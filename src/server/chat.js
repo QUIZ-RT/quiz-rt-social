@@ -17,19 +17,29 @@ export class Chat {
         return message;
     }
 
-    getMessages(email) {
+    getMessages(displayName) {
         let dbRef = firebase.database().ref();
-        let unreadMessages = [];
+        //let unreadMessages = [];
         let messages = dbRef.child('messages');
-        messages.orderByKey()
-            .on('child_added', function (snapshot) {
+        const promise = new Promise(function(resolve, reject) {
+            messages.orderByChild("rdisplayName").equalTo(displayName).on("value", function(snapshot) {
+              resolve(snapshot)
+            }, function(errorObj) {
+              reject(errorObj)
+            })
+          })
+          return promise;
+        // messages.orderByKey()
+        //     .on('child_added', function (snapshot) {
+        //         console.log(" displayName  from db " + snapshot.val().rdisplayName + " displayName  expected " + displayName)
+        //         console.log(snapshot.val().rdisplayName === displayName)
                 
-                if (snapshot.val().remail === email && snapshot.val().readYn === 'no') {
-                    unreadMessages.push(snapshot.val());
-
-                }
-            });           
-        return unreadMessages;
+        //         console.log( snapshot.val().readYn)
+        //         if (snapshot.val().rdisplayName === displayName && snapshot.val().readYn === 'no') {
+        //             unreadMessages.push(snapshot.val());
+        //         }
+        //     });           
+        // return unreadMessages;
     }
 
     updateMessage(message) {

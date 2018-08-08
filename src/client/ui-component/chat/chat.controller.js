@@ -1,11 +1,14 @@
 import $ from "jquery"
 import io from "socket.io-client"
 import { Store } from '../../boot/Store'
-import { createChatContainer } from "./chat.view"
+import { createChatContainer, subsribeRender } from "./chat.view"
 
 let socket = io()
 
-export const loadChatContainer = (user) => {
+export const subsribeRenderCtrl = () => {
+  subsribeRender();
+}
+export const emitCurrentUser = () => {  
   socket.on("newUser", function (newUser) {
     Store.dispatch({
       type: "NEW-USER", myUser: newUser,
@@ -19,15 +22,12 @@ export const loadChatContainer = (user) => {
     myUser.Photo = currentState.menuReducer.currentUserInfo.photoURL;
     socket.emit("newUser", myUser)
   }
-  createChatContainer(user)
-  //$(".chat-module").hide()
-  $("#txtChatMessage").on("keyup", notifyTyping)
-
-
+  $("body").on("keyup", "#txtChatMessage", notifyTyping)
+  $("body").on("keypress", "#txtChatMessage", submitfunction)
 
   socket.on("notifyTyping", function (sender, recipient) {
     if (Store.getState().makeChat.myFriend.socketId === sender.socketId) {
-      $("#notifyTyping").text(sender.email + " is typing ...")
+      $("#notifyTyping").text(sender.user.displayName + " is typing ...")
     }
     setTimeout(function () {
       $("#notifyTyping").text("")
@@ -47,19 +47,19 @@ export const loadChatContainer = (user) => {
       $("ol.discussion").html("").hide()
     }
   })
-
-  $("#txtChatMessage").keypress((event) => {
-    const keycode = (event.keyCode ? event.keyCode : event.which)
-    if (keycode === 13) {
-      submitfunction()
-    }
-  })
-
   socket.on("chatMessage", function (message) {
     Store.dispatch({
       type: "RECIEVE-MSG", message: message,
     })
   })
+}
+
+export const loadChatContainer = (user) => {
+ 
+  
+  createChatContainer(user)
+  //$(".chat-module").hide()
+ 
 
 
   //loginMe()
@@ -87,8 +87,10 @@ function notifyTyping() {
   socket.emit("notifyTyping", Store.getState().makeChat.myUser, Store.getState().makeChat.myFriend)
 }
 
-function submitfunction() {
-  var message = {}; var text = $("#txtChatMessage").val()
+function submitfunction(event) {
+  const keycode = (event.keyCode ? event.keyCode : event.which)
+  if (keycode === 13) {
+    var message = {}; var text = $("#txtChatMessage").val()
 
   if (text !== "") {
     let state = Store.getState();
@@ -96,13 +98,14 @@ function submitfunction() {
     message.text = text
     message.sender = state.makeChat.myUser.socketId
     message.receiver = state.makeChat.myFriend.socketId
-    message.semail = state.makeChat.myUser.user.email
-    message.remail = state.makeChat.myFriend.user.email
+    message.sdisplayName = state.makeChat.myUser.user.displayName
+    message.rdisplayName = state.makeChat.myFriend.user.displayName
     Store.dispatch({
       type: "SEND-MSG", message: message,
     })
     socket.emit("chatMessage", message)
   }
   $("#txtChatMessage").val("").focus()
+  }
 }
 
