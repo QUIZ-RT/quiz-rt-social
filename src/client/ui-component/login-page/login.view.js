@@ -10,7 +10,7 @@ export const getUserTemplate = () => {
   </div>
   <div class="mdl-card__supporting-text login-hero-img" style="padding:20px">
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="signin">
-  Signin  With  Google 
+  Signin  With  Google &nbsp; <i class="fas fa-sign-in-alt"></i>
   </button> 
   </div>
   `
