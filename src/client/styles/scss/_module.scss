@@ -1,13 +1,37 @@
 .login-hero-img{
-  background-image: url('../../assets/background.jpg');
+  background-image: url('../../assets/login_bg1.png');
   height: 100vh;
   width: 100vw;
 }
 #signin {
-  position: absolute;
-  top: calc(50% - 18px);
-  left: calc(50% - 90px);
+  cursor: pointer;
+    margin: 0;
+    border-radius: 5px;
+    font-size: 0.8em;
+    position: relative;
+    left: 50%;
+    min-height: 60px;
+    transform: translate(-50%);
+    background-color: #550f5c;
+    border: none;
+    color: var(--form-background);
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    box-sizing: border-box;
+    border: 2px solid #fbffff;
+    top: calc(50% - 30px);
+    color: #f0f0f1;
+  i{
+  font-size: 1.2em
+  }
 }
+#signin:hover{
+  color: #c5b6be;
+  background-color: #641f82;
+  border: 2px solid #cecad2;
+}
+
 
 #quiz-loader {
     position: absolute;

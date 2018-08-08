@@ -710,6 +710,9 @@ export const createMyChallengesSection = (challengeDataList) => {
 Store.subscribe(() => {
     const currentState = Store.getState()
     if (currentState.menuReducer.currentView === 'dashboard') {
+        if(!document.querySelector('#quiz-maincontent').classList.contains("mainContainer")){
+            document.querySelector('#quiz-maincontent').classList.add("mainContainer")
+        }
         document.querySelector('#quiz-maincontent').innerHTML = ""
         showLoader()
         loadDashboardContainer()
