@@ -47,16 +47,16 @@ workflows:
       - build:
           filters:
             branches:
-              only: feature-friends
+              only: dev-integration
       - test:
           requires:
             - build
           filters:
             branches:
-              only: feature-friends
+              only: dev-integration
       - deploy:
           filters:
             branches:
-              only: feature-friends 
+              only: dev-integration
 
         
