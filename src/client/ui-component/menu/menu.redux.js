@@ -1,30 +1,19 @@
-
-import {Store} from "../../boot/Store"
-// State - To hold states
-
-// State to track
-const actionList = []
-
 // Reducer
-export const menuReducer = (state = {currentview: "dashboard"}, action) => {
-  switch (action.type) {
-  case "CurrentViewUpdate":
-    return updateCurrentView(state, action)
-  default:
-    return state
-  }
+export const menuReducer = (state = {}, action) => {
+    const statePrev = state
+    const newState = Object.assign({}, statePrev)
+    switch (action.type) {
+    case "CurrentViewUpdate":
+      newState.currentView = action.dataItem.Name
+      return newState
+    case "LoggedInUserInfo":
+      newState.currentUserInfo = action.dataItem.UserInfo
+      newState.currentView = action.dataItem.Name
+      return newState
+    default:
+      return newState;
+    }
+    return newState;
 }
 
-// subscribe
-Store.subscribe(renderView)
-
-function renderView() {
-
-}
-
-const updateCurrentView = (state, action) => {
-  actionList.push(action)
-  state.currentview = action.dataItem
-  return state
-}
 

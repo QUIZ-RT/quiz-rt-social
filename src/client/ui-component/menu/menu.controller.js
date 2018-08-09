@@ -1,6 +1,9 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
-import {store} from "../menu/menu.redux"
+import {Store} from "../../boot/Store"
+import {updateTopicCtr} from "../topics/topic-controller";
+
+
 
 const menuData = [{
   "id": 1,
@@ -11,27 +14,20 @@ const menuData = [{
 },
 {
   "id": 2,
-  "Name": "Leaderboard",
-  "Status": "InActive",
-  "href": "Redirect Action",
-  "Icon": "devices_other",
-},
-{
-  "id": 3,
   "Name": "Topics",
   "Status": "InActive",
   "href": "Redirect Action",
   "Icon": "sort",
 },
 {
-  "id": 4,
-  "Name": "challenges",
+  "id": 3,
+  "Name": "Challenges",
   "Status": "InActive",
   "href": "Redirect Action",
   "Icon": "games",
 },
 {
-  "id": 5,
+  "id": 4,
   "Name": "Friends",
   "Status": "InActive",
   "href": "Redirect Action",
@@ -48,7 +44,10 @@ export const createMenu = () => {
       menuNavigation(event)
     })
   })
-  renderViewToContainer(menuContent, "header")
+  renderViewToContainer(menuContent, "#quiz-header")
+  const currentState = Store.getState();
+  //console.log("currentState = ", currentState.menuReducer.currentUserInfo.email)
+  document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email;
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {
@@ -60,6 +59,8 @@ export const createMenu = () => {
   drawerEl.addEventListener("MDCTemporaryDrawer:close", function() {
     console.log("Received MDCTemporaryDrawer:close")
   })
+
+  {}
 }
 
 const menuNavigation = (evt) => {
@@ -69,5 +70,13 @@ const menuNavigation = (evt) => {
   })[0]
   console.log("Clicked - " + menuItem.Name)
   drawer.open = false
-  store.dispatch({type: "CurrentViewUpdate", dataItem: menuItem.Name.toLowerCase()})
+  const currentState = Store.getState()
+  if (currentState.menuReducer.currentView !== menuItem.Name.toLowerCase()) {
+    document.querySelector('#quiz-maincontent').innerHTML = ""
+    if(menuItem.Name.toLowerCase()==="topics"){
+      updateTopicCtr()
+    }
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})
+  }
 }
+

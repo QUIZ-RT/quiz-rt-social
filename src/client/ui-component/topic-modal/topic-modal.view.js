@@ -31,9 +31,16 @@ export const getTopicModalbox = () => {
   return htmlToTemplate(topicModalHtmlStr)
 }
 
-export const getToipcModalBodyContent = (state, id) => {
+export const getToipcModalBodyContent = (state, id,emailId) => {
+  console.log("state", state)
   let follow = ""
-  if (state.follow) {
+  let image = "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png";
+
+  if(state.topicUrl!==''){
+    image=state.topicUrl;
+  }
+   
+  if (state.users!==undefined && state.users.indexOf(emailId)>-1) {
     follow = `<button id="topic-${id}-unfollow" class="mar-btm-10px mdc-button mdc-button--raised">
     Unfollow</button>`
   }
@@ -41,7 +48,7 @@ export const getToipcModalBodyContent = (state, id) => {
     follow = `<button id="topic-${id}-follow" class="mar-btm-10px mdc-button mdc-button--raised">
     Follow</button>`
   }
-
+  
   const modalBodyContentStr = `  
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
@@ -49,7 +56,7 @@ export const getToipcModalBodyContent = (state, id) => {
         <div class="topicCardContainer">
             <div id="topic_${id}" class="mdc-card demo-card demo-card--photo">
               <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-                <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${state.topicImage}');">
+                <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${image}');">
                 </div>
               </a>  
             </div>   
@@ -58,7 +65,7 @@ export const getToipcModalBodyContent = (state, id) => {
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet">
           <button id="topic-${id}-play" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
           ${follow}
-          <button id="topic-${id}-leader" class="mar-btm-10px mdc-button mdc-button--raised">Leader Board</button>
+          <button id="topic-${id}-leader" class="mar-btm-10px mdc-button mdc-button--raised btnLeaderBoard">Leader Board</button>
       </div>      
     </div>
   </div>  
