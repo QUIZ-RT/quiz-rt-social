@@ -39,16 +39,15 @@ export const getShareChallengeTemplate = (dataList) => {
       </td>
     </tr>   
   </tbody>
-</div>`;
+</div>`
   })
   const scContentTemp = htmlToTemplate(shareChallengesContentStr)
   appendShareChellengesTableContainer.appendChild(scContentTemp)
   appendShareChellengesListContainer.appendChild(appendShareChellengesTableContainer);
   return scContainerTemp
 }
-
-export const getFriendsToShareChallengeTemplate = (friends) => {
-  const friendsDiv = `<aside id="shareChall-mdc-dialog"
+export const getShareChallengeModalTemplate = () => {
+  const shareChallengeModalHtml = `<aside id="shareChall-mdc-dialog"
   class="mdc-dialog"
   role="alertdialog"
   aria-labelledby="my-mdc-dialog-label"
@@ -70,11 +69,12 @@ export const getFriendsToShareChallengeTemplate = (friends) => {
   <div class="mdc-dialog__backdrop"></div>
 </aside>
 `
+  return htmlToTemplate(shareChallengeModalHtml)
+}
+export const getshareChallengeModalContent = (friends) => {
   const friendsUl = `<ul class="demo-list-control mdl-list" id="friendsUl">
   </ul>`
-  const friendsDivTemp = htmlToTemplate(friendsDiv)
   const friendsUlTemp = htmlToTemplate(friendsUl)
-  const friendsDivContainer = friendsDivTemp.querySelector(".friendsUsernames")
   const friendsUlContainer = friendsUlTemp.querySelector("#friendsUl")
   let friendsUserNamesContentStr = ""
   let count = 0
@@ -93,7 +93,6 @@ export const getFriendsToShareChallengeTemplate = (friends) => {
   })
   const friendsLi = htmlToTemplate(friendsUserNamesContentStr)
   friendsUlContainer.appendChild(friendsLi)
-  friendsDivContainer.appendChild(friendsUlContainer)  
-  return friendsDivTemp
+  return friendsUlContainer
 }
 
