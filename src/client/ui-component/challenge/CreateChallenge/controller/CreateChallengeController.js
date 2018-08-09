@@ -1,8 +1,9 @@
 import {createChallengeContainer, createQuestion, createChallengeHeader, createChallengeSideBarView} from "../view/CreateChallengeView"
 import {storeChallenge,updateUserTransaction} from "../service/CreateChallengeService"
 import {Store} from '../../../../boot/Store';
-import {createShareChallengesSection} from "../../ShareChallenges/controller/shareChallenges.controller"
+import {createShareChallengesSection, createShareChallengesModal} from "../../ShareChallenges/controller/shareChallenges.controller"
 import {getUserFromUserMaster} from "../../ShareChallenges/service/shareChallenges.service"
+
 
 let count = 0
 
@@ -14,8 +15,9 @@ Store.subscribe(() => {
    
             document.querySelector('#quiz-maincontent').innerHTML = "";
 
-            createChallengeSideBarView();
-
+            createChallengeSideBarView()
+            createShareChallengesModal()
+            createChallengeContainer()
             if(currentState.challengeReducer.currentView != 'shareChallenge'){
                if(document.querySelector('#challengeSection')!=null){
                 document.querySelector('#challengeSection').innerHTML = "";
@@ -24,25 +26,19 @@ Store.subscribe(() => {
                createChallengeHeader();
                 document.getElementById("createChallenge").classList.add("mdc-tab--active");
                 document.getElementById("shareChallenge").classList.remove("mdc-tab--active");
-            }
-
-            const shareChallengeCall = document.getElementById("shareChallenge");
-            var userId;
-            shareChallengeCall.onclick = function() {
+            }else{
               count =0;
               document.querySelector('#challengeSection').innerHTML = "";
               const email = currentState.menuReducer.currentUserInfo.email;       
               //console.log("myEmail: " + email)         
               getUserFromUserMaster(email).then(function(currentUser) {
-                userId = currentUser.userID
+                const userId = currentUser.userID
                 console.log("This is userid:" + userId)
                 createShareChallengesSection(userId)
                  document.getElementById("shareChallenge").classList.add("mdc-tab--active");
                 document.getElementById("createChallenge").classList.remove("mdc-tab--active");
               })
-              
-            }
-            createChallengeContainer();
+            }           
         }
   // if(currentState.challengeReducer.currentView === 'createChallenge'){
   //   document.querySelector('#challengeSection').innerHTML = "";
