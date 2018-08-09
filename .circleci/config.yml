@@ -33,6 +33,9 @@ jobs:
       - image: circleci/node:8
     working_directory: ~/quiz-rt-social
     steps:
+      - checkout
+      - run:
+          command: pwd && ls
       - run:
           name: Echo details
           command: echo $HEROKU_EMAIL
@@ -50,7 +53,7 @@ jobs:
           command: heroku container:push web --app quizrtsocial
       - run:
           name: Heroku docker push
-          command: heroku container:release web
+          command: heroku container:release web  --app quizrtsocial
 
 workflows:
   version: 2
