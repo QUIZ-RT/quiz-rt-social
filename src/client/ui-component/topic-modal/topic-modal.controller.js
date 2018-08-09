@@ -1,166 +1,99 @@
-import { MDCDialog } from "@material/dialog"
-import { MDCSelect } from "@material/select/index"
-import { renderViewToContainer, getTopicModalbox, getToipcModalBodyContent } from "./topic-modal.view"
-import { Store } from "../../boot/Store"
-import { updateFollow } from "../topics/topics.service"
-import { getFilteredGameDetails } from "../leader-board/leader-controller"
-import { showLoader, hideLoader } from "../loader/loader.controller"
-import { getGameDetails } from "../leader-board/leader-board-service"
+import {MDCDialog} from "@material/dialog"
+import {MDCSelect} from "@material/select/index"
+import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
+import {Store} from "../../boot/Store"
+import { getFilteredDetails } from "../leader-board/leader-controller"
+import {serviceCall} from "../leader-board/service-methods"
 
-export const createTopicmodal = () => {
-  const topicModaltemplate = getTopicModalbox()
-  renderViewToContainer(topicModaltemplate, "#quiz-maincontent")
+export const createChallengemodal = () => {
+  const challengeModaltemplate = getChallengeModalbox()
+  renderViewToContainer(challengeModaltemplate, "#quiz-maincontent")
 }
-export const topicModalInitializeShow = (evt) => {
+export const challengeModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
-  //const state = topicDataList[targetId]
-  const state = Store.getState();
-
-  //.topics["" + targetId]
-  //.topics["" + targetId]
-  if (state.menuReducer.currentView  ===  "dashboard") {
-    openTopicModal(state.dashboardReducer.TopicList['' + targetId],  targetId,  evt.target, state.menuReducer.currentUserInfo.email)
-
-  }
-  else  if (state.menuReducer.currentView  ===  "topics") {
-    openTopicModal(state.topicReducer.Topics['' + targetId],  targetId,  evt.target, state.menuReducer.currentUserInfo.email)
-  }
+  const state = Store.getState().dashboardReducer;
+  const dataItem = state.ChallegeList.filter((x) => {return x.challengeId.toString() === targetId})[0]
+  openChallengeModal(dataItem, targetId, evt.target)
   evt.preventDefault()
 }
 
-const openTopicModal = (state, id, target, emailId) => {
-  const dialogElement = document.querySelector("#topic-mdc-dialog")
+const openChallengeModal = (state, id, target) => {
+  const dialogElement = document.querySelector("#challenge-mdc-dialog")
   const dialog = new MDCDialog(dialogElement)
-  const dialogHeader = dialogElement.querySelector("#topic-mdc-dialog-label")
-  dialogHeader.innerHTML = `Topic : ${state.topicText}`
-  render(state, id, emailId)
-  dialog.listen("MDCDialog:cancel", function () {
+  const dialogHeader = dialogElement.querySelector("#challenge-mdc-dialog-label")
+  const dialogBody = dialogElement.querySelector("#challenge-mdc-dialog-description")
+  dialogHeader.innerHTML = `Challenge : ${state.challengeName}`
+  dialogBody.innerHTML = ""
+  const challengeModalBodyTemp = getChallengeModalBodyContent(state, id)
+  const modalBtnList = challengeModalBodyTemp.querySelectorAll("button")
+  modalBtnList.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      challengeModalbtnClick(event)
+    })
+  })
+  dialogBody.appendChild(challengeModalBodyTemp)
+
+  dialog.listen("MDCDialog:cancel", function() {
     console.log("canceled")
   })
+// ///////////////////////// Leader Board Related Code///////////////////////////////
+document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
+  const btnData = event.target.id.split("-")
+  const topicId = btnData[1]
+  sessionStorage.setItem("topicId", topicId);
+  serviceCall("/api/getChallengesByTopic")
+    .then(function (data) {
+      const result = JSON.parse(data())
+      getFilteredGameDetails(result, 1)
+      const dialogElement1 = document.querySelector("#topic-mdc-dialog")
+      const dialog1 = new MDCDialog(dialogElement1)
+      dialog1.close()
 
-  dialog.listen("MDCDialog:cancel", function () {
-    console.log("canceled")
-  })
-
-  // ///////////////////////// Leader Board Related Code///////////////////////////////
-  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
-    const btnData = event.target.id.split("-")
-    const topicId = btnData[1]
-    sessionStorage.setItem("topicId", topicId);
-    serviceCall("/api/getChallengesByTopic")
-      .then(function (data) {
-        const result = JSON.parse(data())
-        getFilteredGameDetails(result, 1)
-        const dialogElement1 = document.querySelector("#topic-mdc-dialog")
-        const dialog1 = new MDCDialog(dialogElement1)
-        dialog1.close()
-
-        const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
-        const dialog2 = new MDCDialog(dialogElement2)
-        dialog2.show()
-        hideLoader();
-        dialog2.listen("MDCDialog:cancel", function () {
-          document.getElementById("leaderBody").innerHTML = ""
-          const select2 = new MDCSelect(document.querySelector(".mdc-select"))
-          select2.value = "1"
-        })
-        const select = new MDCSelect(document.querySelector(".mdc-select"))
-        select.listen("change", () => {
-          const result = JSON.parse(getChallengeDetails())
-          getFilteredGameDetails(result, select.value)
-        })
+      const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
+      const dialog2 = new MDCDialog(dialogElement2)
+      dialog2.show()
+      hideLoader();
+      dialog2.listen("MDCDialog:cancel", function () {
+        document.getElementById("leaderBody").innerHTML = ""
+        const select2 = new MDCSelect(document.querySelector(".mdc-select"))
+        select2.value = "1"
       })
-  })
-  //////////////////////////////////////////////////////////////////////////////////////
+      const select = new MDCSelect(document.querySelector(".mdc-select"))
+      select.listen("change", () => {
+        const result = JSON.parse(getChallengeDetails())
+        getFilteredGameDetails(result, select.value)
+      })
+    })
+})
+//////////////////////////////////////////////////////////////////////////////////////
+
   dialog.lastFocusedTarget = target
   dialog.show()
 }
 
-const render = (state, id, emailId) => {
-  const dialogBody = document.querySelector("#topic-mdc-dialog-description")
-  const topicModalBodyTemp = getToipcModalBodyContent(state, id, emailId)
-  const modalBtnList = topicModalBodyTemp.querySelectorAll("button")
-  modalBtnList.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      topicModalbtnClick(event)
-    })
-  })
-  dialogBody.innerHTML = ""
-  dialogBody.appendChild(topicModalBodyTemp)
-}
-
-const topicModalbtnClick = (event) => {
-  showLoader()
+const challengeModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
-  const topicId = btnData[1]
-  const state = Store.getState()
-  let topicData  = ""
-  if (state.menuReducer.currentView  ===  "dashboard") {
-    topicData  =  state.dashboardReducer.TopicList
+  const challengeId = btnData[1]
+  const curState = Store.getState()
+  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {return x.challengeId.toString() === challengeId })[0]
+  let topicId = ""
+  for (const topickey in curState.dashboardReducer.TopicList) {
+    if(curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName){
+      topicId = curState.dashboardReducer.TopicList[topickey].id
+      break
+    }
   }
-  else  if (state.menuReducer.currentView  ===  "topics") {
-    topicData  =  state.topicReducer.Topics
-  }
-  let data = { "id": topicId, "data": [] }
-  let topic = ""
-  let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
-    case "play":
-      const url = "https://www.pokemon.com/us/"
-      window.open(url, '_blank');
-      break
-    case "leader":
-      console.log("leader" + topicId)
-      break
-    case "unfollow":
-      topic = topicData["" + topicId]
-      let ind = topic.users.indexOf(userid)
-      if (ind > -1) {
-        topic.users.splice(ind, 1)
-      }
-      data.data = topic.users;
-      updateFollow(data).then(result => {
-        console.log(result)
-        topic.users = data.data;
-        topicData["" + topicId]['users'] = topic.users
-        if (state.menuReducer.currentView  !==  "dashboard") {
-          Store.dispatch({ "type":  "UPDATE_TOPIC",  "payload":  topicData })
-          document.getElementById("topic_follower_" + topicId).innerHTML  =  topic.users.length;
-        } else {
-          Store.dispatch({ "type":  "UPDATE_Dashboard_Topic",  "dataItem":  topicData })
-        }
-        render(topic, topicId, userid)
-        hideLoader()
-      }, error => {
-        console.log(error);
-        hideLoader()
-      })
-
-      break
-    case "follow":
-      topic = topicData["" + topicId]
-      if (topic.users !== undefined) {
-        topic.users.push(userid)
-      } else {
-        topic.users = [userid];
-      }
-      data.data = topic.users
-      updateFollow(data).then(result => {
-        topicData["" + topicId]['users'] = topic.users
-        render(topic, topicId, userid)
-        if (state.menuReducer.currentView  !==  "dashboard") {
-          Store.dispatch({ "type":  "UPDATE_TOPIC",  "payload":  topicData })
-          document.getElementById("topic_follower_" + topicId).innerHTML  =  topic.users.length;
-        } else {
-          Store.dispatch({ "type":  "UPDATE_Dashboard_Topic",  "dataItem":  topicData })
-        }
-        hideLoader()
-      }, error => {
-        console.log(error);
-        hideLoader()
-      });
-      break
+  case "play":
+    console.log("play" + challengeId)
+    const url = "https://quiz-engine.herokuapp.com?type=challenge&challengeId="+challengeId
+    window.open(url , '_blank');
+    break
+  case "leader":
+    console.log("leader" + challengeId)
+    break
+ default:
+    break
   }
-
 }

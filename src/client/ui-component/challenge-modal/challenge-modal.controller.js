@@ -109,7 +109,7 @@ const challengeModalbtnClick = (event) => {
   switch (btnData[2]) {
   case "play":
     console.log("play" + challengeId)
-    const url = "https://quiz-engine.herokuapp.com?topicId="+topicId+"&type=challenge"
+    const url = "https://quiz-engine.herokuapp.com?type=challenge&challengeId="+challengeId
     window.open(url , '_blank');
     break
   case "leader":

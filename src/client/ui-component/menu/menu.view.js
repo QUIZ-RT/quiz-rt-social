@@ -12,8 +12,8 @@ export const getMenuTemplate = (menuData) => {
   let menuItemStr = ""
   if (menuData.length > 0) {
     menuData.forEach((item) => {
-      menuItemStr += `<a id="menu_${item.id}" class="headermenu mdc-list-item mdc-list-item--selected demo-drawer-list-item" href="#">
-            <i class="material-icons mdc-list-item__graphic" aria-hidden="true">${item.Icon}</i>${item.Name}
+      menuItemStr += `<a id="menu_${item.id}" class="headermenu mdc-list-item mdc-list-item--selected demo-drawer-list-item" href="#" dir="ltr">
+            <i class="material-icons mdc-list-item__graphic quiz-menuIcon" aria-hidden="true">${item.Icon}</i>${item.Name}
           </a>`
     })
   }
@@ -21,7 +21,7 @@ export const getMenuTemplate = (menuData) => {
   const menuHtmlStr = `<aside class="mdc-drawer mdc-drawer--temporary" dir="rtl">
     <nav class="mdc-drawer__drawer" dir="rtl">
       <header class="mdc-drawer__header">
-      <div class="mdc-drawer__header-content">
+      <div class="mdc-drawer__header-content" dir="ltr">
       <div class="mdc-typography--headline6"></div>
       <div id="loggedInEmail" class="mdc-typography--subtitle2" style="font-weight: bold"></div>
       </div>

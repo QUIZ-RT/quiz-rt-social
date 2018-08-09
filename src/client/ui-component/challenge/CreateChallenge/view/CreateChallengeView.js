@@ -2,15 +2,18 @@ import TemplateGenerator from "../../common/TemplateGenerator"
 import {Store} from '../../../../boot/Store';
 import {getTopics} from '../service/CreateChallengeService'
 import { showLoader } from "../../../loader/loader.controller";
-var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
+let Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
 function createChallengeSideBarView() {
-  const challenegSideBarTemp = `<div class="mdl-layout__drawer" id="sidebar">
-    Challenge
+  const challenegSideBarTemp = `
+  <div class="mdl-js-layout mdl-layout--fixed-drawer">
+  <div class="mdl-layout__drawer" id="sidebar">
+     <span class="mdl-layout-title">Challenge</span>
     <nav class="mdl-navigation">
-      <button class="mdl-navigation__link" id="createChallenge">Create Challenge</button>
-      <button class="mdl-navigation__link" id="shareChallenge">Show Challenges</button>
+      <a class="mdl-navigation__link" id="createChallenge" href="#">Create Challenge</a>
+      <a class="mdl-navigation__link" id="shareChallenge" href="#">Show Challenges</a>
     </nav>
+  </div>
   </div>`
 
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
@@ -78,9 +81,10 @@ function createChallengeHeaderTemplate(topicsArray) {
              <!--<label class="mdc-floating-label">Select your Topic</label>-->
              <div class="mdc-line-ripple"></div>
            </div>
+            <span id ="topicErr" style="display:none" class="challFormValidator">Please select a topic</span>
              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-               <input class="mdl-textfield__input" type="text" id="challengeName" />
-               <label class="mdl-textfield__label" for="challengeName">Challenge Name</label>
+               <input class="mdl-textfield__input" type="text" id="challengeName" placeholder="Challenge Name"/>
+               <span id ="ChallengeNameErr" style="display:none" class="challFormValidator">Challenge Name is mandatory field</span>
              </div>
              <div class="mdl-card__actions mdl-card--border">
                    <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="create">Create Challenge</button>
@@ -112,32 +116,40 @@ function createQuestion(challengeJsonObj, count) {
             <div class="mdl-card__supporting-text">
               <form action="#" id="form">
               <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--12-col">
-                <input class="mdl-textfield__input" type="text" id="ques${count}" />
-                <label class="mdl-textfield__label" for="ques${count}">Question ${count}</label>
+                <input class="mdl-textfield__input" type="text" id="ques${count}" placeholder="Question ${count}"/>
+                <span id ="questionErr" style="display:none" class="challFormValidator">Question is mandatory field</span>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
-                <input class="mdl-textfield__input" type="text" id="ques${count}opt1" />
-                <label class="mdl-textfield__label" for="ques${count}opt1">Option 1</label>
+                <input class="mdl-textfield__input" type="text" id="ques${count}opt1" placeholder="Option1" />              
+               <span id ="option1Err" style="display:none" class="challFormValidator">Option1 is mandatory field</span>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
-                <input class="mdl-textfield__input" type="text" id="ques${count}opt2" />
-                <label class="mdl-textfield__label" for="ques${count}opt2">Option 2</label>
+                <input class="mdl-textfield__input" type="text" id="ques${count}opt2" placeholder="Option2" />
+               <span id ="option2Err" style="display:none" class="challFormValidator">Option2 is mandatory field</span>
               </div>
               <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
-                <input class="mdl-textfield__input" type="text" id="ques${count}opt3" />
-                <label class="mdl-textfield__label" for="ques${count}opt3">Option 3</label>
+                <input class="mdl-textfield__input" type="text" id="ques${count}opt3" placeholder="Option3" />
+                <span id ="option3Err" style="display:none" class="challFormValidator">Option3 is mandatory field</span>
               </div>
             <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
-              <input class="mdl-textfield__input" type="text" id="ques${count}opt4" />
-              <label class="mdl-textfield__label" for="ques${count}opt4">Option 4</label>
+              <input class="mdl-textfield__input" type="text" id="ques${count}opt4" placeholder="Option4" />
+             <span id ="option4Err" style="display:none" class="challFormValidator">Option4 is mandatory field</span>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--6-col">
-              <input class="mdl-textfield__input" type="text" id="ques${count}ans" />
-              <label class="mdl-textfield__label" for="ques${count}ans">Answer</label>
+              <input class="mdl-textfield__input" type="text" id="ques${count}ans" placeholder="Answer" />
+             <span id ="answerErr" style="display:none" class="challFormValidator">Answer is mandatory field</span>
             </div>`
-  if (count < 7) {
-    questionTemplate = questionTemplate.concat(` <div class="mdl-card__actions mdl-card--border">
-                     <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="nextQuestion">Next</button>
+      if (count < 7) {
+        questionTemplate = questionTemplate.concat(` <div class="mdl-card__actions mdl-card--border">`);
+        }
+    if (count >1 && count <7) {
+        questionTemplate = questionTemplate.concat(`
+         <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="prevQuestion">Previous</button>`);
+      }
+        if (count < 7) {
+        questionTemplate = questionTemplate.concat(`             
+        <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="nextQuestion">Next</button>
+
                      </div>
                      </form>
                      </div>
@@ -148,6 +160,7 @@ function createQuestion(challengeJsonObj, count) {
   if (count === 7) {
     questionTemplate = questionTemplate.concat(` 
               <div class="mdl-card__actions mdl-card--border">
+                  <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="prevQuestion">Previous</button>
                   <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="save">Submit</button>
               </div>
           </form>
@@ -163,5 +176,7 @@ function createQuestion(challengeJsonObj, count) {
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName('body')[0].className = ""
 }
+
+
 
 export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callShareChallenge}
