@@ -36,8 +36,11 @@ jobs:
       HEROKU_APP: quizrtsocial
     steps:
       - run:
+          name: Echo details
+          command: echo $HEROKU_EMAIL
+      - run:
           name: Deploy Master to Heroku
-          commands:
+          command:
             - |
               cat >~/.netrc <<EOF
               machine api.heroku.com
@@ -47,10 +50,18 @@ jobs:
                 login $HEROKU_EMAIL
                 password $HEROKU_TOKEN
               EOF
-            - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
-            - heroku container:login
-            - heroku container:push web --app $HEROKU_APP
-            - heroku container:release web
+      - run:
+          name: Change chmod
+          command: chmod 600 ~/.netrc # Heroku cli complains about permissions without this
+      - run:
+          name: Heroku container login
+          command: heroku container:login
+      - run:
+          name: Heroku docker build
+          command: heroku container:push web --app $HEROKU_APP
+      - run:
+          name: Heroku docker push
+          command: heroku container:release web
 
 workflows:
   version: 2
