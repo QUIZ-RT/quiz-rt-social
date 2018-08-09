@@ -59,7 +59,7 @@ jobs:
           command: heroku container:push web --app quizrtsocial
       - run:
           name: Heroku container release
-          command: heroku container:release -a quizrtsocial
+          command: heroku container:release web -a quizrtsocial
 
 workflows:
   version: 2
@@ -76,8 +76,6 @@ workflows:
             branches:
               only: dev-integration
       - deploy:
-          requires:
-            - build1
           filters:
             branches:
               only: dev-integration
