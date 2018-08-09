@@ -48,8 +48,8 @@ export const getLeaderBoardTemplate = () => {
                     <table id='mdl-table' class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead>
                             <tr class="mdl-color--grey-400">
-                                <th>Rank</th>
-                                <th>Player Name</th>
+                                <th class="mdl-data-table__cell--non-numeric material">Rank</th>
+                                <th class="mdl-data-table__cell--non-numeric material">Player Name</th>
                                 <th>Score</th>
                             </tr>
                         </thead>

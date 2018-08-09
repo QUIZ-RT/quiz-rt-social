@@ -40,6 +40,7 @@ const openChallengeModal = (state, id, target) => {
 
   /////////////////////////// Leader Board Related Code///////////////////////////////
   document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
+    debugger;
     const btnData = event.target.id.split("-")
     const challengeId = btnData[1];
     sessionStorage.setItem("challengeId",challengeId);
