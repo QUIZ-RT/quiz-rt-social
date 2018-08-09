@@ -19,25 +19,27 @@ export const createTopics = () => {
       .then(result => {        
         getTopicsFromQAGEN()
           .then(
-            response => {
-              let topicsDB = Object.keys(result);
-              let topicFB = Object.keys(response)
-              if (topicsDB.length !== topicFB.length) {
-                let newtopics = topicFB.filter(function (obj) { return topicsDB.indexOf(obj) == -1; });
-                for (let id of newtopics) {
-                  result['' + id] = response['' + id];
-                }
-                addtopics(result).then(
+            response => {              
+              if(JSON.stringify(result)!==JSON.stringify(response)){
+                let newObj = {}
+                Object.keys(response).forEach(element => {
+                  newObj[element] = response[element];
+                  if( result[element]!== undefined && result[element].users!== undefined){
+                    newObj[element].users = result[element].users;
+                  }                  
+                });
+                addtopics(newObj).then(
                   res => {
                     console.log("res", res)
-                    Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
+                    Store.dispatch({ "type": "ADD_TOPIC", "payload": newObj })
                   },
                   err => {
                     console.log(err)
+                    Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
                   })
-              } else {
+              }else{
                 Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
-              }
+              }              
             }, error => {
               Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
             });
@@ -54,10 +56,12 @@ export const createTopics = () => {
                 },
                 err => {
                   console.log(err)
+                  Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
                 })
             },
-            error => {             
-              loadTopic(Store.getState().topicReducer.Topics)
+            error => {     
+              console.log(err)        
+              //loadTopic(Store.getState().topicReducer.Topics)
             })
       })   
 

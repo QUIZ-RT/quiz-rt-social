@@ -15,7 +15,9 @@ export const getTopics = () => {
           if(json.data!==null){
             json.data.forEach(item => {
                 console.log(item)
-                topics[''+item.id]= item;
+                if(item!==null){
+                  topics[''+item.id]= item;
+                }
             });
           }
         resolve(topics)
