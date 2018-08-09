@@ -29,8 +29,8 @@ jobs:
           name: Test
           command: npm test
   deploy:
-    docker:
-      - image: circleci/node:8
+    machine:
+      enabled: true
     working_directory: ~/quiz-rt-social
     steps:
       - checkout
@@ -42,9 +42,6 @@ jobs:
       - run:
           name: Echo API key
           command: echo $HEROKU_API_KEY
-      - run:
-          name: echo Heroku version
-          command: sudo npm install -g heroku@7.7.8
       - run:
           name: Heroku container login
           command: heroku container:login
