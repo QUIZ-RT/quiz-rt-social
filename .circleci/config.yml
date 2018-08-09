@@ -56,7 +56,7 @@ jobs:
           command: heroku container:push web --app quizrtsocial
       - run:
           name: Heroku docker push
-          command: heroku container:release web
+          command: heroku container:release web -a quizrtsocial
 
 workflows:
   version: 2
