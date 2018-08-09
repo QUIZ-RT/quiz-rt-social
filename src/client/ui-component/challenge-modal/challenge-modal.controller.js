@@ -4,6 +4,7 @@ import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyConten
 import {Store} from "../../boot/Store"
 import { getFilteredDetails } from "../leader-board/leader-controller"
 import {serviceCall} from "../leader-board/service-methods"
+import { showLoader, hideLoader } from "../loader/loader.controller"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -39,8 +40,8 @@ const openChallengeModal = (state, id, target) => {
   })
 
   /////////////////////////// Leader Board Related Code///////////////////////////////
-  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
-    debugger;
+  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {    
+    showLoader();
     const btnData = event.target.id.split("-")
     const challengeId = btnData[1];
     sessionStorage.setItem("challengeId",challengeId);
@@ -62,6 +63,7 @@ const openChallengeModal = (state, id, target) => {
         const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
         const dialog2 = new MDCDialog(dialogElement2)
         dialog2.show()
+        hideLoader();
 
         dialog2.listen("MDCDialog:cancel", function () {
           document.getElementById("leaderBody").innerHTML = ""
