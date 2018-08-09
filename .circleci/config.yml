@@ -37,7 +37,7 @@ jobs:
     steps:
       - run:
           name: Deploy Master to Heroku
-          command:
+          commands:
             - |
               cat >~/.netrc <<EOF
               machine api.heroku.com

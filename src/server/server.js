@@ -10,13 +10,14 @@ import path from 'path';
 
 
 const app = express();
+
+//var DIST_DIR = path.join(__dirname, "./dist")
+app.use(express.static("dist"));
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
-
-var DIST_DIR = path.join(__dirname, "dist")
-app.use(express.static(DIST_DIR));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -386,5 +387,5 @@ app.use("/api/userChallenges", (req, res) => {
       })
    })
 
-app.listen(process.env.PORT || 8080, () => console.log(`Example app listening on ${process.env.PORT || 8080}!`));
+http.listen(process.env.PORT || 8080, () => console.log(`Example app listening on ${process.env.PORT || 8080}!`));
 
