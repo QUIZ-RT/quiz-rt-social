@@ -66,3 +66,18 @@ mdc-select.mdc-select--outline{
     max-height: 64vh;
     min-height: 64vh;
 }
+
+@media(min-width:425px){
+#challengeSection{
+    .mdl-grid {
+    padding: 8px;
+    width: 50%;
+    }
+  .mdl-color--grey-100{
+    width :80%;
+  }
+  .mdl-layout__content,.mdl-card{
+  width:100%;
+  }
+}
+}
