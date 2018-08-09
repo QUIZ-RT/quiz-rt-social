@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
 
 const mainContainer = document.getElementById("quiz-maincontent")
