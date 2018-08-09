@@ -18,11 +18,15 @@ export const getMenuTemplate = (menuData) => {
     })
   }
 
-  const menuHtmlStr = `<aside class="mdc-drawer mdc-drawer--temporary" dir="rtl">
-    <nav class="mdc-drawer__drawer" dir="rtl">
+  const menuHtmlStr = `<aside class="mdc-drawer mdc-drawer--temporary" dir="ltr">
+    <nav class="mdc-drawer__drawer">
       <header class="mdc-drawer__header">
-      <div class="mdc-drawer__header-content" dir="ltr">
-      <div class="mdc-typography--headline6"></div>
+      <div class="mdc-drawer__header-content">
+      <div class="mdc-typography--headline6">
+      <span class="mdl-list__item-primary-content">
+      <i class="material-icons  mdl-list__item-avatar">person</i>
+      </span>    
+      </div>
       <div id="loggedInEmail" class="mdc-typography--subtitle2" style="font-weight: bold"></div>
       </div>
       </header>

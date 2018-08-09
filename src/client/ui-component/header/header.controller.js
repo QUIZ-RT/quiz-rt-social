@@ -7,6 +7,14 @@ import {listOfFriendsClicked} from "../Friends/controller";
 
 export const createHeader = () => {
   const headerContent = getHeaderTemplate()
+  const appNameLbl = headerContent.querySelector("#appName")
+  appNameLbl.addEventListener("click", function() {
+    const currentState = Store.getState()
+    if (currentState.menuReducer.currentView !== "dashboard") {
+    Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: "dashboard"}})
+    }
+  })
+
   const logoutBtn = headerContent.querySelector("#logout")
   logoutBtn.addEventListener("click", function() {
     goToLogout()
