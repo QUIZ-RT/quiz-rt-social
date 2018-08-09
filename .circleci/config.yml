@@ -38,16 +38,8 @@ jobs:
     steps:
       - checkout
       - run:
-          command: pwd && ls
-      - run:
-          name: Echo heroku version
-          command: heroku --version
-      - run:
           name: Echo upgrade heroku
           command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - run:
-          name: Echo updated heroku version
-          command: heroku --version
       - run:
           name: Heroku container login
           command: heroku container:login
@@ -76,6 +68,8 @@ workflows:
             branches:
               only: dev-integration
       - deploy:
+          requires:
+            - build1
           filters:
             branches:
               only: dev-integration
