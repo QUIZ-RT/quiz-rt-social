@@ -40,6 +40,9 @@ jobs:
           name: Echo API key
           command: echo $HEROKU_API_KEY
       - run:
+          name: update Heroku
+          command: npm install -g heroku@7.7.8
+      - run:
           name: echo Heroku version
           command: heroku --version
 
