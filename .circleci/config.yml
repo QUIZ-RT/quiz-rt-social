@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/quiz-rt-social
     # The primary container is an instance of the first image listed. The job's commands run in this container.
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     # The secondary container is an instance of the second listed image which is run in a common network where ports exposed on the primary container are available on localhost.
     steps:
       - checkout
@@ -22,13 +22,15 @@ jobs:
             - node_modules
   test:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
       - run:
           name: Test
           command: npm test
   deploy:
+    docker:
+      - image: circleci/node:10
     machine:
         enabled: true
     working_directory: ~/quiz-rt-social
@@ -39,9 +41,6 @@ jobs:
       - run:
           name: Echo API key
           command: echo $HEROKU_API_KEY
-      - run:
-          name: update Heroku
-          command: npm install -g heroku@7.7.8
       - run:
           name: echo Heroku version
           command: heroku --version
