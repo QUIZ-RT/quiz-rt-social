@@ -14,9 +14,9 @@ export const updateTopicCtr= ()=>{
 }
 
 export const createTopics = () => { 
+  showLoader()
     getTopics()
-      .then(result => {
-        showLoader()
+      .then(result => {        
         getTopicsFromQAGEN()
           .then(
             response => {
