@@ -3,7 +3,7 @@ import {getHeaderTemplate, renderViewToContainer} from "./header.view"
 import {createMenu} from "../menu/menu.controller"
 import {goToLogout} from "../login-page/login.service"
 import {Store} from "../../boot/Store"
-import {listOfFriendsClicked} from "../friends/controller";
+import {listOfFriendsClicked} from "../Friends/controller";
 
 export const createHeader = () => {
   const headerContent = getHeaderTemplate()

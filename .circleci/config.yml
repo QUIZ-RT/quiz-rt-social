@@ -22,7 +22,7 @@ jobs:
             - node_modules
   test:
     docker:
-      - image: circleci/node:4.8.2-jessie
+      - image: circleci/node:8
     steps:
       - checkout
       - run:
@@ -36,9 +36,32 @@ jobs:
       HEROKU_APP: quizrtsocial
     steps:
       - run:
+          name: Echo details
+          command: echo $HEROKU_EMAIL
+      - run:
           name: Deploy Master to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+          command:
+            - |
+              cat >~/.netrc <<EOF
+              machine api.heroku.com
+                login $HEROKU_EMAIL
+                password $HEROKU_TOKEN
+              machine git.heroku.com
+                login $HEROKU_EMAIL
+                password $HEROKU_TOKEN
+              EOF
+      - run:
+          name: Change chmod
+          command: chmod 600 ~/.netrc # Heroku cli complains about permissions without this
+      - run:
+          name: Heroku container login
+          command: heroku container:login
+      - run:
+          name: Heroku docker build
+          command: heroku container:push web --app $HEROKU_APP
+      - run:
+          name: Heroku docker push
+          command: heroku container:release web
 
 workflows:
   version: 2
@@ -55,6 +78,8 @@ workflows:
             branches:
               only: dev-integration
       - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: dev-integration
