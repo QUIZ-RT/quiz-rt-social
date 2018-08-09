@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build1:
     working_directory: ~/quiz-rt-social
     # The primary container is an instance of the first image listed. The job's commands run in this container.
     docker:
@@ -41,7 +41,7 @@ jobs:
           command: echo $HEROKU_API_KEY
       - run:
           name: echo Heroku version
-          command: Heroku --version
+          command: heroku --version
 
       - run:
           name: Heroku container login
@@ -57,19 +57,19 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build:
+      - build1:
           filters:
             branches:
               only: dev-integration
       - test:
           requires:
-            - build
+            - build1
           filters:
             branches:
               only: dev-integration
       - deploy:
           requires:
-            - build
+            - build1
           filters:
             branches:
               only: dev-integration
