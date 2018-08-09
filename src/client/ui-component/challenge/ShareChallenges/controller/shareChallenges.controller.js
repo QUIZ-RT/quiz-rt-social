@@ -55,7 +55,8 @@ export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem)
     const shareUserTranObj = {"challengeId": "", "challengeName": "", "Created_By": "", "shared_by":"","playedOn":"","score":"","userID":"","userName":""};
     for (const item of frnds) {
       if (item.querySelector(".mdl-checkbox__input").checked) {
-        const friendUserId = item.children[1].children[1].id.split("_")[1]
+        let friendUserId = item.children[1].children[1].id.split("_")[1]
+        friendUserId = parseInt(friendUserId, 10)
         const friendDisplayName = item.children[1].children[1].id.split("_")[2]
         selectedFriends.push({"userID": friendUserId, "displayName": friendDisplayName, "email": item.children[1].children[1].innerText})
       }
