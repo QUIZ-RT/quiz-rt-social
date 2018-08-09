@@ -166,6 +166,12 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   }
 }
 
+.challengeCardContainer, .topicCardContainer{
+  .mdc-card{
+    height: 10em;
+    width: 10em;
+  }
+}
 
 #challengeSection{
   .mdl-color--primary{
@@ -185,10 +191,36 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     height: 55px;
   }
   .quiz-menuIcon {
-    margin: 0 8px 0 8px !important;
+    margin: 0 8px 0 0 !important;
   }
   .mdc-drawer{
     z-index: 99 !important;
+  }
+  #appName{
+    cursor: pointer;
+  }
+
+  .mdc-drawer--temporary .mdc-drawer__header-content{
+    justify-content: center;
+    flex-direction: column;
+    align-items: center !important;
+
+    .mdl-list__item-primary-content{
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .mdl-list__item-avatar{
+    height: 80px !important;
+    width: 80px !important;
+    font-size: 68px !important;
+    padding: 6px !important;
+  }
+  #loggedInEmail{
+    justify-content: center;
+    display: flex;
+    font-size: 1em;
+    padding: 0.3em;
   }
 }
 
