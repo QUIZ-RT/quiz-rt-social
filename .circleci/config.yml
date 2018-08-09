@@ -20,6 +20,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run:
+          name: Run build
+          command: npm run build
   test:
     docker:
       - image: circleci/node:8
@@ -34,6 +37,21 @@ jobs:
     working_directory: ~/quiz-rt-social
     steps:
       - checkout
+      - run:
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run build
+          command: npm run build
       - run:
           command: pwd && ls
       - run:
