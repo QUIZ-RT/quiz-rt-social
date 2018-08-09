@@ -38,28 +38,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@latest'
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: Install npm wee
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Run build
-          command: npm run build
-      - run:
           command: pwd && ls
       - run:
-          name: Echo details
-          command: echo $HEROKU_EMAIL
+          name: Echo heroku version
+          command: heroku --version
       - run:
-          name: Echo API key
-          command: echo $HEROKU_API_KEY
+          name: Echo upgrade heroku
+          command: heroku update
+      - run:
+          name: Echo updated heroku version
+          command: heroku --version
       - run:
           name: Heroku container login
           command: heroku container:login
