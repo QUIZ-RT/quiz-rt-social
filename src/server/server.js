@@ -357,4 +357,4 @@ app.use("/api/userChallenges", (req, res) => {
       })
    })
 
-app.listen(process.env.PORT || 8080, () => console.log('Example app listening on port!'));
+app.listen(process.env.PORT || 8080, () => console.log(`Example app listening on ${process.env.PORT || 8080}!`));

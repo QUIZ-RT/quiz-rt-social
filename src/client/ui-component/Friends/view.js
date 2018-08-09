@@ -91,7 +91,7 @@ const createUserListContainer = () => {
 const createSearchUserItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">person</i>
+                <i class="material-icons mdl-list__item-avatar"><img src="${user.Photo}" class="profile_pic"/></i>
                 <span>${user.displayName}</span>
               </span>
               <a class="mdl-list__item-secondary-action sendFriendRequest" href="#" user_id=${user.id} user_email=${user.email}><i class="material-icons" user_id=${user.userID}  user_email=${user.email}>add</i></a>
@@ -102,7 +102,7 @@ const createSearchUserItem = (user) => {
 const createFriendItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">person</i>
+                <i class="material-icons mdl-list__item-avatar"><img src="${user.Photo}" class="profile_pic"/></i>
                 <span>${user.displayName}</span>
               </span>
             </div>`)
@@ -112,7 +112,7 @@ const createFriendItem = (user) => {
 const createFriendReqItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
               <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-avatar">person</i>
+                <i class="material-icons mdl-list__item-avatar"><img src="${user.Photo}" class="profile_pic"/></i>
                 <span>${user.displayName}</span>
               </span>
               <span class="mdl-list__item-secondary-content" style="flex-direction: row;">
