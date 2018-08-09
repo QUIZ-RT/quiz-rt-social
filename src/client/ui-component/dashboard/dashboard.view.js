@@ -58,7 +58,7 @@ export const getNoListMsg = (headingText, msg) => {
     ${headingText}
     </h6>
     </section>
-    <div>
+    <div class="noListItem">
     <h6 class="mdc-typography--headline6">
       ${msg}
       </h6>
