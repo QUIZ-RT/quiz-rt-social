@@ -1,6 +1,6 @@
 import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
 import {Store} from '../../../../boot/Store'
-import {getUserChallenges, getFriendsToShareChallenges} from "../service/shareChallenges.service"
+import {getUserChallenges, getFriendsToShareChallenges, updateUserTransactionWithSharedChallenges} from "../service/shareChallenges.service"
 import { showLoader } from "../../../loader/loader.controller";
 import {loadFriends} from "../../../../ui-component/Friends/service"
 import {updateUserTransaction} from "../../CreateChallenge/service/CreateChallengeService"
@@ -25,18 +25,7 @@ export const createShareChallengesSection = (userId) => {
           fetchFriendsToShareChallenges(friends, userId, curChallengeItem)
         })
       })
-    })
-    // TODO - for play challenge button
-    // const playBtnList = shareChallengesData.querySelectorAll(".sharePlayBtn")
-    // playBtnList.forEach((item) => {
-    //   item.addEventListener("click", (event) => {
-    //     const curChallengeId = event.currentTarget.id.split("_")[1]
-    //     const curChallengeItem = userChallenges.filter((x) => {
-    //       return x.challengeId.toString() === curChallengeId
-    //     })[0]
-    //     console.log(curChallengeItem)
-    //   })
-    // })
+    })   
     let challengeBtnList = shareChallengesData.querySelectorAll(".playChallengeBtnCls");
     challengeBtnList.forEach((item) => {
     item.addEventListener("click", (event) => {
@@ -68,7 +57,7 @@ export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem)
       shareUserTranObj.shared_by = userId
       shareUserTranObj.userID = selFriend.userID
       shareUserTranObj.userName = selFriend.displayName
-      updateUserTransaction(shareUserTranObj)
+      updateUserTransactionWithSharedChallenges(shareUserTranObj)
     }
     console.log("selectedFriends" + JSON.stringify(selectedFriends))
   }

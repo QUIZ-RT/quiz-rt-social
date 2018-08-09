@@ -57,13 +57,29 @@ export const getUserChallenges = (userId) => {
       $.ajax(settings).done(function(response) {
         console.log("Response.recieved from server" + email)
         console.log(response)
-        //const friends = JSON.parse(response.data)
         const friends = response
         resolve(response)
-        //Store.dispatch({type: "FETCH_FRIENDS_RES", users: friends})
       })
     })
     return promise
   }
+
+  export const updateUserTransactionWithSharedChallenges = (userTranObj) => {
+    var settings = {
+      "url": "/api/userTransaction",
+      "type": "POST",
+      "mode": "no-cors",
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache",
+      },
+      "data": JSON.stringify(userTranObj),
+    }
+  
+    $.ajax(settings).done(function(response) {
+      console.log("updateUserTransaction in shareChallenges:" ,response)
+    })
+  }
+  
   
   
