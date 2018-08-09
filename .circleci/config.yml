@@ -32,8 +32,6 @@ jobs:
     machine:
         enabled: true
     working_directory: ~/quiz-rt-social
-    environment:
-      HEROKU_APP: quizrtsocial
     steps:
       - run:
           name: Echo details
@@ -42,11 +40,15 @@ jobs:
           name: Echo API key
           command: echo $HEROKU_API_KEY
       - run:
+          name: echo Heroku version
+          command: Heroku --version
+
+      - run:
           name: Heroku container login
           command: heroku container:login
       - run:
           name: Heroku docker build
-          command: heroku container:push web --app $HEROKU_APP
+          command: heroku container:push web --app quizrtsocial
       - run:
           name: Heroku docker push
           command: heroku container:release web
