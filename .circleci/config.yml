@@ -1,0 +1,79 @@
+version: 2
+jobs:
+  build1:
+    working_directory: ~/quiz-rt-social
+    # The primary container is an instance of the first image listed. The job's commands run in this container.
+    docker:
+      - image: circleci/node:10
+    # The secondary container is an instance of the second listed image which is run in a common network where ports exposed on the primary container are available on localhost.
+    steps:
+      - checkout
+      - run:
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  test:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: npm test
+  deploy:
+    docker:
+      - image: circleci/node:10
+    machine:
+        enabled: true
+    working_directory: ~/quiz-rt-social
+    steps:
+      - run:
+          name: Echo details
+          command: echo $HEROKU_EMAIL
+      - run:
+          name: Echo API key
+          command: echo $HEROKU_API_KEY
+      - run:
+          name: echo Heroku version
+          command: heroku --version
+
+      - run:
+          name: Heroku container login
+          command: heroku container:login
+      - run:
+          name: Heroku docker build
+          command: heroku container:push web --app quizrtsocial
+      - run:
+          name: Heroku docker push
+          command: heroku container:release web
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build1:
+          filters:
+            branches:
+              only: dev-integration
+      - test:
+          requires:
+            - build1
+          filters:
+            branches:
+              only: dev-integration
+      - deploy:
+          requires:
+            - build1
+          filters:
+            branches:
+              only: dev-integration
+
+        
