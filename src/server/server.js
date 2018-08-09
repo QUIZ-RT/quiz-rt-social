@@ -6,8 +6,14 @@ import { searchMasterUser, getUserByEmailId, getUserByUserId, sendFriendRequest,
 import { getAllChallengesFromDB, getUserSpecificChallengesFromDB, getUserFromUserMasterDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
 import { Chat } from './Chat';
+import path from 'path';
+
 
 const app = express();
+
+//var DIST_DIR = path.join(__dirname, "./dist")
+app.use(express.static("dist"));
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 app.use(bodyParser.json());
@@ -381,4 +387,5 @@ app.use("/api/userChallenges", (req, res) => {
       })
    })
 
-http.listen(8080, () => console.log('Example app listening on port 8080!'));
+http.listen(process.env.PORT || 8080, () => console.log(`Example app listening on ${process.env.PORT || 8080}!`));
+

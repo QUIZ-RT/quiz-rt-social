@@ -1,52 +1,76 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
-  machine:
-    services:
-      - docker
-
-  dependencies:
-    cache_directories:
-      - ~/docker
-  
-  build:
+  build1:
+    working_directory: ~/quiz-rt-social
+    # The primary container is an instance of the first image listed. The job's commands run in this container.
     docker:
-      # specify the version you desire here
-      - image: circleci/node
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+      - image: circleci/node:8
+    # The secondary container is an instance of the second listed image which is run in a common network where ports exposed on the primary container are available on localhost.
     steps:
       - checkout
-
-      # Download and cache dependencies
+      - run:
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
       - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm wee
+          command: npm install
       - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      - run: yarn test
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Test
+          command: npm test
+  deploy:
+    machine:
+      enabled: true
+    working_directory: ~/quiz-rt-social
+    steps:
+      - checkout
+      - run:
+          command: pwd && ls
+      - run:
+          name: Echo details
+          command: echo $HEROKU_EMAIL
+      - run:
+          name: Echo API key
+          command: echo $HEROKU_API_KEY
+      - run:
+          name: Heroku container login
+          command: heroku container:login
+      - run:
+          name: Heroku docker build
+          command: heroku container:push web --app quizrtsocial
+      - run:
+          name: Heroku docker push
+          command: heroku container:release web  --app quizrtsocial
 
-  deployment:
-    staging:
-      commands:
-        - docker login --username=_ --password=${HEROKU_APP_TOKEN} registry.heroku.com
-        - docker build --rm=false -t registry.heroku.com/quiz-rt-social/web .
-        - docker push registry.heroku.com/quiz-rt-social/web:latest
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build1:
+          filters:
+            branches:
+              only: dev-integration
+      - test:
+          requires:
+            - build1
+          filters:
+            branches:
+              only: dev-integration
+      - deploy:
+          requires:
+            - build1
+          filters:
+            branches:
+              only: dev-integration
+
+        

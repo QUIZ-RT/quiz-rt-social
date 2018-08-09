@@ -21,9 +21,6 @@ COPY . .
  
 RUN npm run build
  
-# Expose port from container so host can access $PORT
-EXPOSE ${PORT}
- 
 # Start the Node.js app on load
 CMD [ "npm", "start" ]
 
