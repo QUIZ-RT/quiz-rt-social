@@ -16,6 +16,7 @@ export const updateTopicCtr= ()=>{
 export const createTopics = () => { 
     getTopics()
       .then(result => {
+        showLoader()
         getTopicsFromQAGEN()
           .then(
             response => {
@@ -38,7 +39,7 @@ export const createTopics = () => {
                 Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
               }
             }, error => {
-              console.log(error);
+              Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
             });
 
       }, errors => {
