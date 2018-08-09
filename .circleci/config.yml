@@ -44,7 +44,7 @@ jobs:
           command: heroku --version
       - run:
           name: Echo upgrade heroku
-          command: sudo snap install heroku --classic
+          command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run:
           name: Echo updated heroku version
           command: heroku --version
