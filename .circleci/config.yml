@@ -52,11 +52,11 @@ jobs:
           name: Heroku container login
           command: heroku container:login
       - run:
-          name: Heroku docker build
-          command: heroku container:push web --app quizrtsocial
-      - run:
           name: Heroku help container
           command: heroku help container
+      - run:
+          name: Heroku docker build
+          command: heroku container:push web --app quizrtsocial
       - run:
           name: Heroku container release
           command: heroku container:release -a quizrtsocial
