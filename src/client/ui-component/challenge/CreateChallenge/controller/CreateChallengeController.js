@@ -13,25 +13,41 @@ Store.subscribe(() => {
   if(currentState.menuReducer.currentView === 'challenges'){
    
             document.querySelector('#quiz-maincontent').innerHTML = "";
+
             createChallengeSideBarView();
+
+            if(currentState.challengeReducer.currentView != 'shareChallenge'){
+               if(document.querySelector('#challengeSection')!=null){
+                document.querySelector('#challengeSection').innerHTML = "";
+               }
+                count =0;
+               createChallengeHeader();
+                document.getElementById("createChallenge").classList.add("mdc-tab--active");
+                document.getElementById("shareChallenge").classList.remove("mdc-tab--active");
+            }
+
             const shareChallengeCall = document.getElementById("shareChallenge");
             var userId;
             shareChallengeCall.onclick = function() {
+              count =0;
+              document.querySelector('#challengeSection').innerHTML = "";
               const email = currentState.menuReducer.currentUserInfo.email;       
               //console.log("myEmail: " + email)         
               getUserFromUserMaster(email).then(function(currentUser) {
                 userId = currentUser.userID
                 console.log("This is userid:" + userId)
                 createShareChallengesSection(userId)
+                 document.getElementById("shareChallenge").classList.add("mdc-tab--active");
+                document.getElementById("createChallenge").classList.remove("mdc-tab--active");
               })
               
             }
             createChallengeContainer();
         }
-  if(currentState.challengeReducer.currentView === 'createChallenge'){
-    document.querySelector('#challengeSection').innerHTML = "";
-    createChallengeHeader();
-  }
+  // if(currentState.challengeReducer.currentView === 'createChallenge'){
+  //   document.querySelector('#challengeSection').innerHTML = "";
+  //   createChallengeHeader();
+  // }
   if (currentState.menuReducer.currentUserInfo) {
       userEmail =  currentState.menuReducer.currentUserInfo.email ; 
       
@@ -65,8 +81,8 @@ function createNextQuestion(evnt) {
     challenge.challengeName = document.getElementById("challengeName").value
     document.getElementById("ChallengeNameErr").setAttribute("style","display:none");
   }
-  if (document.getElementById("topic") != null) {
-    challenge.topicName = document.getElementById("topic").value
+  if (document.getElementById("selectChallTopic") != null) {
+    challenge.topicName = document.getElementById("selectChallTopic").value
       document.getElementById("topicErr").setAttribute("style","display:none");
   
   }
