@@ -68,6 +68,8 @@ workflows:
             branches:
               only: dev-integration
       - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: dev-integration
