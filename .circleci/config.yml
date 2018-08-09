@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build1:
     working_directory: ~/quiz-rt-social
     # The primary container is an instance of the first image listed. The job's commands run in this container.
     docker:
@@ -20,9 +20,12 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run:
+          name: Run build
+          command: npm run build
   test:
     docker:
-      - image: circleci/node:4.8.2-jessie
+      - image: circleci/node:8
     steps:
       - checkout
       - run:
@@ -30,31 +33,60 @@ jobs:
           command: npm test
   deploy:
     machine:
-        enabled: true
+      enabled: true
     working_directory: ~/quiz-rt-social
-    environment:
-      HEROKU_APP: quizrtsocial
     steps:
+      - checkout
       - run:
-          name: Deploy Master to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run build
+          command: npm run build
+      - run:
+          command: pwd && ls
+      - run:
+          name: Echo details
+          command: echo $HEROKU_EMAIL
+      - run:
+          name: Echo API key
+          command: echo $HEROKU_API_KEY
+      - run:
+          name: Heroku container login
+          command: heroku container:login
+      - run:
+          name: Heroku docker build
+          command: heroku container:push web --app quizrtsocial
+      - run:
+          name: Heroku docker push
+          command: heroku container:release web  --app quizrtsocial
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build:
+      - build1:
           filters:
             branches:
               only: dev-integration
       - test:
           requires:
-            - build
+            - build1
           filters:
             branches:
               only: dev-integration
       - deploy:
+          requires:
+            - build1
           filters:
             branches:
               only: dev-integration

@@ -55,7 +55,9 @@ const addtopics = (topics) => {
         if(json.data!==null){
           json.data.forEach(item => {
             console.log(item)
-            topics[''+item.id]= item;
+            if(item!==null){
+              topics[''+item.id]= item;
+            }
           });
         }  
         resolve(topics)
@@ -96,9 +98,13 @@ const addtopics = (topics) => {
         res => res.json()
       ).then(data => {
         console.log("gettopicfromservice - ",data)
-        data.forEach(element => {
-          obj[""+element.id]=element;
-        });
+        if(data!==null){
+          data.forEach(element => {  
+            if(element!==null) {         
+              obj[""+element.id]=element;
+            }
+          });
+        }
         resolve(obj)
       }, error => {
         reject(error)

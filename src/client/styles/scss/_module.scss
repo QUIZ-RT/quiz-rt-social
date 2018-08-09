@@ -166,6 +166,12 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   }
 }
 
+.challengeCardContainer, .topicCardContainer{
+  .mdc-card{
+    height: 10em;
+    width: 10em;
+  }
+}
 
 #challengeSection{
   .mdl-color--primary{
@@ -185,10 +191,36 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     height: 55px;
   }
   .quiz-menuIcon {
-    margin: 0 8px 0 8px !important;
+    margin: 0 8px 0 0 !important;
   }
   .mdc-drawer{
     z-index: 99 !important;
+  }
+  #appName{
+    cursor: pointer;
+  }
+
+  .mdc-drawer--temporary .mdc-drawer__header-content{
+    justify-content: center;
+    flex-direction: column;
+    align-items: center !important;
+
+    .mdl-list__item-primary-content{
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .mdl-list__item-avatar{
+    height: 80px !important;
+    width: 80px !important;
+    font-size: 68px !important;
+    padding: 6px !important;
+  }
+  #loggedInEmail{
+    justify-content: center;
+    display: flex;
+    font-size: 1em;
+    padding: 0.3em;
   }
 }
 
@@ -202,7 +234,7 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     background: #442e63;
     position: relative;
     bottom: 0;
-    min-height: 3em;
+    min-height: 45px;
     .copyRight-container{
       padding: .4em;
      .copyright{
@@ -228,9 +260,53 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
 
 #challengeSection{
   .mdl-color--grey-100{
-    width :60%;
+    width :100%;
+  }
+  .mdl-layout__content,.mdl-card{
+      max-width: 30em;
+
+  }
+}
+
+@media only screen and (min-device-width: 280px) and (max-device-width: 568px){
+  .mdl-layout__content,.mdl-card{
+    width : 100%;
+  }
+ 
+}
+@media only screen and (min-device-width: 568px){
+  .mdl-layout__content{
+   display:inline;
+   }
+}
+
+
+#challenge-Sidebar{
+.mdl-layout__container{
+  height: calc(100% - 105px);
+  }
+}
+
+#selectChallTopic{
+      -webkit-appearance: none
+}
+
+@media(min-width:425px){
+#challengeSection{
+    .mdl-grid {
+    padding: 8px;
+    width: 50%;
+    }
+  .mdl-color--grey-100{
+    width :100%;
   }
   .mdl-layout__content,.mdl-card{
   width:100%;
   }
+}
+
+
+#mdl-table{
+  flex-grow: 0.9;
+
 }

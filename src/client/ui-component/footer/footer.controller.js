@@ -11,6 +11,6 @@ Store.subscribe(() => {
     const currentState = Store.getState()
     if(currentState.menuReducer.currentView !== 'login'){
       document.querySelector("#quiz-footer").innerHTML = ""
-      //createFooter()
+      createFooter()
     }
   })

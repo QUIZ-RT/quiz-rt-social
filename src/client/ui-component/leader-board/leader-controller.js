@@ -1,23 +1,32 @@
-import {getLeaderBoardTemplate, renderViewToContainer} from "./leader-view"
-import {Store} from './../../boot/Store';
+import { getLeaderBoardTemplate, renderViewToContainer } from "./leader-view"
+import { Store } from './../../boot/Store';
 
 export const createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
   renderViewToContainer(leaderBoardContent, "main")
 }
 
-export const getFilteredGameDetails = (arry) => {
+export const getFilteredGameDetails = (arry, days) => {
   let html = ""
   let rank = 0
-
   let newArray = new Array()
+  const startValue = new Date()
+  const endValue = new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
+
+  newArray = arry.filter(item => {
+    const markerDate = new Date(item.heldOn
+    )
+    return (markerDate.getTime() <= startValue.getTime() && markerDate.getTime() >= endValue.getTime())
+  });
+
+
   let filteredArray = new Array()
   let score = 0;
   //merging all arrays
-  for (let item of arry.games) {
+  for (let item of newArray.games) {
     newArray = newArray.concat(item.players)
   }
- 
+
   //grouping the array by id
   newArray = newArray.reduce((h, a) => Object.assign(h, { [a.id]: (h[a.id] || []).concat(a) }), {})
 
@@ -34,7 +43,7 @@ export const getFilteredGameDetails = (arry) => {
       score: score
     })
   }
-  
+
   //sorting according to the score
   filteredArray = filteredArray
     .sort((a, b) => {
@@ -53,14 +62,19 @@ export const getFilteredGameDetails = (arry) => {
 
   for (const item of filteredArray) {
     rank++
-    html = html + `<tr id="${item.playerId}">
+    html = html + `<tr id="${item.playerName}">
                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
                      <td class="mdl-data-table__cell--non-numeric material">${item.playerName}</td>
                      <td>${item.score}</td>
                    </tr>`
   }
   document.getElementById("leaderBody").innerHTML = html
-  //document.querySelector("tr[id='8']").className = "selectedRow"
+  
+  const currentState = Store.getState();
+  const userName = currentState.menuReducer.currentUserInfo.displayName.replace(' ', '').toLowerCase();
+  let selection = document.querySelector(`tr[id=${userName}]`);
+  if (selection)
+    selection.className = "selectedRow";
 }
 
 export const getFilteredDetails = (arry, days) => {
@@ -88,21 +102,21 @@ export const getFilteredDetails = (arry, days) => {
     }
     return comparison
   })
- 
+
   for (const item of filteredArray) {
     rank++
-    html = html + `<tr id="${item.userName.replace(' ','').toLowerCase()}">
+    html = html + `<tr id="${item.userName.replace(' ', '').toLowerCase()}">
                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
                      <td class="mdl-data-table__cell--non-numeric material">${item.userName}</td>
                      <td>${item.score}</td>
                    </tr>`
   }
 
-  document.getElementById("leaderBody").innerHTML = html  
+  document.getElementById("leaderBody").innerHTML = html
   const currentState = Store.getState();
-  const userName = currentState.menuReducer.currentUserInfo.displayName.replace(' ','').toLowerCase();
+  const userName = currentState.menuReducer.currentUserInfo.displayName.replace(' ', '').toLowerCase();
   let selection = document.querySelector(`tr[id=${userName}]`);
-  if(selection)
-     selection.className = "selectedRow"; 
+  if (selection)
+    selection.className = "selectedRow";
 
 }
