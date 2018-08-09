@@ -18,12 +18,12 @@ export const topicModalInitializeShow = (evt) => {
   
   //.topics["" + targetId]
   //.topics["" + targetId]
-  if(state.menuReducer.currentView === "dashboard"){
-    openTopicModal(state.dashboardReducer.TopicList[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  if(state.menuReducer.currentView === "dashboard"){
+    openTopicModal(state.dashboardReducer.TopicList[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
   
   }
-  else if(state.menuReducer.currentView === "topics"){
-    openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
+  else if(state.menuReducer.currentView === "topics"){
+    openTopicModal(state.topicReducer.Topics[''+targetId], targetId, evt.target,state.menuReducer.currentUserInfo.email)
   } 
   evt.preventDefault()
 }
@@ -90,12 +90,12 @@ const topicModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const topicId = btnData[1]
   const state = Store.getState()
-  let topicData = ""
-  if(state.menuReducer.currentView === "dashboard"){
-    topicData = state.dashboardReducer.TopicList
+  let topicData = ""
+  if(state.menuReducer.currentView === "dashboard"){
+    topicData = state.dashboardReducer.TopicList
   }
-  else if(state.menuReducer.currentView === "topics"){
-    topicData = state.topicReducer.Topics
+  else if(state.menuReducer.currentView === "topics"){
+    topicData = state.topicReducer.Topics
   } 
   let data  = {"id":topicId,"data":[]}
   let topic = ""
@@ -120,11 +120,11 @@ const topicModalbtnClick = (event) => {
       console.log(result)
       topic.users = data.data;      
       topicData["" + topicId]['users'] = topic.users
-      if(state.menuReducer.currentView !== "dashboard"){
-        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
-        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
       }else{
-        Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
+        Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
       }
       render(topic, topicId,userid)
       hideLoader()
@@ -145,11 +145,11 @@ const topicModalbtnClick = (event) => {
     updateFollow(data).then(result=>{        
       topicData["" + topicId]['users'] = topic.users
       render(topic, topicId,userid)
-      if(state.menuReducer.currentView !== "dashboard"){
-        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
-        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
+      if(state.menuReducer.currentView !== "dashboard"){
+        Store.dispatch({"type": "UPDATE_TOPIC", "payload": topicData})
+        document.getElementById("topic_follower_"+topicId).innerHTML = topic.users.length;
      }else{
-      Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
+      Store.dispatch({"type": "UPDATE_Dashboard_Topic", "dataItem": topicData})
      }
       hideLoader()
     },error=>{

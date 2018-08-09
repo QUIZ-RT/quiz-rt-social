@@ -37,6 +37,7 @@
 
 .mdl-table{
    max-height: 43vh;
+   min-height: 43vh;
    overflow-y: scroll;
 }
 
@@ -60,9 +61,9 @@ mdc-select.mdc-select--outline{
     background-color: var(--mdc-theme-primary, #6200ee);
 }
 
-#leaderBrd-mdc-dialog .mdc-dialog__surface {
-    width: auto !important;
-    min-width: auto !important;
-    max-height: 64vh;
-    min-height: 64vh;
-}
+// #leaderBrd-mdc-dialog .mdc-dialog__surface {
+//     width: auto !important;
+//     min-width: auto !important;
+//     max-height: 64vh;
+//     min-height: 64vh;
+// }

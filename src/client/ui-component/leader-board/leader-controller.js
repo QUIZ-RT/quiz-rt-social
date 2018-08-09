@@ -1,6 +1,5 @@
 import {getLeaderBoardTemplate, renderViewToContainer} from "./leader-view"
 import {Store} from './../../boot/Store';
-import {getUserFromUserMaster} from "../challenge/ShareChallenges/service/shareChallenges.service"
 
 export const createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
@@ -15,10 +14,10 @@ export const getFilteredGameDetails = (arry) => {
   let filteredArray = new Array()
   let score = 0;
   //merging all arrays
-  for (let i = 0; i < arry.length; i++) {
-    newArray = newArray.concat(arry[i].players)
+  for (let item of arry.games) {
+    newArray = newArray.concat(item.players)
   }
-
+ 
   //grouping the array by id
   newArray = newArray.reduce((h, a) => Object.assign(h, { [a.id]: (h[a.id] || []).concat(a) }), {})
 
