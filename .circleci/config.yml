@@ -37,8 +37,21 @@ jobs:
     steps:
       - run:
           name: Deploy Master to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+          commands:
+            - |
+              cat >~/.netrc <<EOF
+              machine api.heroku.com
+                login $HEROKU_EMAIL
+                password $HEROKU_TOKEN
+              machine git.heroku.com
+                login $HEROKU_EMAIL
+                password $HEROKU_TOKEN
+              EOF
+            - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
+            - heroku container:login
+            - heroku container:push web --app $HEROKU_APP
+            - heroku container:release web
+                timeout: 400 # if your deploys take a long time
 
 workflows:
   version: 2
