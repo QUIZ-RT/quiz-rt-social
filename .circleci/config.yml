@@ -44,7 +44,7 @@ jobs:
           command: heroku --version
       - run:
           name: Echo upgrade heroku
-          command: heroku update
+          command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
           name: Echo updated heroku version
           command: heroku --version
