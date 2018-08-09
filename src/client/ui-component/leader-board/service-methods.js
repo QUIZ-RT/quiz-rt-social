@@ -13,5 +13,5 @@ export const serviceCall = (url) => {
     }).catch(function(error) {
       console.log("Request failure: ", error)
       reject(error)     
-    })   
+    })
 }

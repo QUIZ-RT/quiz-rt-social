@@ -1,6 +1,3 @@
-import {serviceCall} from './service-methods'
-
-
 const challengeData = {
   challengeId: "",
   topicName: "",

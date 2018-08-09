@@ -51,7 +51,7 @@ const openChallengeModal = (state, id, target) => {
           array.push(item);
         }        
         const filteredArray = array.filter(item => {          
-          return (item.challengeId == challengeId)
+          return (item.challengeId == challengeId && item.score != '')
         })
         getFilteredDetails(filteredArray, 1)
         const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
