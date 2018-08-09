@@ -27,20 +27,56 @@ const createFriendsComponent = () => {
 }
 
 const createFriendsSideNav = () => {
-  const friendSideNav = htmlToTemplate(`<div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Friends</span>
-    <nav class="mdl-navigation">
-    <a class="mdl-navigation__link" id="add_friend" href="#">Add a Friend</a>
-    <a class="mdl-navigation__link" id="list_of_friend" href="#">List of Friends</a>
-    <a class="mdl-navigation__link" id="frnd_req" href="#">Friend Requests</a>
-    </nav>
-    </div>`)
+  // const friendSideNav = htmlToTemplate(`<div class="mdl-layout__drawer">
+  //   <span class="mdl-layout-title">Friends</span>
+  //   <nav class="mdl-navigation">
+  //   <a class="mdl-navigation__link" id="add_friend" href="#">Add a Friend</a>
+  //   <a class="mdl-navigation__link" id="list_of_friend" href="#">List of Friends</a>
+  //   <a class="mdl-navigation__link" id="frnd_req" href="#">Friend Requests</a>
+  //   </nav>
+  //   </div>`)
+
+  const friendSideNav = htmlToTemplate(`<div class="mdc-tab-bar" role="tablist">
+  <div class="mdc-tab-scroller">
+    <div class="mdc-tab-scroller__scroll-area">
+      <div class="mdc-tab-scroller__scroll-content">
+        <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0" id="add_friend">
+          <span class="mdc-tab__content">
+            <span class="mdc-tab__text-label">Add a Friend</span>
+          </span>
+          <span class="mdc-tab-indicator mdc-tab-indicator--active">
+            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+          </span>
+          <span class="mdc-tab__ripple"></span>
+        </button>
+         <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0" id="list_of_friend">
+          <span class="mdc-tab__content">
+            <span class="mdc-tab__text-label">List of Friends</span>
+          </span>
+          <span class="mdc-tab-indicator mdc-tab-indicator--active">
+            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+          </span>
+          <span class="mdc-tab__ripple"></span>
+        </button>
+        <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0" id="frnd_req">
+          <span class="mdc-tab__content">
+            <span class="mdc-tab__text-label">Friends request</span>
+          </span>
+          <span class="mdc-tab-indicator mdc-tab-indicator--active">
+            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+          </span>
+          <span class="mdc-tab__ripple"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>`)
   return friendSideNav
 }
 
 const createFriendHeaderWithOutSearchBox = (headerName) => {
   const friendHeader = htmlToTemplate(`<div class="mdl-layout__content mdl-grid">
-    <header class="mdl-layout__header">
+    <header class="mdl-layout__header frnd_header_bg">
         <div class="mdl-layout__header-row">
           <div class="mdl-layout-spacer">
             <span class="mdl-layout-title">${headerName}</span>
@@ -53,7 +89,7 @@ const createFriendHeaderWithOutSearchBox = (headerName) => {
 
 const createFriendHeaderWithSearchBox = (headerName) => {
   const friendHeader = htmlToTemplate(`<div class="mdl-layout__content mdl-grid">
-    <header class="mdl-layout__header">
+    <header class="mdl-layout__header frnd_header_bg">
         <div class="mdl-layout__header-row">
           <div class="mdl-layout-spacer">
             <span class="mdl-layout-title">${headerName}</span>
@@ -171,7 +207,14 @@ export const showSearchPageWithResult = (users, showProgress) => {
   mainContainer.appendChild(friendComponent)
   mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
+  const add_friend_doc = document.getElementById("add_friend")
+  const list_of_friend_doc = document.getElementById("list_of_friend")
+  const frnd_req_doc = document.getElementById("frnd_req")
+  add_friend_doc.className = "mdc-tab mdc-tab--active"
+  list_of_friend_doc.className = "mdc-tab"
+  frnd_req_doc.className = "mdc-tab"
   document.getElementsByTagName('body')[0].className = ""
+
 }
 
 export const showFriendList = (users, showProgress) => {
@@ -204,6 +247,12 @@ export const showFriendList = (users, showProgress) => {
   mainContainer.appendChild(friendComponent)
   mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
+  const add_friend_doc = document.getElementById("add_friend")
+  const list_of_friend_doc = document.getElementById("list_of_friend")
+  const frnd_req_doc = document.getElementById("frnd_req")
+  add_friend_doc.className = "mdc-tab"
+  list_of_friend_doc.className = "mdc-tab mdc-tab--active"
+  frnd_req_doc.className = "mdc-tab"
   document.getElementsByTagName('body')[0].className = ""
 }
 }
@@ -237,5 +286,11 @@ export const showPendingFriendRequests = (users, showProgress) => {
   mainContainer.appendChild(friendComponent)
   mainContainer.appendChild(createSnackBar())
   componentHandler.upgradeAllRegistered()
+  const add_friend_doc = document.getElementById("add_friend")
+  const list_of_friend_doc = document.getElementById("list_of_friend")
+  const frnd_req_doc = document.getElementById("frnd_req")
+  add_friend_doc.className = "mdc-tab"
+  list_of_friend_doc.className = "mdc-tab"
+  frnd_req_doc.className = "mdc-tab mdc-tab--active"
   document.getElementsByTagName('body')[0].className = ""
 }

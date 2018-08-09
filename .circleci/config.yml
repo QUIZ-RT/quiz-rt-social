@@ -38,25 +38,20 @@ jobs:
     steps:
       - checkout
       - run:
-          command: pwd && ls
-      - run:
-          name: Echo heroku version
-          command: heroku --version
-      - run:
           name: Echo upgrade heroku
-          command: curl https://cli-assets.heroku.com/install.sh | sh
-      - run:
-          name: Echo updated heroku version
-          command: heroku --version
+          command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run:
           name: Heroku container login
           command: heroku container:login
       - run:
+          name: Heroku help container
+          command: heroku help container
+      - run:
           name: Heroku docker build
           command: heroku container:push web --app quizrtsocial
       - run:
-          name: Heroku docker push
-          command: heroku container:release web
+          name: Heroku container release
+          command: heroku container:release web -a quizrtsocial
 
 workflows:
   version: 2
