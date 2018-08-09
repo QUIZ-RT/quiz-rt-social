@@ -39,20 +39,8 @@ jobs:
           name: Echo details
           command: echo $HEROKU_EMAIL
       - run:
-          name: Deploy Master to Heroku
-          command:
-            - |
-              cat >~/.netrc <<EOF
-              machine api.heroku.com
-                login $HEROKU_EMAIL
-                password $HEROKU_TOKEN
-              machine git.heroku.com
-                login $HEROKU_EMAIL
-                password $HEROKU_TOKEN
-              EOF
-      - run:
-          name: Change chmod
-          command: chmod 600 ~/.netrc # Heroku cli complains about permissions without this
+          name: Echo API key
+          command: echo $HEROKU_API_KEY
       - run:
           name: Heroku container login
           command: heroku container:login
