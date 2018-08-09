@@ -53,7 +53,7 @@ jobs:
           command: heroku container:login
       - run:
           name: Heroku docker build
-          command: heroku container:push web --app quizrtsocial && heroku container:release web -a quizrtsocial
+          command: heroku container:push web --app quizrtsocial && heroku container:release -a quizrtsocial
       - run:
           name: Heroku docker push
           command: echo "completed"
