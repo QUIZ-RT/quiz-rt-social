@@ -4,35 +4,16 @@ import {getTopics} from "../service/CreateChallengeService"
 import {showLoader} from "../../../loader/loader.controller"
 const Material = require("exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js")
 
-function createChallengeSideBarView() {
-  // const challenegSideBarTemp = `<div id="challenge-Sidebar">
-  // <div class="mdl-js-layout mdl-layout--fixed-drawer">
-  // <div class="mdl-layout__drawer" id="sidebar">
-  //    <span class="mdl-layout-title">Challenge</span>
-  //   <nav class="mdl-navigation">
-  //     <a class="mdl-navigation__link" id="createChallenge" href="#">Create Challenge</a>
-  //     <a class="mdl-navigation__link" id="shareChallenge" href="#">Show Challenges</a>
-  //   </nav>
-  // </div>
-  // </div>
-  // </div>`
+function createChallengeHeaderPanel() {
+  
 
-  const challenegSideBarTemp = `<div class="mdc-tab-bar" role="tablist">
+  const challenegSideBarTemp = `<div class="mdc-tab-bar" role="tablist" id="challengePanel">
   <div class="mdc-tab-scroller">
     <div class="mdc-tab-scroller__scroll-area">
       <div class="mdc-tab-scroller__scroll-content">
-        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0" id="createChallenge">
-          <span class="mdc-tab__content">
-            <span class="mdc-tab__text-label">Create Challenge</span>
-          </span>
-          <span class="mdc-tab-indicator mdc-tab-indicator--active">
-            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-          </span>
-          <span class="mdc-tab__ripple"></span>
-        </button>
-         <button class="mdc-tab mdc-tab" role="tab" aria-selected="true" tabindex="0" id="shareChallenge">
-          <span class="mdc-tab__content">
-            <span class="mdc-tab__text-label">Show Challenge</span>
+        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+          <span class="mdc-tab__content" >
+            <span class="mdc-tab__text-label" id="challenegeLabel">Challenges</span>
           </span>
           <span class="mdc-tab-indicator mdc-tab-indicator--active">
             <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
@@ -47,18 +28,14 @@ function createChallengeSideBarView() {
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate)
-  // const chSidebar = document.querySelector("#challenge-Sidebar").children[0]
-  // chSidebar.classList.add("challengeSidebar")
+ 
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName("body")[0].className = ""
 }
 
-function callCreateChallenge() {
-  Store.dispatch({type: "currentchallengeview", dataItem: "createChallenge"})
-}
-
-function callShareChallenge() {
-  Store.dispatch({type: "currentchallengeview", dataItem: "shareChallenge"})
+function callCreateChallenge(){
+  
+  Store.dispatch({type:"CurrentViewUpdate",dataItem: {Name: "createChallenge"}});
 }
 
 function createChallengeContainer() {
@@ -73,19 +50,16 @@ function createChallengeContainer() {
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName("body")[0].className = ""
 }
-function createChallengeHeader() {
+function renderCreateChallengeComponent() {
   showLoader()
   getTopics()
-
-  // createChallengeHeaderTemplate()
+  
 }
 
+
 function createChallengeHeaderTemplate(topicsArray) {
-  // Store.subscribe(()=>{
-  //   let state = Store.getState();
-  //   if(state.challengeReducer.currentView ==="createChallenge"){
+ 
   let topics = ""
-  //   let topicsArray = Object.values(state.challengeReducer.topics);
   for (let index = 0; index < topicsArray.length; index += 1) {
     if (topicsArray[index] != null) {
       topics = topics.concat(` <option value="${topicsArray[index].topicText}">
@@ -94,11 +68,11 @@ function createChallengeHeaderTemplate(topicsArray) {
     }
   }
 
-  const challengeTemplate = `<div class="mdl-color--grey-100" id="firstPage">
+  const challengeTemplate = `<div class="createChallContent" id="firstPage">
      <main class="mdl-layout__content mdl-cell mdl-cell--12-col">
        <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--12-col">
          <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-           <h2 class="mdl-card__title-text"> Create Challenge</h2>
+           <h2 class="mdl-card__title-text" id="createChallHeader"> Create Challenge</h2>
          </div>
          <div class="mdl-card__supporting-text">
            <form action="#" id="form">
@@ -116,7 +90,7 @@ function createChallengeHeaderTemplate(topicsArray) {
                <span id ="ChallengeNameErr" style="display:none" class="challFormValidator">Challenge Name is mandatory field</span>
              </div>
              <div class="mdl-card__actions">
-                   <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="create">Create Challenge</button>
+                   <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="create">Create</button>
                </div>
                </form>
                </div>
@@ -133,11 +107,11 @@ function createChallengeHeaderTemplate(topicsArray) {
 }
 function createQuestion(challengeJsonObj, count) {
   let questionTemplate = ` 
-    <div class="mdl-color--grey-100">
+    <div class="createChallContent">
         <main class="mdl-layout__content mdl-cell mdl-cell--12-col">
           <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--12-col">
-            <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
-            <span id="challengelabel">${challengeJsonObj.challengeName} </span><span>${count} out of 7</span>
+            <div class="mdl-card__title mdl-color--primary mdl-color-text--white" id="createChallHeaderLabelDiv">
+            <span id="challengelabel" class="createChallHeaderLabel">${challengeJsonObj.challengeName}</span><span class="createChallHeaderLabel"> ${count} out of 7</span>
             </div>
             <div class="mdl-card__supporting-text">
               <form action="#" id="form">
@@ -203,4 +177,6 @@ function createQuestion(challengeJsonObj, count) {
   document.getElementsByTagName("body")[0].className = ""
 }
 
-export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView, createChallengeHeaderTemplate, callCreateChallenge, callShareChallenge}
+
+
+export {createChallengeContainer, renderCreateChallengeComponent, createQuestion, createChallengeHeaderPanel,createChallengeHeaderTemplate,callCreateChallenge}

@@ -187,7 +187,7 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
 
 #challengeSection{
   .mdl-color--primary{
-    background-color:#442e63 !important;
+    background-color:white !important;
   }
   #shareChallengesTable{
     .mdl-button--raised.mdl-button--colored{
@@ -322,3 +322,54 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   flex-grow: 1;
 
 }
+
+.app-fab--absolute {
+  //bottom: 1rem;
+  //right: 1rem;
+}
+
+#createChallenge{
+    background-color: white;
+    top: -2.5 rem;
+}
+#challenegeLabel{
+  color: white;
+}
+#challengePanel{
+  background-color:#442e63;
+}
+#createChallIcon{
+  color: #442e63;
+}
+
+
+   .app-fab--absolute {
+    //bottom: -5.5rem;
+    right: 1rem;
+    top: -2.5rem;
+  }
+@media(max-width:445px){
+  .app-fab--absolute {
+    right: -12rem;
+    top: -80rem;
+}
+}
+#createChallHeader,.createChallHeaderLabel{
+  color:black;
+}
+.createChallContent{
+  width: 100%;
+}
+
+#createChallHeaderLabelDiv{
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600
+}
+
+@media(max-width: 650px){
+  .tableChallengeIdCol{
+    display: none;
+  }
+}
+
