@@ -2,9 +2,9 @@ import {MDCDialog} from "@material/dialog"
 import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
-import { getFilteredDetails } from "../leader-board/leader-controller"
+import {getFilteredDetails} from "../leader-board/leader-controller"
 import {serviceCall} from "../leader-board/service-methods"
-import { showLoader, hideLoader } from "../loader/loader.controller"
+import {showLoader, hideLoader} from "../loader/loader.controller"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -13,8 +13,10 @@ export const createChallengemodal = () => {
 export const challengeModalInitializeShow = (evt) => {
   const targetId = evt.currentTarget.id.split("_")[1]
   console.log(targetId)
-  const state = Store.getState().dashboardReducer;
-  const dataItem = state.ChallegeList.filter((x) => {return x.challengeId.toString() === targetId})[0]
+  const state = Store.getState().dashboardReducer
+  const dataItem = state.ChallegeList.filter((x) => {
+    return x.challengeId.toString() === targetId
+  })[0]
   openChallengeModal(dataItem, targetId, evt.target)
   evt.preventDefault()
 }
@@ -39,21 +41,22 @@ const openChallengeModal = (state, id, target) => {
     console.log("canceled")
   })
 
-  /////////////////////////// Leader Board Related Code///////////////////////////////
-  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {    
-    showLoader();
+  // ///////////////////////// Leader Board Related Code///////////////////////////////
+  document.querySelector(".btnLeaderBoard").addEventListener("click", function(event) {
+    showLoader()
     const btnData = event.target.id.split("-")
-    const challengeId = btnData[1];
-    sessionStorage.setItem("challengeId",challengeId);
+    const challengeId = btnData[1]
+    sessionStorage.setItem("challengeId", challengeId)
     serviceCall("/api/getChallengesByTopic")
-      .then(function (data) {        
-        let array = new Array();
-        for (let item of data) {
-          if(item)
-          array.push(item);
-        }        
-        const filteredArray = array.filter(item => {          
-          return (item.challengeId == challengeId && item.score != '')
+      .then(function(data) {
+        const array = new Array()
+        for (const item of data) {
+          if (item) {
+            array.push(item)
+          }
+        }
+        const filteredArray = array.filter(item => {
+          return (item.challengeId == challengeId && item.score != "")
         })
         getFilteredDetails(filteredArray, 1)
         const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
@@ -63,35 +66,36 @@ const openChallengeModal = (state, id, target) => {
         const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
         const dialog2 = new MDCDialog(dialogElement2)
         dialog2.show()
-        hideLoader();
+        hideLoader()
 
-        dialog2.listen("MDCDialog:cancel", function () {
+        dialog2.listen("MDCDialog:cancel", function() {
           document.getElementById("leaderBody").innerHTML = ""
           const select2 = new MDCSelect(document.querySelector(".mdc-select"))
           select2.value = "1"
-          sessionStorage.removeItem("challengeId");
+          sessionStorage.removeItem("challengeId")
           dialog1.close()
-          document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
+          document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating")
         })
         const select = new MDCSelect(document.querySelector(".mdc-select"))
         select.listen("change", (event) => {
-          let challengeId = sessionStorage.getItem("challengeId");
+          const challengeId = sessionStorage.getItem("challengeId")
           serviceCall("/api/getChallengesByTopic")
-          .then(function (data) {
-            let array = new Array();
-            for (let item of data) {
-              if(item)
-              array.push(item);
-            }                
-            const filteredArray = array.filter(item => {          
-              return (item.challengeId == challengeId)
+            .then(function(data) {
+              const array = new Array()
+              for (const item of data) {
+                if (item) {
+                  array.push(item)
+                }
+              }
+              const filteredArray = array.filter(item => {
+                return (item.challengeId == challengeId)
+              })
+              getFilteredDetails(filteredArray, select.value)
             })
-            getFilteredDetails(filteredArray, select.value);
-          });          
-        });
-      });
+        })
+      })
   })
-  //////////////////////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////////////////////
 
   dialog.lastFocusedTarget = target
   dialog.show()
@@ -101,10 +105,12 @@ const challengeModalbtnClick = (event) => {
   const btnData = event.target.id.split("-")
   const challengeId = btnData[1]
   const curState = Store.getState()
-  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {return x.challengeId.toString() === challengeId })[0]
+  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {
+    return x.challengeId.toString() === challengeId
+  })[0]
   let topicId = ""
   for (const topickey in curState.dashboardReducer.TopicList) {
-    if(curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName){
+    if (curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName) {
       topicId = curState.dashboardReducer.TopicList[topickey].id
       break
     }
@@ -112,13 +118,13 @@ const challengeModalbtnClick = (event) => {
   switch (btnData[2]) {
   case "play":
     console.log("play" + challengeId)
-    const url = "https://quiz-engine.herokuapp.com?type=challenge&challengeId="+challengeId
-    window.open(url , '_blank');
+    const url = "https://quiz-engine.herokuapp.com?type=challenge&challengeId=" + challengeId
+    window.open(url, "_blank")
     break
   case "leader":
     console.log("leader" + challengeId)
     break
- default:
+  default:
     break
   }
 }

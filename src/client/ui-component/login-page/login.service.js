@@ -42,7 +42,7 @@ function app(user) {
       }
     })
   }, function(errorObject) {
-    console.log("The read failed: " + errorObject.code);
+    console.log("The read failed: " + errorObject.code)
   })
 }
 

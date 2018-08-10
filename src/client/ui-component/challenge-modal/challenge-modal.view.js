@@ -1,15 +1,15 @@
 const htmlToTemplate = (htmlstr) => {
-    const template = document.createElement("template")
-    template.innerHTML = htmlstr
-    return template.content
-  }
-  export const renderViewToContainer = (content, containerKey) => {
-    const container = document.querySelector(containerKey)
-    container.appendChild(content)
-  }
-  
-  export const getChallengeModalbox = () => {
-    const challengeModalHtmlStr = `<aside id="challenge-mdc-dialog"
+  const template = document.createElement("template")
+  template.innerHTML = htmlstr
+  return template.content
+}
+export const renderViewToContainer = (content, containerKey) => {
+  const container = document.querySelector(containerKey)
+  container.appendChild(content)
+}
+
+export const getChallengeModalbox = () => {
+  const challengeModalHtmlStr = `<aside id="challenge-mdc-dialog"
       class="mdc-dialog"
       role="alertdialog"
       aria-labelledby="my-mdc-dialog-label"
@@ -28,11 +28,11 @@ const htmlToTemplate = (htmlstr) => {
       </div>
       <div class="mdc-dialog__backdrop"></div>
     </aside>`
-    return htmlToTemplate(challengeModalHtmlStr)
-  }
-  
-  export const getChallengeModalBodyContent = (state, id) => {
-    const modalBodyContentStr = `  
+  return htmlToTemplate(challengeModalHtmlStr)
+}
+
+export const getChallengeModalBodyContent = (state, id) => {
+  const modalBodyContentStr = `  
     <div class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-tablet">
@@ -52,6 +52,5 @@ const htmlToTemplate = (htmlstr) => {
       </div>
     </div>  
     `
-    return htmlToTemplate(modalBodyContentStr)
-  }
-  
+  return htmlToTemplate(modalBodyContentStr)
+}

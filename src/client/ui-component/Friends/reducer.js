@@ -4,12 +4,12 @@ export const friendReducer = (currentState = { }, action) => {
   console.log("inside friendReducer")
   const newState = currentState
   let friends = []
-  if(currentState.friendsAndChat && currentState.friendsAndChat.friends){
+  if (currentState.friendsAndChat && currentState.friendsAndChat.friends) {
     friends = currentState.friendsAndChat.friends
   }
 
   let pendingFrndReq = []
-  if(currentState.friendsAndChat && currentState.friendsAndChat.pendingFriendRequest){
+  if (currentState.friendsAndChat && currentState.friendsAndChat.pendingFriendRequest) {
     pendingFrndReq = currentState.friendsAndChat.pendingFriendRequest
   }
 
@@ -20,7 +20,7 @@ export const friendReducer = (currentState = { }, action) => {
   switch (action.type) {
   case "SHOW_FRIENDS_CHAT" :
     console.log("inside SHOW_FRIENDS_CHAT")
-    //newState.SELECTED_PAGE = "FRIENDS_AND_CHAT"
+    // newState.SELECTED_PAGE = "FRIENDS_AND_CHAT"
     newState.friendsAndChat = {
       page: "DEFAULT",
       friends: friends,
