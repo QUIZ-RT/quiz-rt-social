@@ -213,6 +213,7 @@ export const showSearchPageWithResult = (users, showProgress) => {
   add_friend_doc.className = "mdc-tab mdc-tab--active"
   list_of_friend_doc.className = "mdc-tab"
   frnd_req_doc.className = "mdc-tab"
+  friendComponent.parentElement.className = ""
   document.getElementsByTagName('body')[0].className = ""
 
 }
@@ -253,6 +254,7 @@ export const showFriendList = (users, showProgress) => {
   add_friend_doc.className = "mdc-tab"
   list_of_friend_doc.className = "mdc-tab mdc-tab--active"
   frnd_req_doc.className = "mdc-tab"
+  friendComponent.parentElement.className = ""
   document.getElementsByTagName('body')[0].className = ""
 }
 }
@@ -292,5 +294,6 @@ export const showPendingFriendRequests = (users, showProgress) => {
   add_friend_doc.className = "mdc-tab"
   list_of_friend_doc.className = "mdc-tab"
   frnd_req_doc.className = "mdc-tab mdc-tab--active"
+  friendComponent.parentElement.className = ""
   document.getElementsByTagName('body')[0].className = ""
 }
