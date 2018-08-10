@@ -65,6 +65,7 @@ export const getUserChallenges = (userId) => {
   }
 
   export const updateUserTransactionWithSharedChallenges = (userTranObj) => {
+    console.log("shareService with user : "+ JSON.stringify(userTranObj))
     var settings = {
       "url": "/api/userTransaction",
       "type": "POST",

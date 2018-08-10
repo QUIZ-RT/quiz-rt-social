@@ -20,6 +20,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+      - run:
+          name: Run build
+          command: npm run build
   test:
     docker:
       - image: circleci/node:8
@@ -35,22 +38,20 @@ jobs:
     steps:
       - checkout
       - run:
-          command: pwd && ls
-      - run:
-          name: Echo details
-          command: echo $HEROKU_EMAIL
-      - run:
-          name: Echo API key
-          command: echo $HEROKU_API_KEY
+          name: Echo upgrade heroku
+          command: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run:
           name: Heroku container login
           command: heroku container:login
       - run:
+          name: Heroku help container
+          command: heroku help container
+      - run:
           name: Heroku docker build
           command: heroku container:push web --app quizrtsocial
       - run:
-          name: Heroku docker push
-          command: heroku container:release web  --app quizrtsocial
+          name: Heroku container release
+          command: heroku container:release web -a quizrtsocial
 
 workflows:
   version: 2

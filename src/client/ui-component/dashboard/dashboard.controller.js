@@ -673,7 +673,7 @@ export const createFavoriteTopicSection = (topicData) => {
 }
 export const createChallengesSection = (challengeDataList) => {
     document.querySelector('#dashboard_challenge').innerHTML = ""
-    if (challengeDataList !== []) {
+    if (challengeDataList.length > 0) {
         const challengestemp = getChallengesTemplate(challengeDataList, "Challenges")
         const challengeitems = challengestemp.querySelectorAll(".mdc-card")
         challengeitems.forEach((item) => {
@@ -689,7 +689,7 @@ export const createChallengesSection = (challengeDataList) => {
 export const createMyChallengesSection = (challengeDataList) => {
     document.querySelector('#dashboard_mychallenge').innerHTML = ""
     const curState = Store.getState()
-    if (challengeDataList !== []) {
+    if (challengeDataList.length > 0) {
         const mychallangeList = challengeDataList.filter((x) => { return x.Created_By == curState.menuReducer.currentUserInfo.email})
         const mychallengestemp = getMyChallengesTemplate(mychallangeList, "My Challenges")
         const mychallengeitems = mychallengestemp.querySelectorAll(".mdc-card")

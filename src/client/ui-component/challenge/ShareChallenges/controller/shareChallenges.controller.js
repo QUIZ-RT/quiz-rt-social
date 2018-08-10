@@ -1,16 +1,22 @@
-import {getShareChallengeTemplate, renderViewToContainer, getFriendsToShareChallengeTemplate} from "../view/shareChallenges.view"
+import {getShareChallengeTemplate, getShareChallengeModalTemplate, renderViewToContainer, getshareChallengeModalContent} from "../view/shareChallenges.view"
 import {Store} from '../../../../boot/Store'
 import {getUserChallenges, getFriendsToShareChallenges, updateUserTransactionWithSharedChallenges} from "../service/shareChallenges.service"
 import { showLoader } from "../../../loader/loader.controller";
 import {loadFriends} from "../../../../ui-component/Friends/service"
 import {updateUserTransaction} from "../../CreateChallenge/service/CreateChallengeService"
 import {MDCDialog} from "@material/dialog"
+import { setTimeout } from "timers";
+import {showSnackBar} from "../../../snackbar/snackbar.controller"
 
-var shareChallenges
+
+export const createShareChallengesModal = () => {
+  const shareChallengesModalTemp = getShareChallengeModalTemplate()
+  renderViewToContainer(shareChallengesModalTemp, "#quiz-maincontent")
+}
+
 export const createShareChallengesSection = (userId) => {
   showLoader()
   getUserChallenges(userId).then(function(userChallenges) {
-    shareChallenges = userChallenges
     const currentState = Store.getState()
     const shareChallengesData = getShareChallengeTemplate(userChallenges)
     const shareBtnList = shareChallengesData.querySelectorAll(".shareChalBtn")
@@ -26,44 +32,53 @@ export const createShareChallengesSection = (userId) => {
         })
       })
     })   
-    let challengeBtnList = shareChallengesData.querySelectorAll(".playChallengeBtnCls");
+    let challengeBtnList = shareChallengesData.querySelectorAll(".playChallengeBtnCls")
     challengeBtnList.forEach((item) => {
     item.addEventListener("click", (event) => {
       playChallengeOnPlayButton(event)
     })
   })
-    renderViewToContainer(shareChallengesData, "#challengeSection");
+    renderViewToContainer(shareChallengesData, "#challengeSection")
   })
 }
 
 export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem) => {
-  const shareChallengesWithFriendsData = getFriendsToShareChallengeTemplate(friends)
-  shareChallengesWithFriendsData.getElementById("submitSharedChallenge").onclick = function() {
+  const shareChallengeModalContentTemp = getshareChallengeModalContent(friends)
+  document.querySelector(".friendsUsernames").innerHTML = ""
+  renderViewToContainer(shareChallengeModalContentTemp, ".friendsUsernames")
+  const dialogElement = document.querySelector("#shareChall-mdc-dialog")
+  const dialog = new MDCDialog(dialogElement)
+  document.querySelector("#submitSharedChallenge").addEventListener("click", (event) => { 
     var friendsListUL = document.querySelector("#friendsUl")
     var frnds = friendsListUL.querySelectorAll("#friendsLi")
-    let selectedFriends = []
-    const shareUserTranObj={"challengeId": "","challengeName": "","Created_By":"","shared_by":"","playedOn":"","score":"","userID":"","userName":""};
-    for (let item of frnds) {
+    const selectedFriends = []
+    const shareUserTranObj = {"challengeId": "", "challengeName": "", "Created_By": "", "shared_by":"","playedOn":"","score":"","userID":"","userName":""};
+    for (const item of frnds) {
       if (item.querySelector(".mdl-checkbox__input").checked) {
-        const friendUserId = item.children[1].children[1].id.split("_")[1]
+        let friendUserId = item.children[1].children[1].id.split("_")[1]
+        friendUserId = parseInt(friendUserId, 10)
         const friendDisplayName = item.children[1].children[1].id.split("_")[2]
         selectedFriends.push({"userID": friendUserId, "displayName": friendDisplayName, "email": item.children[1].children[1].innerText})
       }
     }
-    for (let selFriend of selectedFriends) {
-      shareUserTranObj.Created_By = curChallengeItem.Created_By
-      shareUserTranObj.challengeId = curChallengeItem.challengeId
-      shareUserTranObj.challengeName = curChallengeItem.challengeName
-      shareUserTranObj.shared_by = userId
-      shareUserTranObj.userID = selFriend.userID
-      shareUserTranObj.userName = selFriend.displayName
-      updateUserTransactionWithSharedChallenges(shareUserTranObj)
+    if (selectedFriends.length > 0) {
+      for (const selFriend of selectedFriends) {
+        shareUserTranObj.Created_By = curChallengeItem.Created_By
+        shareUserTranObj.challengeId = curChallengeItem.challengeId
+        shareUserTranObj.challengeName = curChallengeItem.challengeName
+        shareUserTranObj.shared_by = userId
+        shareUserTranObj.userID = selFriend.userID
+        shareUserTranObj.userName = selFriend.displayName
+        updateUserTransactionWithSharedChallenges(shareUserTranObj)
+      }
+      console.log("selectedFriends" + JSON.stringify(selectedFriends))
+      showSnackBar("challenge shared successfully", "Success")
+      dialog.close()
     }
-    console.log("selectedFriends" + JSON.stringify(selectedFriends))
-  }
-  renderViewToContainer(shareChallengesWithFriendsData, "#challengeSection")
-  const dialogElement = document.querySelector("#shareChall-mdc-dialog")
-  const dialog = new MDCDialog(dialogElement)
+    else {
+      showSnackBar("Please select atlease one friend to share challenge or click on Close", "Error")
+    }
+  })
   const target = document.querySelector("#shareChallengeButton")
   dialog.lastFocusedTarget = target
   dialog.show()

@@ -17,5 +17,5 @@ export const showSnackBar = (text, msgtype) => {
     }
     setTimeout(function() {
       snackBar.style.display = "none"
-    }, 3000)
+    }, 1500)
   }

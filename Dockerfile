@@ -20,7 +20,7 @@ RUN npm install
 COPY . .
  
 RUN npm run build
- 
+  
 # Start the Node.js app on load
 CMD [ "npm", "start" ]
 

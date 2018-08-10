@@ -5,7 +5,7 @@ import { addChallengeToDB,getUserDetail,updateUserTransaction,getChallengeDetail
 import { searchMasterUser, getUserByEmailId, getUserByUserId, sendFriendRequest, getPendingFriendRequest, getFriendRequest, acceptFriendReq, rejectFriendReq, getListOfFriend } from './FirebaseDb/Friends';
 import { getAllChallengesFromDB, getUserSpecificChallengesFromDB, getUserFromUserMasterDB } from './FirebaseDb/challengesDb';
 import { Topics } from './topics/topics';
-import { Chat } from './Chat';
+import { Chat } from './chat';
 import path from 'path';
 
 

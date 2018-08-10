@@ -2,11 +2,22 @@
   background-image: url('../../assets/login_bg1.png');
   height: 100vh;
   width: 100vw;
+  filter:blur(3px);
 }
 
 .login-form{
-  position: relative;
-  top: calc(50% - 50px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  top: calc(50% - 70px);
+  left: calc(50% - 140px);
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  padding: 0 10px;
+  width: 280px;
+  height: 140px;
   .lbl_login{
     font-size: 1.5em;
     font-weight: bold;
@@ -24,25 +35,26 @@
   left: 50%;
   min-height: 4em;
   transform: translate(-50%);
-  background-color: #550f5c;
+  background-color: #49145b;
   border: none;
   color: var(--form-background);
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   box-sizing: border-box;
-  border: 2px solid #fbffff;
+  border: 1px solid #fbffff;
   /* top: calc(50% - 30px); */
   color: #f0f0f1;
   i{
-  font-size: 1.2em;
+    font-size: 2em;
+    margin-top: -8px;
   
   }
 }
 #signin:hover{
-  color: #c5b6be;
-  background-color: #641f82;
-  border: 2px solid #cecad2;
+  color: #ffffff;
+  background-color: #47125b;
+  border: 1px solid #c9c7ca7d;
 }
 
 
@@ -234,7 +246,7 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     background: #442e63;
     position: relative;
     bottom: 0;
-    min-height: 3em;
+    min-height: 45px;
     .copyRight-container{
       padding: .4em;
      .copyright{
@@ -260,13 +272,53 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
 
 #challengeSection{
   .mdl-color--grey-100{
-    width :60%;
+    width :100%;
+  }
+  .mdl-layout__content,.mdl-card{
+      max-width: 30em;
+
+  }
+}
+
+@media only screen and (min-device-width: 280px) and (max-device-width: 568px){
+  .mdl-layout__content,.mdl-card{
+    width : 100%;
+  }
+ 
+}
+@media only screen and (min-device-width: 568px){
+  .mdl-layout__content{
+   display:inline;
+   }
+}
+
+
+#challenge-Sidebar{
+.mdl-layout__container{
+  height: calc(100% - 105px);
+  }
+}
+
+#selectChallTopic{
+      -webkit-appearance: none
+}
+
+@media(min-width:425px){
+#challengeSection{
+    .mdl-grid {
+    padding: 8px;
+    width: 50%;
+    }
+  .mdl-color--grey-100{
+    width :100%;
   }
   .mdl-layout__content,.mdl-card{
   width:100%;
   }
 }
+}
 
 #mdl-table{
   flex-grow: 0.9;
+
 }

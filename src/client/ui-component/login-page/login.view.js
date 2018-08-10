@@ -6,18 +6,15 @@ const htmlToTemplate = (htmlstr) => {
 
 // first
 export const getUserTemplate = () => {
-  const userHtmlContent = `
-  <div>
-  <div class="mdl-card__supporting-text login-hero-img" style="padding:20px">
-  <div class="login-form">
+  const userHtmlContent = `<div>
+  <div class="login-hero-img"></div>
+  <div class="mdl-card__supporting-text login-form">
   <div class="lbl_login">Quizzapp</div>
-  <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="signin">
-  Signin  With  Google &nbsp; <i class="fas fa-sign-in-alt"></i>
+  <button id="signin" class="demo-button mdc-button mdc-button--raised mdc-ripple-upgraded" style="--mdc-ripple-fg-size:55.2094px; --mdc-ripple-fg-scale:1.97081; --mdc-ripple-fg-translate-start:20.8172px, -13.7922px; --mdc-ripple-fg-translate-end:18.4031px, -9.60469px;">
+  <i class="material-icons mdc-button__icon">https</i> &nbsp; Signin  With  Google
   </button> 
   </div>
-  </div>
-  `
-
+  </div>`
   return htmlToTemplate(userHtmlContent)
 }
 
