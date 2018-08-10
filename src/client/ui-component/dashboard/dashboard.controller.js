@@ -689,8 +689,8 @@ export const createChallengesSection = (challengeDataList) => {
 export const createMyChallengesSection = (challengeDataList) => {
     document.querySelector('#dashboard_mychallenge').innerHTML = ""
     const curState = Store.getState()
-    if (challengeDataList.length > 0) {
-        const mychallangeList = challengeDataList.filter((x) => { return x.Created_By == curState.menuReducer.currentUserInfo.email})
+    const mychallangeList = challengeDataList.filter((x) => { return x.Created_By == curState.menuReducer.currentUserInfo.email})
+    if (mychallangeList.length > 0) {
         const mychallengestemp = getMyChallengesTemplate(mychallangeList, "My Challenges")
         const mychallengeitems = mychallengestemp.querySelectorAll(".mdc-card")
         mychallengeitems.forEach((item) => {
