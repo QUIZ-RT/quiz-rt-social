@@ -57,13 +57,5 @@ mdc-select.mdc-select--outline{
 }
 
 .mdl-color--customTheme {
-    background-color: var(--mdc-theme-primary, #6200ee);
+    background-color:  #2f1356;
 }
-
-#leaderBrd-mdc-dialog .mdc-dialog__surface {
-    width: auto !important;
-    min-width: auto !important;
-    max-height: 64vh;
-    min-height: 64vh;
-}
-
