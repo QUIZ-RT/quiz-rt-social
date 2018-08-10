@@ -4,5 +4,5 @@ export const config = {
   databaseURL: "https://quizrtsocial-db.firebaseio.com",
   projectId: "quizrtsocial-db",
   storageBucket: "quizrtsocial-db.appspot.com",
-  messagingSenderId: "701948863845"
+  messagingSenderId: "701948863845",
 }

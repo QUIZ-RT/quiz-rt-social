@@ -2,7 +2,6 @@ import firebase from "firebase"
 import {config} from "../config"
 
 export const searchMasterUser = (searchValue) => {
-  console.log("In searchMasterUser " + searchValue)
   if (!firebase.apps.length) {
     firebase.initializeApp(config)
   }
@@ -35,7 +34,6 @@ export const searchMasterUser = (searchValue) => {
 }
 
 export const getUser = (key, value) => {
-  console.log("In searchMasterUser " + value)
   if (!firebase.apps.length) {
     firebase.initializeApp(config)
   }
@@ -52,7 +50,6 @@ export const getUser = (key, value) => {
 }
 
 export const getUserByEmailId = (email) => {
-  console.log("Search by email - "+email);
   return getUser("email", email)
 }
 
@@ -108,7 +105,6 @@ export const acceptFriendReq = (reqId, owner, friend) => {
     friend: friend,
   }
   const newFriendKey = firebase.database().ref("Frnd_List").push().key
-  console.log("new Friends key", newFriendKey)
 
   const frndRow2 = {
     owner: friend,

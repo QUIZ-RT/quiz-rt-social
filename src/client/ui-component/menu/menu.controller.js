@@ -1,9 +1,7 @@
 import {MDCTemporaryDrawer} from "@material/drawer/index"
 import {getMenuTemplate, renderViewToContainer} from "./menu.view"
 import {Store} from "../../boot/Store"
-import {updateTopicCtr} from "../topics/topic-controller";
-
-
+import {updateTopicCtr} from "../topics/topic-controller"
 
 const menuData = [{
   "id": 1,
@@ -45,9 +43,9 @@ export const createMenu = () => {
     })
   })
   renderViewToContainer(menuContent, "#quiz-header")
-  const currentState = Store.getState();
-  //console.log("currentState = ", currentState.menuReducer.currentUserInfo.email)
-  document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email;
+  const currentState = Store.getState()
+  // console.log("currentState = ", currentState.menuReducer.currentUserInfo.email)
+  document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {
@@ -72,8 +70,8 @@ const menuNavigation = (evt) => {
   drawer.open = false
   const currentState = Store.getState()
   if (currentState.menuReducer.currentView !== menuItem.Name.toLowerCase()) {
-    document.querySelector('#quiz-maincontent').innerHTML = ""
-    if(menuItem.Name.toLowerCase()==="topics"){
+    document.querySelector("#quiz-maincontent").innerHTML = ""
+    if (menuItem.Name.toLowerCase() === "topics") {
       updateTopicCtr()
     }
     Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: menuItem.Name.toLowerCase()}})

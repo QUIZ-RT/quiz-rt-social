@@ -14,12 +14,11 @@ export const getHorizontalScrollableContainerTopic = (dataList, idkey) => {
   const hsContainerTemp = htmlToTemplate(hsContainerStr)
   const appendListContainer = hsContainerTemp.querySelector(".hsListContainer")
   let hsContentStr = ""
-  let image = "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png";
+  const image = "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png"
 
- 
   for (const topickey in dataList) {
     const item = dataList[topickey]
-    if(item.topicUrl.trim() === ''){
+    if (item.topicUrl.trim() === "") {
       item.topicUrl = image
     }
     hsContentStr += `<div id="${idkey}_${topickey}" class="mdc-card demo-card demo-card--photo">

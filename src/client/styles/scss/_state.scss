@@ -32,7 +32,8 @@
 }
 
 .rankingTable {
-    min-width: 36vw;   
+    // min-width: 36vw; 
+    min-height: 42vh;  
 }
 
 .mdl-table{
@@ -42,9 +43,6 @@
 
 mdc-select.mdc-select--outline{
     min-width:36vw;
-}
-.mdl-table {
-    min-width: 33vw !important;
 }
 
 .selectedRow {
@@ -57,13 +55,5 @@ mdc-select.mdc-select--outline{
 }
 
 .mdl-color--customTheme {
-    background-color: var(--mdc-theme-primary, #6200ee);
+    background-color:  #efefef;
 }
-
-#leaderBrd-mdc-dialog .mdc-dialog__surface {
-    width: auto !important;
-    min-width: auto !important;
-    max-height: 64vh;
-    min-height: 64vh;
-}
-
