@@ -24,6 +24,7 @@ import "./ui-component/Friends/controller"
 import "./ui-component/Friends/reducer"
 import "./ui-component/Friends/service"
 import "./ui-component/Friends/view"
+import { app } from "firebase";
 var Material = require("exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js")
 
 createLoader()
@@ -44,4 +45,6 @@ $("#quiz-maincontent").on("click", "#createChallenge", callCreateChallenge)
 $("#quiz-maincontent").on("click", "#shareChallenge", callShareChallenge)
 // createShareChallengesSection()
 // ShareChallengesWithSelectedFriendsSection()
+
+module.exports = app
 
