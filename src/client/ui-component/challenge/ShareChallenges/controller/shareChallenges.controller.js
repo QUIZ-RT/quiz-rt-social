@@ -1,13 +1,12 @@
 import {getShareChallengeTemplate, getShareChallengeModalTemplate, renderViewToContainer, getshareChallengeModalContent} from "../view/shareChallenges.view"
-import {Store} from '../../../../boot/Store'
+import {Store} from "../../../../boot/Store"
 import {getUserChallenges, getFriendsToShareChallenges, updateUserTransactionWithSharedChallenges} from "../service/shareChallenges.service"
-import { showLoader } from "../../../loader/loader.controller";
+import {showLoader} from "../../../loader/loader.controller"
 import {loadFriends} from "../../../../ui-component/Friends/service"
 import {updateUserTransaction} from "../../CreateChallenge/service/CreateChallengeService"
 import {MDCDialog} from "@material/dialog"
-import { setTimeout } from "timers";
+import {setTimeout} from "timers"
 import {showSnackBar} from "../../../snackbar/snackbar.controller"
-
 
 export const createShareChallengesModal = () => {
   const shareChallengesModalTemp = getShareChallengeModalTemplate()
@@ -31,13 +30,13 @@ export const createShareChallengesSection = (userId) => {
           fetchFriendsToShareChallenges(friends, userId, curChallengeItem)
         })
       })
-    })   
-    let challengeBtnList = shareChallengesData.querySelectorAll(".playChallengeBtnCls")
-    challengeBtnList.forEach((item) => {
-    item.addEventListener("click", (event) => {
-      playChallengeOnPlayButton(event)
     })
-  })
+    const challengeBtnList = shareChallengesData.querySelectorAll(".playChallengeBtnCls")
+    challengeBtnList.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        playChallengeOnPlayButton(event)
+      })
+    })
     renderViewToContainer(shareChallengesData, "#challengeSection")
   })
 }
@@ -48,11 +47,11 @@ export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem)
   renderViewToContainer(shareChallengeModalContentTemp, ".friendsUsernames")
   const dialogElement = document.querySelector("#shareChall-mdc-dialog")
   const dialog = new MDCDialog(dialogElement)
-  document.querySelector("#submitSharedChallenge").addEventListener("click", (event) => { 
+  document.querySelector("#submitSharedChallenge").addEventListener("click", (event) => {
     var friendsListUL = document.querySelector("#friendsUl")
     var frnds = friendsListUL.querySelectorAll("#friendsLi")
     const selectedFriends = []
-    const shareUserTranObj = {"challengeId": "", "challengeName": "", "Created_By": "", "shared_by":"","playedOn":"","score":"","userID":"","userName":""};
+    const shareUserTranObj = {"challengeId": "", "challengeName": "", "Created_By": "", "shared_by": "", "playedOn": "", "score": "", "userID": "", "userName": ""}
     for (const item of frnds) {
       if (item.querySelector(".mdl-checkbox__input").checked) {
         let friendUserId = item.children[1].children[1].id.split("_")[1]
@@ -85,13 +84,15 @@ export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem)
 }
 
 const playChallengeOnPlayButton = (event) => {
-  const btnData = event.target.id.split("-");
+  const btnData = event.target.id.split("-")
   const challengeId = btnData[1]
   const curState = Store.getState()
-  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {return x.challengeId.toString() === challengeId })[0]
+  const curChallengeInfo = curState.dashboardReducer.ChallegeList.filter((x) => {
+    return x.challengeId.toString() === challengeId
+  })[0]
   let topicId = ""
   for (const topickey in curState.dashboardReducer.TopicList) {
-    if(curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName){
+    if (curState.dashboardReducer.TopicList[topickey].topicText === curChallengeInfo.topicName) {
       topicId = curState.dashboardReducer.TopicList[topickey].id
       break
     }
@@ -99,13 +100,13 @@ const playChallengeOnPlayButton = (event) => {
   switch (btnData[2]) {
   case "play":
     console.log("play" + challengeId)
-    const url = "https://quiz-engine.herokuapp.com?topicId="+topicId+"&type=challenge"
-    window.open(url , '_blank');
+    const url = "https://quiz-engine.herokuapp.com?topicId=" + topicId + "&type=challenge"
+    window.open(url, "_blank")
     break
   case "leader":
     console.log("leader" + challengeId)
     break
- default:
+  default:
     break
   }
 }

@@ -1,4 +1,4 @@
-var Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
+var Material = require("exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js")
 
 const mainContainer = document.getElementById("quiz-maincontent")
 
@@ -135,8 +135,8 @@ const createSearchUserItem = (user) => {
 }
 
 const createFriendItem = (user) => {
-  let temdisplayName =  user.displayName;
-let replaced = temdisplayName.replace(' ', '___');
+  const temdisplayName = user.displayName
+  const replaced = temdisplayName.replace(" ", "___")
   const item = htmlToTemplate(`<div id= ${replaced} class="mdl-list__item start_chat" email=${user.email} displayName=${replaced} photoURL=${user.photoURL} >
               <span class="mdc-list-item__graphic material-icons green chatOnline" aria-hidden="true" email=${user.email} displayName=${replaced} photoURL=${user.photoURL}></span>
               <span class="mdl-list__item-primary-content" email=${user.email} displayName=${replaced} photoURL=${user.photoURL} >
@@ -177,7 +177,6 @@ const createchatSectionContainer = () => {
   return chatSectionContainer
 }
 
-
 export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
@@ -214,8 +213,7 @@ export const showSearchPageWithResult = (users, showProgress) => {
   list_of_friend_doc.className = "mdc-tab"
   frnd_req_doc.className = "mdc-tab"
   friendComponent.parentElement.className = ""
-  document.getElementsByTagName('body')[0].className = ""
-
+  document.getElementsByTagName("body")[0].className = ""
 }
 
 export const showFriendList = (users, showProgress) => {
@@ -224,13 +222,13 @@ export const showFriendList = (users, showProgress) => {
 
   let count = 0
 
-  if ( users && users.length > 0) {
+  if (users && users.length > 0) {
     count = users.length
   }
 
   friendComponent.appendChild(createFriendHeaderWithOutSearchBox(`You have ${count} friends`))
   const mainContent = createFriendMainContentContainer()
-  
+
   if (showProgress) {
     mainContent.appendChild(showProgressBar())
   }
@@ -239,24 +237,24 @@ export const showFriendList = (users, showProgress) => {
     usersContainer.style.width = "50%"
     mainContent.appendChild(usersContainer)
 
-  users.forEach((user) => {
-    usersContainer.appendChild(createFriendItem(user))
-  })
-  mainContent.appendChild(createchatSectionContainer())
-  friendComponent.appendChild(mainContent)
-  mainContainer.innerHTML = ""
-  mainContainer.appendChild(friendComponent)
-  mainContainer.appendChild(createSnackBar())
-  componentHandler.upgradeAllRegistered()
-  const add_friend_doc = document.getElementById("add_friend")
-  const list_of_friend_doc = document.getElementById("list_of_friend")
-  const frnd_req_doc = document.getElementById("frnd_req")
-  add_friend_doc.className = "mdc-tab"
-  list_of_friend_doc.className = "mdc-tab mdc-tab--active"
-  frnd_req_doc.className = "mdc-tab"
-  friendComponent.parentElement.className = ""
-  document.getElementsByTagName('body')[0].className = ""
-}
+    users.forEach((user) => {
+      usersContainer.appendChild(createFriendItem(user))
+    })
+    mainContent.appendChild(createchatSectionContainer())
+    friendComponent.appendChild(mainContent)
+    mainContainer.innerHTML = ""
+    mainContainer.appendChild(friendComponent)
+    mainContainer.appendChild(createSnackBar())
+    componentHandler.upgradeAllRegistered()
+    const add_friend_doc = document.getElementById("add_friend")
+    const list_of_friend_doc = document.getElementById("list_of_friend")
+    const frnd_req_doc = document.getElementById("frnd_req")
+    add_friend_doc.className = "mdc-tab"
+    list_of_friend_doc.className = "mdc-tab mdc-tab--active"
+    frnd_req_doc.className = "mdc-tab"
+    friendComponent.parentElement.className = ""
+    document.getElementsByTagName("body")[0].className = ""
+  }
 }
 
 export const showPendingFriendRequests = (users, showProgress) => {
@@ -264,7 +262,7 @@ export const showPendingFriendRequests = (users, showProgress) => {
   friendComponent.appendChild(createFriendsSideNav())
   let count = 0
 
-  if ( users && users.length > 0) {
+  if (users && users.length > 0) {
     count = users.length
   }
 
@@ -295,5 +293,5 @@ export const showPendingFriendRequests = (users, showProgress) => {
   list_of_friend_doc.className = "mdc-tab"
   frnd_req_doc.className = "mdc-tab mdc-tab--active"
   friendComponent.parentElement.className = ""
-  document.getElementsByTagName('body')[0].className = ""
+  document.getElementsByTagName("body")[0].className = ""
 }
