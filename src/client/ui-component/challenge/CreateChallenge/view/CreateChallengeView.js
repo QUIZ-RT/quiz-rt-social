@@ -7,23 +7,9 @@ const Material = require("exports-loader?componentHandler&MaterialRipple!materia
 function createChallengeHeaderPanel() {
   
 
-  const challenegSideBarTemp = `<div class="mdc-tab-bar" role="tablist" id="challengePanel">
-  <div class="mdc-tab-scroller">
-    <div class="mdc-tab-scroller__scroll-area">
-      <div class="mdc-tab-scroller__scroll-content">
-        <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
-          <span class="mdc-tab__content" >
-            <span class="mdc-tab__text-label" id="challenegeLabel">Challenges</span>
-          </span>
-          <span class="mdc-tab-indicator mdc-tab-indicator--active">
-            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-          </span>
-          <span class="mdc-tab__ripple"></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>`
+  const challenegSideBarTemp = `<div id="challengePanel">
+  <span class="mdc-typography--headline6" id="challenegeLabel">Challenges</span>
+  </div>`
 
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")

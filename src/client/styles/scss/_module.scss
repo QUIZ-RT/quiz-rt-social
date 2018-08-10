@@ -333,10 +333,11 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     top: -2.5 rem;
 }
 #challenegeLabel{
-  color: white;
+  font-weight: bold;
 }
 #challengePanel{
-  background-color:#442e63;
+  color: #442e63 !important;
+  text-align: center;
 }
 #createChallIcon{
   color: #442e63;
@@ -350,8 +351,8 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   }
 @media(max-width:445px){
   .app-fab--absolute {
-    right: -12rem;
-    top: -28rem;
+    right: -10rem;
+    top: -59rem;
 }
 }
 #createChallHeader,.createChallHeaderLabel{
