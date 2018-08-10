@@ -11,7 +11,12 @@ export const renderViewToContainer = (content, containerKey) => {
 }
 export const getShareChallengeTemplate = (dataList) => {
   const scContainerStr = `<div class="shareChallenges">        
-    </div>`
+    </div>
+    <span>
+    <button class="mdc-fab app-fab--absolute" aria-label="Favorite" id="createChallenge">
+  <span class="mdc-fab__icon material-icons" id ="createChallIcon">add</span>
+</button>
+</span>`
 
   const scTable = `<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="shareChallengesTable">
                         <thead>

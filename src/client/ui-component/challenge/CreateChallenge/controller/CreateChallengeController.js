@@ -1,4 +1,4 @@
-import {createChallengeContainer, createQuestion, createChallengeHeader, createChallengeSideBarView} from "../view/CreateChallengeView"
+import {createChallengeContainer, createQuestion, renderCreateChallengeComponent, createChallengeHeaderPanel} from "../view/CreateChallengeView"
 import {storeChallenge,updateUserTransaction} from "../service/CreateChallengeService"
 import {Store} from '../../../../boot/Store';
 import {createShareChallengesSection, createShareChallengesModal} from "../../ShareChallenges/controller/shareChallenges.controller"
@@ -15,35 +15,32 @@ Store.subscribe(() => {
    
             document.querySelector('#quiz-maincontent').innerHTML = "";
 
-            createChallengeSideBarView()
+            createChallengeHeaderPanel()
             createShareChallengesModal()
             createChallengeContainer()
-            if(currentState.challengeReducer.currentView != 'shareChallenge'){
-               if(document.querySelector('#challengeSection')!=null){
-                document.querySelector('#challengeSection').innerHTML = "";
-               }
-                count =0;
-               createChallengeHeader();
-                document.getElementById("createChallenge").classList.add("mdc-tab--active");
-                document.getElementById("shareChallenge").classList.remove("mdc-tab--active");
-            }else{
+          
               count =0;
               document.querySelector('#challengeSection').innerHTML = "";
               const email = currentState.menuReducer.currentUserInfo.email;       
-              //console.log("myEmail: " + email)         
               getUserFromUserMaster(email).then(function(currentUser) {
                 const userId = currentUser.userID
                 console.log("This is userid:" + userId)
                 createShareChallengesSection(userId)
-                 document.getElementById("shareChallenge").classList.add("mdc-tab--active");
-                document.getElementById("createChallenge").classList.remove("mdc-tab--active");
               })
-            }           
+                      
+        }else if(currentState.menuReducer.currentView === 'createChallenge'){
+          document.querySelector('#quiz-maincontent').innerHTML = "";
+           createChallengeHeaderPanel()
+            createChallengeContainer()
+           
+            if(document.querySelector('#challengeSection')!=null){
+             document.querySelector('#challengeSection').innerHTML = "";
+            }
+             count =0;
+              renderCreateChallengeComponent();
+         }else{
         }
-  // if(currentState.challengeReducer.currentView === 'createChallenge'){
-  //   document.querySelector('#challengeSection').innerHTML = "";
-  //   createChallengeHeader();
-  // }
+  
   if (currentState.menuReducer.currentUserInfo) {
       userEmail =  currentState.menuReducer.currentUserInfo.email ; 
       
@@ -52,24 +49,6 @@ Store.subscribe(() => {
 })
 
 
-// Store.subscribe(() => {
-//   const currentState = Store.getState()
-//   if(currentState.challengeReducer.currentView === 'createChallenge'){
-//     document.querySelector('#quiz-maincontent').innerHTML = "";
-//     createChallengeSideBarView();
-//     createChallengeContainer()
-//     createChallengeHeader()
-//   }
-// })
-
-// function createChallengeSideBar() {
-//   createChallengeSideBarView()
-// }
-
-// function createChallenge() {
-//   createChallengeContainer()
-//   createChallengeHeader()
-// }
 
 function createNextQuestion(evnt) {
   evnt.preventDefault()
