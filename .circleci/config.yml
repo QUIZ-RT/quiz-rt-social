@@ -69,7 +69,7 @@ workflows:
               only: dev-integration
       - deploy:
           requires:
-            - build1
+            - test
           filters:
             branches:
               only: dev-integration

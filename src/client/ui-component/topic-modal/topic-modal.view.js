@@ -31,16 +31,16 @@ export const getTopicModalbox = () => {
   return htmlToTemplate(topicModalHtmlStr)
 }
 
-export const getToipcModalBodyContent = (state, id,emailId) => {
+export const getToipcModalBodyContent = (state, id, emailId) => {
   console.log("state", state)
   let follow = ""
-  let image = "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png";
+  let image = "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png"
 
-  if(state.topicUrl!==''){
-    image=state.topicUrl;
+  if (state.topicUrl !== "") {
+    image = state.topicUrl
   }
-   
-  if (state.users!==undefined && state.users.indexOf(emailId)>-1) {
+
+  if (state.users !== undefined && state.users.indexOf(emailId) > -1) {
     follow = `<button id="topic-${id}-unfollow" class="mar-btm-10px mdc-button mdc-button--raised">
     Unfollow</button>`
   }
@@ -48,7 +48,7 @@ export const getToipcModalBodyContent = (state, id,emailId) => {
     follow = `<button id="topic-${id}-follow" class="mar-btm-10px mdc-button mdc-button--raised">
     Follow</button>`
   }
-  
+
   const modalBodyContentStr = `  
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">

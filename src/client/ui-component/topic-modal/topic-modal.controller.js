@@ -138,7 +138,7 @@ const topicModalbtnClick = (event) => {
   let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
     case "play":
-      const url = "https://quiz-engine.herokuapp.com/?topicId=" + topicId
+      const url = "https://game-engine-beta.herokuapp.com/?topicId="+topicData[topicId].topicText
       window.open(url, '_blank');
       hideLoader()
       break

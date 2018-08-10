@@ -1,6 +1,6 @@
 
-import { Store } from '../../boot/Store'
-import { updateChat } from "./chat.service"
+import {Store} from "../../boot/Store"
+import {updateChat} from "./chat.service"
 function createHTMLElement(html) {
   const template = document.createElement("template")
   template.innerHTML = html
@@ -50,11 +50,11 @@ function createChatHeaderLeft(name) {
 }
 
 function chatboxScrollBottom() {
-  $("ol.discussion").animate({ scrollTop: $("ol.discussion").prop("scrollHeight") })
+  $("ol.discussion").animate({scrollTop: $("ol.discussion").prop("scrollHeight")})
 }
 
 function appendMessage(message, cssClass) {
-  var messageTimestamp = new Date().toLocaleString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
+  var messageTimestamp = new Date().toLocaleString("en-US", {hour: "numeric", minute: "numeric", hour12: true})
   var chatMessageTimestamp = "<label class=\"chatMessageTimestamp\">" + messageTimestamp + "</label>"
   if (message.type === "text") {
     const ol = document.querySelector("ol.discussion")
@@ -66,9 +66,9 @@ function appendMessage(message, cssClass) {
 function loadChatBox(messages) {
   $(".chat-module").show()
   $("ol.discussion").html("").show()
-  messages.forEach(function (message) {
+  messages.forEach(function(message) {
     var cssClass = (message.sdisplayName === Store.getState().makeChat.myUser.user.displayName) ? "self mdc-list-item" : "other mdc-list-item"
-    updateChat(message).then(function () {
+    updateChat(message).then(function() {
     })
     appendMessage(message, cssClass, message.name)
   })
@@ -77,23 +77,23 @@ function loadChatBox(messages) {
 
 function clearChatNotificationCount(chatNotificationCount, userName) {
   chatNotificationCount[userName] = 0
-  let temdisplayName =  userName;
-  let replaced = temdisplayName.replace(' ', '___');
+  const temdisplayName = userName
+  const replaced = temdisplayName.replace(" ", "___")
   $("#" + replaced + " label.chatNotificationCount").hide()
 }
 
 function selectUerChatBox(selectedUser) {
-  let myFriend = {}
-  let user = {}
+  const myFriend = {}
+  const user = {}
   myFriend.socketId = selectedUser.socketId
   user.email = selectedUser.email
-  user.displayName = selectedUser.displayName;
-  user.Photo = selectedUser.photoURL;
-  myFriend.user = user;
+  user.displayName = selectedUser.displayName
+  user.Photo = selectedUser.photoURL
+  myFriend.user = user
   Store.dispatch({
-    type: "SELECT-FRIEND", myFriend: myFriend
+    type: "SELECT-FRIEND", myFriend: myFriend,
   })
-  //$(evt.target).addClass("active")
+  // $(evt.target).addClass("active")
   clearChatNotificationCount(Store.getState().makeChat.chatNotificationCount, myFriend.user.displayName)
 }
 
@@ -119,73 +119,73 @@ function createMsgLiElementSelf(msg, cssClass, name) {
 }
 
 function render() {
-  let state = Store.getState();
-  //$("#onlineUsers").empty()
-  let chatCount = 0; 
-  state.makeChat.onlineUsers.forEach(function (user) {
+  const state = Store.getState()
+  // $("#onlineUsers").empty()
+  let chatCount = 0
+  state.makeChat.onlineUsers.forEach(function(user) {
     if (user.user.displayName !== state.makeChat.myUser.user.displayName) {
-      //var liElement = createLiElement(user.id, user.name)
-      //document.querySelector("#onlineUsers").appendChild(liElement)
-      let temdisplayName =  user.user.displayName;
-      let replaced = temdisplayName.replace(' ', '___');
+      // var liElement = createLiElement(user.id, user.name)
+      // document.querySelector("#onlineUsers").appendChild(liElement)
+      const temdisplayName = user.user.displayName
+      const replaced = temdisplayName.replace(" ", "___")
       if (state.makeChat.chatNotificationCount[user.user.displayName] !== undefined &&
-        state.makeChat.chatNotificationCount[user.user.displayName] !== 0) { 
-          chatCount = chatCount + state.makeChat.chatNotificationCount[user.user.displayName] 
+        state.makeChat.chatNotificationCount[user.user.displayName] !== 0) {
+        chatCount = chatCount + state.makeChat.chatNotificationCount[user.user.displayName]
         $("#" + replaced + " label.chatNotificationCount").html(state.makeChat.chatNotificationCount[user.user.displayName])
         $("#" + replaced + " label.chatNotificationCount").show()
       }
-      $("#" + replaced + " span.chatOnline").html('fiber_manual_record')
-        $("#" + replaced + " span.chatOnline").show()
-      
-      if (state.makeChat.myFriend && state.makeChat.myFriend.user 
-        && state.makeChat.myFriend.user.displayName === user.user.displayName) {
+      $("#" + replaced + " span.chatOnline").html("fiber_manual_record")
+      $("#" + replaced + " span.chatOnline").show()
+
+      if (state.makeChat.myFriend && state.makeChat.myFriend.user &&
+        state.makeChat.myFriend.user.displayName === user.user.displayName) {
         clearChatNotificationCount(state.makeChat.chatNotificationCount, user.user.displayName)
       }
     }
   })
-  if(chatCount > 0){
+  if (chatCount > 0) {
     $(".chatIcon").attr("data-badge", chatCount)
   }
-  if(state.makeChat.myFriend && state.makeChat.myFriend.user 
-  && state.makeChat.myFriend.user.displayName){
+  if (state.makeChat.myFriend && state.makeChat.myFriend.user &&
+  state.makeChat.myFriend.user.displayName) {
     const body = document.querySelector(".chatSection")
     if ($(".chat-module")[0] === undefined) {
       body.appendChild(createchatSection())
     }
     $(".chat-module").show()
-      $("ol.discussion").show()
-      $(".chat-top-bar").html("").show()
-      document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.user.displayName))
-      if (state.makeChat.allChatMessages[state.makeChat.myFriend.user.displayName] !== undefined) {
-        loadChatBox(state.makeChat.allChatMessages[state.makeChat.myFriend.user.displayName])
-      }
-      else {
-        $("ol.discussion").html("")
-      }
+    $("ol.discussion").show()
+    $(".chat-top-bar").html("").show()
+    document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.user.displayName))
+    if (state.makeChat.allChatMessages[state.makeChat.myFriend.user.displayName] !== undefined) {
+      loadChatBox(state.makeChat.allChatMessages[state.makeChat.myFriend.user.displayName])
+    }
+    else {
+      $("ol.discussion").html("")
+    }
   }
- 
+
   // if (state.makeChat.onlineUsers.length >= 2 && state.makeChat.myFriend.name !== undefined) {
   //   $(".chat-module").show()
   //   $("ol.discussion").show()
   //   $(".chat-top-bar").html("").show()
   //   document.querySelector(".chat-top-bar").appendChild(createChatHeaderLeft(state.makeChat.myFriend.name))
   // }
-  //$("#onlineUsers li").removeClass("active")
+  // $("#onlineUsers li").removeClass("active")
   $("#notifyTyping").text("")
   $("#txtChatMessage").val("").focus()
 }
 
-export const subsribeRender = () =>{
+export const subsribeRender = () => {
   Store.subscribe(render)
 }
 
 export const createChatContainer = (selectedUser) => {
-  let state = Store.getState();
-  state.makeChat.onlineUsers.forEach(function (user) {
+  const state = Store.getState()
+  state.makeChat.onlineUsers.forEach(function(user) {
     if (selectedUser.displayName === user.user.displayName) {
       selectedUser.socketId = user.socketId
     }
   })
-  selectUerChatBox(selectedUser);
+  selectUerChatBox(selectedUser)
 }
 

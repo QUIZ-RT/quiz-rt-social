@@ -1,4 +1,4 @@
-import {playChallengeOnPlayButton} from '../controller/shareChallenges.controller';
+import {playChallengeOnPlayButton} from "../controller/shareChallenges.controller"
 
 const htmlToTemplate = (htmlstr) => {
   const template = document.createElement("template")
@@ -43,7 +43,7 @@ export const getShareChallengeTemplate = (dataList) => {
   })
   const scContentTemp = htmlToTemplate(shareChallengesContentStr)
   appendShareChellengesTableContainer.appendChild(scContentTemp)
-  appendShareChellengesListContainer.appendChild(appendShareChellengesTableContainer);
+  appendShareChellengesListContainer.appendChild(appendShareChellengesTableContainer)
   return scContainerTemp
 }
 export const getShareChallengeModalTemplate = () => {
