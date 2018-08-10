@@ -35,16 +35,14 @@ export const addChallengeToDB = (req, resp) => {
 }
 
 export const updateUserTransaction = (req, resp) => {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(config);
-    }
-    console.log("inside updateUserTransaction");
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
  const challenges = firebase.database().ref("User_Transaction");
 
  const promise = new Promise(function(resolve, reject) {
        challenges.once("value", function(userTranNode) {
           let requestBody = req.body;
-          console.log("userTranNode val:",userTranNode);
          let nextUserTranSeq = Math.max.apply(Math,(Object.keys(userTranNode.val())));
           console.log("nextUserTranSeq before :",nextUserTranSeq);
           nextUserTranSeq = +nextUserTranSeq+1;
@@ -76,22 +74,39 @@ export const getAllChallengesFromDB = (req, resp) => {
   return promise;
 }
 
-export const getUserDetail = (req, resp) => {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(config);
-    }
- const userTranRef = firebase.database().ref();
- const promise = new Promise(function(resolve, reject) {
-    userTranRef.child("User_Master").once("value", function(userTranNode) {
-        resolve(userTranNode.val());
-  }, function (errorObject) {
-         reject(errorObject);
-         
-  });
-});
-  return promise;
+//  adding particular challenge API
+export const getParticularChallengeFromDB = (challengeId) => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
+  }
+  const challengesRef = firebase.database().ref("Challenges")
+
+  const promise = new Promise(function(resolve, reject) {
+    challengesRef.orderByChild("challengeId").equalTo(parseInt(challengeId)).on("value", function(snapshot) {
+      console.log("chal value: ", snapshot.val())
+      resolve(snapshot)
+    }, function(errorObj) {
+      console.log(errorObj)
+      reject(errorObj)
+    })
+  })
+  return promise
 }
 
+export const getUserDetail = (req, resp) => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
+  }
+  const userTranRef = firebase.database().ref()
+  const promise = new Promise(function(resolve, reject) {
+    userTranRef.child("User_Master").once("value", function(userTranNode) {
+      resolve(userTranNode.val())
+    }, function(errorObject) {
+      reject(errorObject)
+    })
+  })
+  return promise
+}
 
 // get user specific challenges
 export const getUserSpecificChallengesFromDB = (req, resp) => {
@@ -102,7 +117,6 @@ export const getUserSpecificChallengesFromDB = (req, resp) => {
   const challengesRef = firebase.database().ref()
   const promise = new Promise(function(resolve, reject) {
     challengesRef.child("User_Transaction").orderByChild("userID").equalTo(req.body.userId).on("child_added", function(users) {
-      //console.log("Users DATA" + JSON.stringify(users))
       userChallenges.push(users)
       resolve(userChallenges)
     }, function(errorObject) {
