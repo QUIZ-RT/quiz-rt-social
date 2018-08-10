@@ -79,7 +79,7 @@ export const getshareChallengeModalContent = (friends) => {
   let friendsUserNamesContentStr = ""
   let count = 0
   friends.forEach((friend) => {
-    friendsUserNamesContentStr += `<li class="mdl-list__item" id="friendsLi">
+    friendsUserNamesContentStr += `<li class="mdl-list__item friendsLi" id="friendsLi_${friend.userID}">
     <span class="mdl-list__item-secondary-action">
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-${++count}">
             <input type="checkbox" id="checkbox-${count}" class="mdl-checkbox__input" >

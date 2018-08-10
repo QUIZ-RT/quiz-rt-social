@@ -637,7 +637,7 @@ export const createPopularTopicSection = (topicData) => {
     renderViewToContainer(pTopictemp, "#dashboard_pTopic")
   }
   else {
-    renderViewToContainer(getNoListMsg("Popular Topic", "No Popular Topic List"), "#dashboard_pTopic")
+    //renderViewToContainer(getNoListMsg("Popular Topic", "No Popular Topic List"), "#dashboard_pTopic")
   }
 }
 export const createFavoriteTopicSection = (topicData) => {
@@ -662,7 +662,7 @@ export const createFavoriteTopicSection = (topicData) => {
     renderViewToContainer(fTopictemp, "#dashboard_fTopic")
   }
   else {
-    renderViewToContainer(getNoListMsg("Favorite Topic", "No Favorite Topic List"), "#dashboard_fTopic")
+    //renderViewToContainer(getNoListMsg("Favorite Topic", "No Favorite Topic List"), "#dashboard_fTopic")
   }
 }
 export const createChallengesSection = (challengeDataList) => {
@@ -678,7 +678,7 @@ export const createChallengesSection = (challengeDataList) => {
     renderViewToContainer(challengestemp, "#dashboard_challenge")
   }
   else {
-    renderViewToContainer(getNoListMsg("Challenges", "No Challenge List"), "#dashboard_challenge")
+    //renderViewToContainer(getNoListMsg("Challenges", "No Challenge List"), "#dashboard_challenge")
   }
 }
 export const createMyChallengesSection = (challengeDataList) => {
@@ -698,7 +698,7 @@ export const createMyChallengesSection = (challengeDataList) => {
     renderViewToContainer(mychallengestemp, "#dashboard_mychallenge")
   }
   else {
-    renderViewToContainer(getNoListMsg("My Challenges", "No My Challenge List"), "#dashboard_mychallenge")
+    //renderViewToContainer(getNoListMsg("My Challenges", "No My Challenge List"), "#dashboard_mychallenge")
   }
 }
 

@@ -35,7 +35,8 @@ const menuData = [{
 
 let drawer = null
 export const createMenu = () => {
-  const menuContent = getMenuTemplate(menuData)
+  const currentState = Store.getState()
+  const menuContent = getMenuTemplate(menuData, currentState.menuReducer.currentUserInfo)
   const menuList = menuContent.querySelectorAll(".headermenu")
   menuList.forEach((menu) => {
     menu.addEventListener("click", (event) => {
@@ -43,9 +44,8 @@ export const createMenu = () => {
     })
   })
   renderViewToContainer(menuContent, "#quiz-header")
-  const currentState = Store.getState()
   // console.log("currentState = ", currentState.menuReducer.currentUserInfo.email)
-  document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email
+  //document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {

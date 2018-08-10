@@ -211,7 +211,11 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   #appName{
     cursor: pointer;
   }
-
+  .userIcon{
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+  }
   .mdc-drawer--temporary .mdc-drawer__header-content{
     justify-content: center;
     flex-direction: column;
