@@ -1,14 +1,17 @@
-import {getLeaderBoardTemplate, renderViewToContainer} from "./leader-view"
-import {Store} from "./../../boot/Store"
+import { getLeaderBoardTemplate, renderViewToContainer } from "./leader-view"
+import { Store } from "./../../boot/Store"
+import { MDCSelect } from "@material/select/index"
+import { MDCDialog } from "@material/dialog"
+import { serviceCall } from "./service-methods"
+import { showLoader, hideLoader } from "../loader/loader.controller"
 
-export const createLeaderBoardForChallenges = () => {
+export let createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
   renderViewToContainer(leaderBoardContent, "main")
 }
 
-export const getFilteredGameDetails = (arry, days) => {
-  let html = ""
-  let rank = 0
+let getFilteredDetails = (arry, days) => {
+
   let newArray = new Array()
   const startValue = new Date()
   const endValue = new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
@@ -20,25 +23,27 @@ export const getFilteredGameDetails = (arry, days) => {
   })
 
   let filteredArray = new Array()
+  let tempArray = new Array()
   let score = 0
+  
   // merging all arrays
-  for (const item of newArray.games) {
-    newArray = newArray.concat(item.players)
+  for (const item of newArray) {
+    tempArray = tempArray.concat(item.players)
   }
 
   // grouping the array by id
-  newArray = newArray.reduce((h, a) => Object.assign(h, {[a.id]: (h[a.id] || []).concat(a)}), {})
+  tempArray = tempArray.reduce((h, a) => Object.assign(h, { [a.name]: (h[a.name] || []).concat(a) }), {})
 
-  newArray = Object.keys(newArray).map(function(key) {
-    return [Number(key), newArray[key]]
+  tempArray = Object.keys(tempArray).map(function (key) {
+    return [Number(key), tempArray[key]]
   })
 
   // forming the filtered array
-  for (let j = 0; j < newArray.length; j++) {
-    score = newArray[j]["1"].reduce((a, b) => +a + +b.score, 0)
+  for (let j = 0; j < tempArray.length; j++) {
+    score = tempArray[j]["1"].reduce((a, b) => Math.max(+a, +b.score), 0)
     filteredArray.push({
-      playerName: newArray[j]["1"][0].name,
-      playerId: newArray[j]["1"][0].id,
+      playerName: tempArray[j]["1"][0].name,
+      playerId: tempArray[j]["1"][0].id,
       score: score,
     })
   }
@@ -59,6 +64,13 @@ export const getFilteredGameDetails = (arry, days) => {
       return comparison
     })
 
+  return filteredArray;
+
+}
+
+let renderRankings = filteredArray => {
+  let rank = 0;
+  let html = "";
   for (const item of filteredArray) {
     rank++
     html = html + `<tr id="${item.playerName}">
@@ -68,54 +80,93 @@ export const getFilteredGameDetails = (arry, days) => {
                    </tr>`
   }
   document.getElementById("leaderBody").innerHTML = html
-
   const currentState = Store.getState()
   const userName = currentState.menuReducer.currentUserInfo.displayName.replace(" ", "").toLowerCase()
-  const selection = document.querySelector(`tr[id=${userName}]`)
+  let selection = document.querySelector(`tr[id=${userName}]`)
   if (selection) {
     selection.className = "selectedRow"
   }
 }
 
-export const getFilteredDetails = (arry, days) => {
-  const startValue = new Date()
-  const endValue = new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
-  let html = ""
-  let rank = 0
+export let displayLeaderBoard = (type, id) => {
 
-  const filteredArray = arry.filter(item => {
-    const markerDate = new Date(item.playedOn
-    )
-    return (markerDate.getTime() <= startValue.getTime() && markerDate.getTime() >= endValue.getTime())
-  }).sort((a, b) => {
-    const scoreA = +a.score
+  serviceCall(`https://game-engine-beta.herokuapp.com/api/${type}/${id}`)
+    .then(function (data) {
+      var array = new Array();      
+      for (let item of Object.values(data)) {
+        if (item)
+          array.push(item);
+      }
 
-    const scoreB = +b.score
+      let filteredArray1 = getFilteredDetails(array, 1)
+      renderRankings(filteredArray1);
 
-    let comparison = 0
-    if (scoreB > scoreA) {
-      comparison = 1
-    }
-    else if (scoreB < scoreA) {
-      comparison = -1
-    }
-    return comparison
-  })
+      const dialogElement1 = document.querySelector("#topic-mdc-dialog")
+      const dialog1 = new MDCDialog(dialogElement1)
+      dialog1.close()
 
-  for (const item of filteredArray) {
-    rank++
-    html = html + `<tr id="${item.userName.replace(" ", "").toLowerCase()}">
-                     <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
-                     <td class="mdl-data-table__cell--non-numeric material">${item.userName}</td>
-                     <td>${item.score}</td>
-                   </tr>`
-  }
+      const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
+      const dialog2 = new MDCDialog(dialogElement2)
+      dialog2.show()
+      hideLoader();
 
-  document.getElementById("leaderBody").innerHTML = html
-  const currentState = Store.getState()
-  const userName = currentState.menuReducer.currentUserInfo.displayName.replace(" ", "").toLowerCase()
-  const selection = document.querySelector(`tr[id=${userName}]`)
-  if (selection) {
-    selection.className = "selectedRow"
-  }
+      dialog2.listen("MDCDialog:cancel", function () {
+        document.getElementById("leaderBody").innerHTML = ""
+        const select2 = new MDCSelect(document.querySelector(".mdc-select"))
+        select2.value = "1"
+        dialog1.close()
+        document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
+      })
+      const select = new MDCSelect(document.querySelector(".mdc-select"))
+      select.listen("change", () => {
+        debugger;
+        showLoader();
+        let filteredArray2 = getFilteredDetails(array, select.value)
+        renderRankings(filteredArray2);
+        hideLoader();
+      })
+    })
 }
+
+// export let getFilteredDetails = (arry, days) => {
+//   const startValue = new Date()
+//   const endValue = new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
+//   let html = ""
+//   let rank = 0
+
+//   const filteredArray = arry.filter(item => {
+//     const markerDate = new Date(item.playedOn
+//     )
+//     return (markerDate.getTime() <= startValue.getTime() && markerDate.getTime() >= endValue.getTime())
+//   }).sort((a, b) => {
+//     const scoreA = +a.score
+
+//     const scoreB = +b.score
+
+//     let comparison = 0
+//     if (scoreB > scoreA) {
+//       comparison = 1
+//     }
+//     else if (scoreB < scoreA) {
+//       comparison = -1
+//     }
+//     return comparison
+//   })
+
+//   for (const item of filteredArray) {
+//     rank++
+//     html = html + `<tr id="${item.userName.replace(" ", "").toLowerCase()}">
+//                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
+//                      <td class="mdl-data-table__cell--non-numeric material">${item.userName}</td>
+//                      <td>${item.score}</td>
+//                    </tr>`
+//   }
+
+//   document.getElementById("leaderBody").innerHTML = html
+//   const currentState = Store.getState()
+//   const userName = currentState.menuReducer.currentUserInfo.displayName.replace(" ", "").toLowerCase()
+//   const selection = document.querySelector(`tr[id=${userName}]`)
+//   if (selection) {
+//     selection.className = "selectedRow"
+//   }
+// }

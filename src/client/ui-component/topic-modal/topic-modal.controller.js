@@ -1,11 +1,9 @@
 import { MDCDialog } from "@material/dialog"
-import { MDCSelect } from "@material/select/index"
 import { renderViewToContainer, getTopicModalbox, getToipcModalBodyContent } from "./topic-modal.view"
 import { Store } from "../../boot/Store"
 import { updateFollow } from "../topics/topics.service"
-import { getFilteredGameDetails } from "../leader-board/leader-controller"
+import { displayLeaderBoard } from "../leader-board/leader-controller"
 import { showLoader, hideLoader } from "../loader/loader.controller"
-import { serviceCall} from "../leader-board/service-methods"
 
 export const createTopicmodal = () => {
   const topicModaltemplate = getTopicModalbox()
@@ -43,64 +41,13 @@ const openTopicModal = (state, id, target, emailId) => {
     console.log("canceled")
   })
 
-  // ///////////////////////// Leader Board Related Code///////////////////////////////
-  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
-    debugger;
+  /////////////////////////// Leader Board Related Code///////////////////////////////
+  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {    
     showLoader();
     const btnData = event.target.id.split("-")
-    const topicId = btnData[1]
-    sessionStorage.setItem("topicId", topicId);
-    // serviceCall(`https://quiz-engine.herokuapp.com/api/games/${topicId}`)
-    //   .then(function (data) {
-
-       
-    //   })
-
-      let array = new Array();
-      let data = `{"-LJRxCNoPunGRNfH278s":{"id":659124902,"players":[{"name":"Parveen Khan","score":0},
-      {"name":"Gopi Nath","score":0}],"topicId":"1"},"-LJS4FG44DZ3V2wrotIU":{"id":532996625,"players"
-      :[{"name":"Gopi Nath","score":0},{"name":"Gopi Nath","score":0}],"topicId":"1"},
-      "-LJS5ofoG0wk4CwYYwyx":{"id":867291489,"players":[{"name":"Parveen Khan","score":0},
-      {"name":"Gopi Nath","score":0}],"topicId":"1"},"-LJS9wI9QjmDXdrAaooe":{"id":863329166,
-      "players":[{"name":"Gopi Nath","score":0},{"name":"Gopi Nath","score":0}],"topicId":"1"}}`;
-      data = JSON.parse(data);
-      for (let item of Object.values(data)) {
-        if (item)
-          array.push(item);
-      }
-      
-      getFilteredGameDetails(array, 1)
-
-      const dialogElement1 = document.querySelector("#topic-mdc-dialog")
-      const dialog1 = new MDCDialog(dialogElement1)
-      dialog1.close()
-
-      const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
-      const dialog2 = new MDCDialog(dialogElement2)
-      dialog2.show()
-      hideLoader();
-
-      dialog2.listen("MDCDialog:cancel", function () {
-        document.getElementById("leaderBody").innerHTML = ""
-        const select2 = new MDCSelect(document.querySelector(".mdc-select"))
-        select2.value = "1"
-        sessionStorage.removeItem("topicId");
-        dialog1.close()
-        document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
-      })
-      const select = new MDCSelect(document.querySelector(".mdc-select"))
-      select.listen("change", () => {
-        let topicId = sessionStorage.getItem("topicId");
-        serviceCall(`https://game-engine-beta.herokuapp.com/api/games/${topicId}`)
-          .then(function (data) {
-            let array = new Array();
-            for (let item of data) {
-              if (item)
-                array.push(item);
-            }
-            getFilteredGameDetails(array, select.value);
-          })
-      })
+    const topicId = btnData[1]    
+    debugger;
+    displayLeaderBoard("games",topicId);
   })
   // ////////////////////////////////////////////////////////////////////////////////////
 
