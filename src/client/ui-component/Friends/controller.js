@@ -1,13 +1,13 @@
 import {Store} from "../../boot/Store"
 import {showSearchPageWithResult, showFriendList, showPendingFriendRequests} from "./view"
-import {loadChatContainer} from "../chat/chat.controller";
-var userName = "";
+import {loadChatContainer} from "../chat/chat.controller"
+var userName = ""
 function addFriendLinkClicked(event) {
   console.log("add friend link clicked")
   Store.dispatch({type: "SHOW_FRIENDS_CHAT"})
 }
 
-export const  listOfFriendsClicked = function (event) {
+export const listOfFriendsClicked = function(event) {
   console.log("list of friend link clicked")
   Store.dispatch({type: "FETCH_FRIENDS_REQ", userName: userName})
 }
@@ -32,26 +32,26 @@ function rejectFriendRequest(event) {
 function sendFriendRequest(event) {
   console.log("sendFriendRequest controller")
   console.log(event)
-  Store.dispatch({type: "SEND_FRIEND_REQ", reciever: event.target.getAttribute("user_email"), userName: userName}) 
+  Store.dispatch({type: "SEND_FRIEND_REQ", reciever: event.target.getAttribute("user_email"), userName: userName})
 }
 
 function searchUser(event) {
   console.log("search user")
   if (event.keyCode === 13) {
     console.log("search user hit enter")
-    event.preventDefault();
+    event.preventDefault()
     // console.log('in controller updateCard enter');
     console.log("inside searchUser")
     console.log(event.target.value)
-    Store.dispatch( {type: 'SEARCH_FRIENDS_REQ', value: event.target.value, userName: userName })
-    return false;
+    Store.dispatch({type: "SEARCH_FRIENDS_REQ", value: event.target.value, userName: userName})
+    return false
   }
-  return true;
+  return true
 }
 
-function showSnackBar(msg){
-  var snackbarContainer = document.querySelector('#msg-snack-bar')
-  var data = {message: msg};
+function showSnackBar(msg) {
+  var snackbarContainer = document.querySelector("#msg-snack-bar")
+  var data = {message: msg}
   snackbarContainer.MaterialSnackbar.showSnackbar(data)
 }
 
@@ -61,13 +61,12 @@ function render() {
   const state = Store.getState().friendReducer
   console.log(menuReducer)
   console.log(state)
-  
+
   if (menuReducer.currentUserInfo) {
-      userName =  menuReducer.currentUserInfo.email  
+    userName = menuReducer.currentUserInfo.email
   }
   if (menuReducer.currentView === "friends") {
-
-    if ( state && state.friendsAndChat ) {
+    if (state && state.friendsAndChat) {
       console.log("in friends controller selected page")
       if (state.friendsAndChat.page === "DEFAULT") {
         console.log("in friends controller DEFAULT page")
@@ -77,16 +76,14 @@ function render() {
         console.log("in friends controller DEFAULT page")
         showSearchPageWithResult([], true)
       }
-      else if (state.friendsAndChat.page === "SEARCH_FRIENDS_LOADED")
-      {
+      else if (state.friendsAndChat.page === "SEARCH_FRIENDS_LOADED") {
         console.log("in friends controller SEARCH_FRIENDS_LOADED page")
         showSearchPageWithResult(state.friendsAndChat.searchResult)
-        if(!state.friendsAndChat.searchResult || state.friendsAndChat.searchResult.length == 0){
-          showSnackBar("No user found ...")  
+        if (!state.friendsAndChat.searchResult || state.friendsAndChat.searchResult.length == 0) {
+          showSnackBar("No user found ...")
         }
       }
-      else if (state.friendsAndChat.page === "SEND_FRIEND_RES")
-      {
+      else if (state.friendsAndChat.page === "SEND_FRIEND_RES") {
         console.log("in friends controller SEND_FRIEND_RES page")
         showSearchPageWithResult(state.friendsAndChat.searchResult)
         showSnackBar("Friend request sent...")
@@ -114,12 +111,12 @@ function render() {
   }
 }
 function showChatBox(event) {
-  let user = {};
+  const user = {}
   user.email = event.target.getAttribute("email")
-  let temdisplayName =  event.target.getAttribute("displayName");
-  user.displayName = temdisplayName.replace('___', ' ');
+  const temdisplayName = event.target.getAttribute("displayName")
+  user.displayName = temdisplayName.replace("___", " ")
   user.photoURL = event.target.getAttribute("photoURL")
-  loadChatContainer(user);
+  loadChatContainer(user)
 }
 Store.subscribe(render)
 
@@ -128,6 +125,6 @@ $("body").on("click", "#list_of_friend", listOfFriendsClicked)
 $("body").on("click", "#frnd_req", showPendingFriendReq)
 $("body").on("click", ".accept-Friend-Request", acceptFriendRequest)
 $("body").on("click", ".reject-Friend-Request", rejectFriendRequest)
-$("body").on('keydown', '#fixed-header-drawer-exp', searchUser);
+$("body").on("keydown", "#fixed-header-drawer-exp", searchUser)
 $("body").on("click", ".sendFriendRequest", sendFriendRequest)
 $("body").on("click", ".start_chat", showChatBox)

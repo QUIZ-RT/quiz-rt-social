@@ -64,5 +64,5 @@ export const getNoListMsg = (headingText, msg) => {
       </h6>
       </div>`
 
-      return htmlToTemplate(NolistStr)
+  return htmlToTemplate(NolistStr)
 }

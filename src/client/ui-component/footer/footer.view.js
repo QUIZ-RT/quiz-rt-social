@@ -1,15 +1,15 @@
 export const htmlToTemplate = (htmlstr) => {
-    const template = document.createElement("template")
-    template.innerHTML = htmlstr
-    return template.content
+  const template = document.createElement("template")
+  template.innerHTML = htmlstr
+  return template.content
 }
 export const renderViewToContainer = (content, containerKey) => {
-    const container = document.querySelector(containerKey)
-    container.appendChild(content)
-  }
+  const container = document.querySelector(containerKey)
+  container.appendChild(content)
+}
 
-export const getFooterHtml = () =>{
-    const footerHtml = `<div class="footer-container">
+export const getFooterHtml = () => {
+  const footerHtml = `<div class="footer-container">
     <div class="copyRight-container">
     <div class="copyright">Copyright &copy; www.quizzapp.com
     <br>
@@ -18,5 +18,5 @@ export const getFooterHtml = () =>{
     </div>
     </div>
     </div>`
-    return htmlToTemplate(footerHtml)
+  return htmlToTemplate(footerHtml)
 }

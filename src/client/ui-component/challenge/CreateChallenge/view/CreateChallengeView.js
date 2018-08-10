@@ -1,8 +1,8 @@
 import TemplateGenerator from "../../common/TemplateGenerator"
-import {Store} from '../../../../boot/Store';
-import {getTopics} from '../service/CreateChallengeService'
-import { showLoader } from "../../../loader/loader.controller";
-let Material = require('exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js');
+import {Store} from "../../../../boot/Store"
+import {getTopics} from "../service/CreateChallengeService"
+import {showLoader} from "../../../loader/loader.controller"
+const Material = require("exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js")
 
 function createChallengeSideBarView() {
   // const challenegSideBarTemp = `<div id="challenge-Sidebar">
@@ -42,27 +42,24 @@ function createChallengeSideBarView() {
       </div>
     </div>
   </div>
-</div>`;
+</div>`
 
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate)
-  //const chSidebar = document.querySelector("#challenge-Sidebar").children[0]
-  //chSidebar.classList.add("challengeSidebar")
+  // const chSidebar = document.querySelector("#challenge-Sidebar").children[0]
+  // chSidebar.classList.add("challengeSidebar")
   componentHandler.upgradeAllRegistered()
-  document.getElementsByTagName('body')[0].className = ""
+  document.getElementsByTagName("body")[0].className = ""
 }
 
-function callCreateChallenge(){
-  
-  Store.dispatch({type:"currentchallengeview",dataItem:"createChallenge"});
+function callCreateChallenge() {
+  Store.dispatch({type: "currentchallengeview", dataItem: "createChallenge"})
 }
 
-function callShareChallenge(){
-
-  Store.dispatch({type:"currentchallengeview",dataItem:"shareChallenge"});
+function callShareChallenge() {
+  Store.dispatch({type: "currentchallengeview", dataItem: "shareChallenge"})
 }
-
 
 function createChallengeContainer() {
   const challengeContainer = `<section class="mdl-grid" id="challengeSection">
@@ -74,32 +71,30 @@ function createChallengeContainer() {
 
   container.appendChild(challengeContainerTemp)
   componentHandler.upgradeAllRegistered()
-  document.getElementsByTagName('body')[0].className = ""
+  document.getElementsByTagName("body")[0].className = ""
 }
 function createChallengeHeader() {
   showLoader()
   getTopics()
-  
-  //createChallengeHeaderTemplate()
+
+  // createChallengeHeaderTemplate()
 }
 
 function createChallengeHeaderTemplate(topicsArray) {
-
   // Store.subscribe(()=>{
   //   let state = Store.getState();
   //   if(state.challengeReducer.currentView ==="createChallenge"){
-     let topics = ``
+  let topics = ""
   //   let topicsArray = Object.values(state.challengeReducer.topics);
-    for(let index =0;index<topicsArray.length;index+=1){
-      
-      if(topicsArray[index] !=null){
-          topics =topics.concat(` <option value="${topicsArray[index].topicText}">
+  for (let index = 0; index < topicsArray.length; index += 1) {
+    if (topicsArray[index] != null) {
+      topics = topics.concat(` <option value="${topicsArray[index].topicText}">
                      ${topicsArray[index].topicText}
-                    </option>`);
-         }
+                    </option>`)
     }
+  }
 
-     const challengeTemplate = `<div class="mdl-color--grey-100" id="firstPage">
+  const challengeTemplate = `<div class="mdl-color--grey-100" id="firstPage">
      <main class="mdl-layout__content mdl-cell mdl-cell--12-col">
        <div class="mdl-card mdl-shadow--6dp mdl-cell mdl-cell--12-col">
          <div class="mdl-card__title mdl-color--primary mdl-color-text--white">
@@ -128,16 +123,13 @@ function createChallengeHeaderTemplate(topicsArray) {
                </div>
                </main>
              </div>`
-const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
-const challengeSection = document.getElementById("challengeSection")
-challengeSection.appendChild(challengeTemplt);
-componentHandler.upgradeAllRegistered()
-document.getElementsByTagName('body')[0].className = ""
-  //}
-  //})
-  
-  
- 
+  const challengeTemplt = TemplateGenerator.createAllChildHTMLElement(challengeTemplate)
+  const challengeSection = document.getElementById("challengeSection")
+  challengeSection.appendChild(challengeTemplt)
+  componentHandler.upgradeAllRegistered()
+  document.getElementsByTagName("body")[0].className = ""
+  // }
+  // })
 }
 function createQuestion(challengeJsonObj, count) {
   let questionTemplate = ` 
@@ -173,15 +165,15 @@ function createQuestion(challengeJsonObj, count) {
               <input class="mdl-textfield__input" type="text" id="ques${count}ans" placeholder="Answer" />
              <span id ="answerErr" style="display:none" class="challFormValidator">Answer is mandatory field</span>
             </div>`
-      if (count < 7) {
-        questionTemplate = questionTemplate.concat(` <div class="mdl-card__actions mdl-card--border">`);
-        }
-    if (count >1 && count <7) {
-        questionTemplate = questionTemplate.concat(`
-         <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="prevQuestion">Previous</button>`);
-      }
-        if (count < 7) {
-        questionTemplate = questionTemplate.concat(`             
+  if (count < 7) {
+    questionTemplate = questionTemplate.concat(" <div class=\"mdl-card__actions mdl-card--border\">")
+  }
+  if (count > 1 && count < 7) {
+    questionTemplate = questionTemplate.concat(`
+         <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="prevQuestion">Previous</button>`)
+  }
+  if (count < 7) {
+    questionTemplate = questionTemplate.concat(`             
         <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="nextQuestion">Next</button>
 
                      </div>
@@ -208,9 +200,7 @@ function createQuestion(challengeJsonObj, count) {
   formSection.innerHTML = ""
   formSection.appendChild(challengeTemplt)
   componentHandler.upgradeAllRegistered()
-  document.getElementsByTagName('body')[0].className = ""
+  document.getElementsByTagName("body")[0].className = ""
 }
 
-
-
-export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView,createChallengeHeaderTemplate,callCreateChallenge,callShareChallenge}
+export {createChallengeContainer, createChallengeHeader, createQuestion, createChallengeSideBarView, createChallengeHeaderTemplate, callCreateChallenge, callShareChallenge}
