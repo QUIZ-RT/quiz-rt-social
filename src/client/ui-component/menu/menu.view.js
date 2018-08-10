@@ -8,7 +8,7 @@ export const renderViewToContainer = (content, containerKey) => {
   const container = document.querySelector(containerKey)
   container.appendChild(content)
 }
-export const getMenuTemplate = (menuData) => {
+export const getMenuTemplate = (menuData, userInfo) => {
   let menuItemStr = ""
   if (menuData.length > 0) {
     menuData.forEach((item) => {
@@ -24,10 +24,10 @@ export const getMenuTemplate = (menuData) => {
       <div class="mdc-drawer__header-content">
       <div class="mdc-typography--headline6">
       <span class="mdl-list__item-primary-content">
-      <i class="material-icons  mdl-list__item-avatar">person</i>
+      <img class="material-icons userIcon" src="${userInfo.photoURL}" style="">
       </span>    
       </div>
-      <div id="loggedInEmail" class="mdc-typography--subtitle2" style="font-weight: bold"></div>
+      <div id="loggedInEmail" class="mdc-typography--subtitle2" style="font-weight: bold">${userInfo.email}</div>
       </div>
       </header>
       <nav class="mdc-drawer__content mdc-list-group">
