@@ -15,7 +15,7 @@ export const getHeaderTemplate = () => {
   <div class="mdc-top-app-bar__row">
     <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
     <a href="#" class="sidemenu material-icons mdc-top-app-bar__navigation-icon">menu</a>
-    <span id="appName" class="mdc-top-app-bar__title">Quizzapp</span>
+    <span id="appName" class="mdc-top-app-bar__title">Quiz RT</span>
     </section>
     <section id="iconSection" class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">    
     <a href="#" class="material-icons logoutIcon" id="logout" >power_settings_new</a>
