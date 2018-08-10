@@ -42,9 +42,9 @@ export const getLeaderBoardTemplate = () => {
             <div class="mdc-notched-outline__idle"></div>
         </div> 
         <div class="rankingTable mdl-shadow--2dp mdl-color--customTheme display-row justify-content-center" >       
-            <div class="mdl-card__actions mdl-card--border">
-        <div class="rankingTable mdl-shadow--2dp mdl-color--customTheme display-row justify-content-center" >       
-        <div id="mdl-table" class="mdl-table display-flex justify-content-center">
+            
+        <div class="rankingTable mdl-table mdl-shadow--2dp mdl-color--customTheme display-flex display-row justify-content-center" >       
+       <!-- <div id="mdl-table" class="mdl-table display-flex justify-content-center">-->
                     <table id='mdl-table' class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead>
                             <tr class="mdl-color--grey-400">
@@ -57,9 +57,9 @@ export const getLeaderBoardTemplate = () => {
                         
                         </tbody>
                     </table>
-                </div>
+                    <!-- </div>-->
             </div>
-        </div>
+            <!-- </div>-->
     </div>
         </section>
         <footer class="mdc-dialog__footer">
