@@ -1,5 +1,5 @@
 # A node.js v8 box
-FROM node:8
+FROM node:8-alpine
  
 # Who(m) to blame if nothing works
 MAINTAINER sushilkumar4sep@gmail.com
