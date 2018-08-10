@@ -52,14 +52,19 @@ const addtopics = (topics) => {
       }).then(
         res => res.json()
       ).then(json => {
-        if(json.data!==null){
-          json.data.forEach(item => {
-            if(item!==null){
-              topics[''+item.id]= item;
-            }
-          });
-        }  
-        resolve(topics)
+        if(Array.isArray(json)){
+          if(json.data!==null){
+            json.data.forEach(item => {
+              if(item!==null){
+                topics[''+item.id]= item;
+              }
+            });
+          }
+          resolve(topics)
+        }else{
+          resolve(json.data || {})
+        }
+        
 
       }, error => {
         reject(error)

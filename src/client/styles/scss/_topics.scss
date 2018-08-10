@@ -52,3 +52,10 @@
         width: var(--mdc-grid-list-tile-width, 157px);
     }
   }
+
+  @media (max-height: 380px) {
+    .mdc-dialog__body{
+       max-height: 12em;
+       overflow: scroll;
+    }
+  }

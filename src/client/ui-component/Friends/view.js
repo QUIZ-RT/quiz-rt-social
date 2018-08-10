@@ -111,9 +111,15 @@ const createFriendHeaderWithSearchBox = (headerName) => {
   return friendHeader
 }
 
-const createFriendMainContentContainer = () => {
-  const mainContent = htmlToTemplate(`<div class="mdl-layout__content demo-list-action mdl-grid">
+const createFriendSuperContentContainer = () => {
+  const superContent = htmlToTemplate(`<div class="mdl-layout__content demo-list-action ">
+   
     </div>`)
+  return superContent
+}
+
+const createFriendMainContentContainer = () => {
+  const mainContent = htmlToTemplate(`<div class="mdl-grid"> </div>`)
   return mainContent
 }
 
@@ -172,11 +178,17 @@ const showProgressBar = () => {
 }
 
 const createchatSectionContainer = () => {
-  const chatSectionContainer = htmlToTemplate(`<div class="chatSection" style="width:50%;">
+  const chatSectionContainer = htmlToTemplate(`<div class="chatSection" style="width:100%;">
           </div>`)
   return chatSectionContainer
 }
 
+const createCellContainer = () => {
+  const createCell = htmlToTemplate(`<div class = "mdl-cell mdl-cell--4-col"></div>`)
+  return createCell
+}
+
+              
 export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
@@ -200,8 +212,9 @@ export const showSearchPageWithResult = (users, showProgress) => {
       usersContainer.appendChild(createSearchUserItem(user))
     })
   }
-
-  friendComponent.appendChild(mainContent)
+  const superContainer =  createFriendSuperContentContainer();
+  superContainer.appendChild(mainContent)
+  friendComponent.appendChild(superContainer)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
   mainContainer.appendChild(createSnackBar())
@@ -234,14 +247,19 @@ export const showFriendList = (users, showProgress) => {
   }
   else {
     const usersContainer = createUserListContainer()
-    usersContainer.style.width = "50%"
-    mainContent.appendChild(usersContainer)
+    const cell1 = createCellContainer()
+    cell1.appendChild(usersContainer)
+    mainContent.appendChild(cell1)
 
     users.forEach((user) => {
       usersContainer.appendChild(createFriendItem(user))
     })
-    mainContent.appendChild(createchatSectionContainer())
-    friendComponent.appendChild(mainContent)
+    const cell2 = createCellContainer()
+    cell2.appendChild(createchatSectionContainer())
+    mainContent.appendChild(cell2)
+    const superContainer =  createFriendSuperContentContainer();
+    superContainer.appendChild(mainContent)
+    friendComponent.appendChild(superContainer)
     mainContainer.innerHTML = ""
     mainContainer.appendChild(friendComponent)
     mainContainer.appendChild(createSnackBar())
@@ -281,7 +299,9 @@ export const showPendingFriendRequests = (users, showProgress) => {
     })
   }
 
-  friendComponent.appendChild(mainContent)
+  const superContainer =  createFriendSuperContentContainer();
+  superContainer.appendChild(mainContent)
+  friendComponent.appendChild(superContainer)
   mainContainer.innerHTML = ""
   mainContainer.appendChild(friendComponent)
   mainContainer.appendChild(createSnackBar())
