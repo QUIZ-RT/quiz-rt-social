@@ -12,15 +12,15 @@ export const getTopics = () => {
       res => res.json()
     ).then(json => {
       console.log(json)
-      if (json.data !== null) {
+      /*if (json.data !== null) {
         json.data.forEach(item => {
           console.log(item)
           if (item !== null) {
             topics["" + item.id] = item
           }
         })
-      }
-      resolve(topics)
+      }*/
+      resolve(json)
     }, error => {
       reject(error)
     })
