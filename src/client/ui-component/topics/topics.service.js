@@ -54,7 +54,6 @@ const addtopics = (topics) => {
       ).then(json => {
         if(json.data!==null){
           json.data.forEach(item => {
-            console.log(item)
             if(item!==null){
               topics[''+item.id]= item;
             }

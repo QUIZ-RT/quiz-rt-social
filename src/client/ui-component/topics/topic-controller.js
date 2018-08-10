@@ -30,11 +30,9 @@ export const createTopics = () => {
                 });
                 addtopics(newObj).then(
                   res => {
-                    console.log("res", res)
                     Store.dispatch({ "type": "ADD_TOPIC", "payload": newObj })
                   },
                   err => {
-                    console.log(err)
                     Store.dispatch({ "type": "ADD_TOPIC", "payload": result })
                   })
               }else{
@@ -80,6 +78,7 @@ const loadTopic = (state) => {
 }
 
 const render = (topics) => {
+  document.querySelector('#quiz-maincontent').innerHTML = ""
   const html = `
   <div>
     <input type="text" id="myInput" placeholder="Search for topics.." title="Type in a topic">
