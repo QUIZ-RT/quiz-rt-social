@@ -47,8 +47,14 @@
   color: #f0f0f1;
   i{
     font-size: 2em;
-    margin-top: -8px;
-  
+    /* margin-top: 11px; */
+    position: relative;
+    top: 3px;
+  }
+  label{
+    font-size: 1em;
+    position: relative;
+    top: -4px;
   }
 }
 #signin:hover{
