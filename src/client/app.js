@@ -24,7 +24,7 @@ import "./ui-component/Friends/controller"
 import "./ui-component/Friends/reducer"
 import "./ui-component/Friends/service"
 import "./ui-component/Friends/view"
-import { app } from "firebase";
+import {app} from "firebase"
 var Material = require("exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js")
 
 createLoader()
@@ -41,8 +41,7 @@ $("body").on("click", "#create", createNextQuestion)
 $("body").on("click", "#prevQuestion", goToPrevQuestion)
 $("body").on("click", "#nextQuestion", createNextQuestion)
 $("body").on("click", "#save", saveChallengeDetails)
-$("body").on("click", "#createChallenge", callCreateChallenge);
-
+$("body").on("click", "#createChallenge", callCreateChallenge)
 
 module.exports = app
 

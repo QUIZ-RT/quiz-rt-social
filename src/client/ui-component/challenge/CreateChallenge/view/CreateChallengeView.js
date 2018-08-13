@@ -5,8 +5,6 @@ import {showLoader} from "../../../loader/loader.controller"
 const Material = require("exports-loader?componentHandler&MaterialRipple!material-design-lite/material.js")
 
 function createChallengeHeaderPanel() {
-  
-
   const challenegSideBarTemp = `<div id="challengePanel">
   <span class="mdc-typography--headline6" id="challenegeLabel">Challenges</span>
   </div>`
@@ -14,14 +12,13 @@ function createChallengeHeaderPanel() {
   const challengeSideBarTemplate = TemplateGenerator.createAllChildHTMLElement(challenegSideBarTemp)
   const container = document.querySelector("#quiz-maincontent")
   container.appendChild(challengeSideBarTemplate)
- 
+
   componentHandler.upgradeAllRegistered()
   document.getElementsByTagName("body")[0].className = ""
 }
 
-function callCreateChallenge(){
-  
-  Store.dispatch({type:"CurrentViewUpdate",dataItem: {Name: "createChallenge"}});
+function callCreateChallenge() {
+  Store.dispatch({type: "CurrentViewUpdate", dataItem: {Name: "createChallenge"}})
 }
 
 function createChallengeContainer() {
@@ -39,12 +36,9 @@ function createChallengeContainer() {
 function renderCreateChallengeComponent() {
   showLoader()
   getTopics()
-  
 }
 
-
 function createChallengeHeaderTemplate(topicsArray) {
- 
   let topics = ""
   for (let index = 0; index < topicsArray.length; index += 1) {
     if (topicsArray[index] != null) {
@@ -132,7 +126,6 @@ function createQuestion(challengeJsonObj, count) {
   if (count > 1 && count < 7) {
     questionTemplate = questionTemplate.concat(`
          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="prevQuestion">Previous</button>`)
-         
   }
   if (count < 7) {
     questionTemplate = questionTemplate.concat(`             
@@ -164,6 +157,4 @@ function createQuestion(challengeJsonObj, count) {
   document.getElementsByTagName("body")[0].className = ""
 }
 
-
-
-export {createChallengeContainer, renderCreateChallengeComponent, createQuestion, createChallengeHeaderPanel,createChallengeHeaderTemplate,callCreateChallenge}
+export {createChallengeContainer, renderCreateChallengeComponent, createQuestion, createChallengeHeaderPanel, createChallengeHeaderTemplate, callCreateChallenge}

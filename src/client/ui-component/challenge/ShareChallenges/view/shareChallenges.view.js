@@ -68,7 +68,7 @@ export const getShareChallengeModalTemplate = () => {
     </section> 
     <footer class="mdc-dialog__footer">
     <button type="button" class="mdc-button mdc-button--raised close-btn  mdc-dialog__footer__button mdc-dialog__footer__button--cancel">Close</button>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="submitSharedChallenge">Submit</button>
+    <button type="button" class="mdc-button mdc-button--raised mdc-dialog__footer__button" id="submitSharedChallenge">Submit</button>
     </footer>     
   </div>
   <div class="mdc-dialog__backdrop"></div>
