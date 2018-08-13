@@ -133,24 +133,34 @@ app.get("/api/friends/search", (req, res) => {
 
 
 app.post("/api/friends/accept", (req, res) => {
-  const reqDetails = getFriendRequest(req.body.req_id)
-  reqDetails.then(
-    result => {
-      const val = result.val()
-      result.forEach(function(data) {
-        const tempVal = val[data.key]
-        const ret = acceptFriendReq(data.key, tempVal['sender'], tempVal['receiver'])
-        ret.then(
-          result => {
-            res.sendStatus(200)
-          },
-          error => {
-            res.sendStatus(500)            
-          })
+    //console.log(req.body.req_id)
+    //console.log("Friend request accpeted")
+    const reqDetails = getFriendRequest(req.body.req_id)
+    reqDetails.then(
+        result => {
+            //console.log(result.val())
+            const val = result.val()
+            result.forEach(function(data) {
+                const tempVal = val[data.key]
+                //console.log("*********")
+                //console.log(tempVal)
+                //console.log("*********")
+                const ret = acceptFriendReq(data.key, tempVal['sender'], tempVal['receiver'])
+                ret.then(
+                    result => {
+                        res.sendStatus(200)
+                    },
+                    error => {
+                        //console.log("/api/friends/accept 22")
+                        //console.log(error)
+                        res.sendStatus(200)            
+                    })
             })
         },
         error => {
-            res.sendStatus(500)
+            //console.log("/api/friends/accept")
+            //console.log(error)
+            res.sendStatus(200)
         });
     
 });

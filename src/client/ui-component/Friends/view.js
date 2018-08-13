@@ -39,7 +39,7 @@ const createFriendsSideNav = () => {
   const friendSideNav = htmlToTemplate(`<div class="mdc-tab-bar" role="tablist">
   <div class="mdc-tab-scroller">
     <div class="mdc-tab-scroller__scroll-area">
-      <div class="mdc-tab-scroller__scroll-content">
+      <div class="mdc-tab-scroller__scroll-content frnd_header_menu">
         <button class="mdc-tab" role="tab" aria-selected="true" tabindex="0" id="add_friend">
           <span class="mdc-tab__content">
             <span class="mdc-tab__text-label">Add a Friend</span>
@@ -74,46 +74,40 @@ const createFriendsSideNav = () => {
   return friendSideNav
 }
 
+// const createFriendHeaderWithOutSearchBox = (headerName) => {
+//   const friendHeader = htmlToTemplate(`<div class="mdl-layout__content mdl-grid">
+//     <header class="mdl-layout__header frnd_header_bg">
+//         <div class="mdl-layout__header-row">
+//           <div class="mdl-layout-spacer">
+//             <span class="mdl-layout-title">${headerName}</span>
+//           </div>
+//         </div>
+//     </header>
+//   </div>`)
+//   return friendHeader
+// }
+
 const createFriendHeaderWithOutSearchBox = (headerName) => {
-  const friendHeader = htmlToTemplate(`<div class="mdl-layout__content mdl-grid">
-    <header class="mdl-layout__header frnd_header_bg">
-        <div class="mdl-layout__header-row">
-          <div class="mdl-layout-spacer">
-            <span class="mdl-layout-title">${headerName}</span>
-          </div>
-        </div>
-    </header>
+  const friendHeader = htmlToTemplate(`<div class="subHeeader">
+    <p>${headerName}</p>
   </div>`)
   return friendHeader
 }
 
-const createFriendHeaderWithSearchBox = (headerName) => {
-  const friendHeader = htmlToTemplate(`<div class="mdl-layout__content mdl-grid">
-    <header class="mdl-layout__header frnd_header_bg">
-        <div class="mdl-layout__header-row">
-          <div class="mdl-layout-spacer">
-            <span class="mdl-layout-title">${headerName}</span>
-          </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-            mdl-textfield--floating-label mdl-textfield--align-right">
-              <label class="mdl-button mdl-js-button mdl-button--icon"
-              for="fixed-header-drawer-exp">
-                  <i class="material-icons">search</i>
-              </label>
-              <div class="mdl-textfield__expandable-holder">
-                <input class="mdl-textfield__input" type="text" name="sample"
-                id="fixed-header-drawer-exp">
+const createFriendHeaderWithSearchBox = () => {
+  const friendHeader = htmlToTemplate(`<div class="subHeeader">
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="fixed-header-drawer-exp">
+                <label class="mdl-textfield__label" for="sample3">Search friends..</label>
               </div>
-          </div>
-        </div>
-    </header>
-  </div>`)
+            </form>
+        </div>`)
   return friendHeader
 }
 
 const createFriendSuperContentContainer = () => {
-  const superContent = htmlToTemplate(`<div class="mdl-layout__content demo-list-action ">
-   
+  const superContent = htmlToTemplate(`<div class="mdl-layout__content demo-list-action "> 
     </div>`)
   return superContent
 }
@@ -123,11 +117,23 @@ const createFriendMainContentContainer = () => {
   return mainContent
 }
 
+// const createFriendMainContentContainer = () => {
+//   const mainContent = htmlToTemplate(`<div class="mdl-layout__content demo-list-action mdl-grid">
+//     </div>`)
+//   return mainContent
+// }
+
 const createUserListContainer = () => {
-  const usersContainer = htmlToTemplate(`<div class="demo-list-action mdl-list" style="width:100%;">
+  const usersContainer = htmlToTemplate(`<div class="mdl-card mdl-shadow--2dp userListConatiner">
           </div>`)
   return usersContainer
 }
+
+// const createUserListContainer = () => {
+//   const usersContainer = htmlToTemplate(`<div class="demo-list-action mdl-list" style="width:100%;">
+//           </div>`)
+//   return usersContainer
+// }
 
 const createSearchUserItem = (user) => {
   const item = htmlToTemplate(`<div class="mdl-list__item">
@@ -192,7 +198,7 @@ const createCellContainer = () => {
 export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
-  friendComponent.appendChild(createFriendHeaderWithSearchBox("Search and make friends"))
+  friendComponent.appendChild(createFriendHeaderWithSearchBox())
   const mainContent = createFriendMainContentContainer()
   // const usersContainer = createUserListContainer()
   // mainContent.appendChild(usersContainer)
@@ -204,7 +210,7 @@ export const showSearchPageWithResult = (users, showProgress) => {
   if (showProgress) {
     mainContent.appendChild(showProgressBar())
   }
-  else {
+  else if (users.length > 0) {
     const usersContainer = createUserListContainer()
     mainContent.appendChild(usersContainer)
 
@@ -290,7 +296,7 @@ export const showPendingFriendRequests = (users, showProgress) => {
   if (showProgress) {
     mainContent.appendChild(showProgressBar())
   }
-  else {
+  else if (users.length > 0){
     const usersContainer = createUserListContainer()
     mainContent.appendChild(usersContainer)
 
