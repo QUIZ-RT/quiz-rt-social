@@ -175,14 +175,14 @@ app.post("/api/friends/accept", (req, res) => {
                     error => {
                         //console.log("/api/friends/accept 22")
                         //console.log(error)
-                        res.sendStatus(500)            
+                        res.sendStatus(200)            
                     })
             })
         },
         error => {
             //console.log("/api/friends/accept")
             //console.log(error)
-            res.sendStatus(500)
+            res.sendStatus(200)
         });
     
 });
