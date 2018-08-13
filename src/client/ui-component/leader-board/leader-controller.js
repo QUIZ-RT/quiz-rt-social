@@ -4,6 +4,7 @@ import { MDCSelect } from "@material/select/index"
 import { MDCDialog } from "@material/dialog"
 import { serviceCall } from "./service-methods"
 import { showLoader, hideLoader } from "../loader/loader.controller"
+import moment from "moment"
 
 export let createLeaderBoardForChallenges = () => {
   const leaderBoardContent = getLeaderBoardTemplate()
@@ -14,20 +15,26 @@ let getFilteredDetails = (arry, days) => {
 
   let newArray = new Array()
   const startValue = new Date()
-  let endValue;
-  
-  endValue = days == 1?  new Date():new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))  
+  const endValue = days == 1 ? new Date() : new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
 
-  newArray = arry.filter(item => {
-    const markerDate = new Date(item.heldOn
-    )
-    return (markerDate.getTime() <= startValue.getTime() && markerDate.getTime() >= endValue.getTime())
-  })
+  if (days == 1) {
+    newArray = arry.filter(item => {
+      const markerDate = new Date(item.heldOn)
+      return (moment(markerDate).isSameOrAfter(new Date(), 'day'))
+    })
+  }
+  else {
+    newArray = arry.filter(item => {
+      const markerDate = new Date(item.heldOn
+      )
+      return (markerDate.getTime() < startValue.getTime() && markerDate.getTime() > endValue.getTime())
+    })
+  }
 
   let filteredArray = new Array()
   let tempArray = new Array()
   let score = 0
-  
+
   // merging all arrays
   for (const item of newArray) {
     tempArray = tempArray.concat(item.players)
@@ -94,7 +101,7 @@ export let displayLeaderBoard = (type, id) => {
 
   serviceCall(`https://game-engine-beta.herokuapp.com/api/${type}/${id}`)
     .then(function (data) {
-      var array = new Array();      
+      var array = new Array();
       for (let item of Object.values(data)) {
         if (item)
           array.push(item);
@@ -117,10 +124,10 @@ export let displayLeaderBoard = (type, id) => {
         select2.value = "1"
         dialog1.close()
         document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
-        document.getElementById("topic-mdc-dialog").classList.remove("mdc-dialog--animating");        
+        document.getElementById("topic-mdc-dialog").classList.remove("mdc-dialog--animating");
       })
       const select = new MDCSelect(document.querySelector(".mdc-select"))
-      select.listen("change", () => {        
+      select.listen("change", () => {
         showLoader();
         let filteredArray2 = getFilteredDetails(array, select.value)
         renderRankings(filteredArray2);
