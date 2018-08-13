@@ -14,7 +14,9 @@ let getFilteredDetails = (arry, days) => {
 
   let newArray = new Array()
   const startValue = new Date()
-  const endValue = new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
+  let endValue;
+  
+  endValue = days == 1?  new Date():new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))  
 
   newArray = arry.filter(item => {
     const markerDate = new Date(item.heldOn
@@ -73,7 +75,7 @@ let renderRankings = filteredArray => {
   let html = "";
   for (const item of filteredArray) {
     rank++
-    html = html + `<tr id="${item.playerName}">
+    html = html + `<tr id="${item.playerName.replace(" ", "").toLowerCase()}">
                      <td class="mdl-data-table__cell--non-numeric material">${rank}</td>
                      <td class="mdl-data-table__cell--non-numeric material">${item.playerName}</td>
                      <td>${item.score}</td>
@@ -97,7 +99,6 @@ export let displayLeaderBoard = (type, id) => {
         if (item)
           array.push(item);
       }
-
       let filteredArray1 = getFilteredDetails(array, 1)
       renderRankings(filteredArray1);
 
@@ -116,10 +117,10 @@ export let displayLeaderBoard = (type, id) => {
         select2.value = "1"
         dialog1.close()
         document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating");
+        document.getElementById("topic-mdc-dialog").classList.remove("mdc-dialog--animating");        
       })
       const select = new MDCSelect(document.querySelector(".mdc-select"))
-      select.listen("change", () => {
-        debugger;
+      select.listen("change", () => {        
         showLoader();
         let filteredArray2 = getFilteredDetails(array, select.value)
         renderRankings(filteredArray2);
