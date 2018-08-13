@@ -41,10 +41,8 @@ $("body").on("click", "#create", createNextQuestion)
 $("body").on("click", "#prevQuestion", goToPrevQuestion)
 $("body").on("click", "#nextQuestion", createNextQuestion)
 $("body").on("click", "#save", saveChallengeDetails)
-$("#quiz-maincontent").on("click", "#createChallenge", callCreateChallenge)
-$("#quiz-maincontent").on("click", "#shareChallenge", callShareChallenge)
-// createShareChallengesSection()
-// ShareChallengesWithSelectedFriendsSection()
+$("body").on("click", "#createChallenge", callCreateChallenge);
+
 
 module.exports = app
 

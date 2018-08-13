@@ -5,7 +5,6 @@
 @import '@material/top-app-bar/mdc-top-app-bar';
 @import '@material/drawer/mdc-drawer';
 @import '@material/list/mdc-list';
-@import '@material/button/mdc-button';
 @import '@material/elevation/mdc-elevation';
 @import '@material/form-field/mdc-form-field';
 @import '@material/card/mdc-card';
@@ -15,13 +14,14 @@
 @import "~@material/textfield/mdc-text-field";
 @import "~@material/list/mdc-list";
 @import "~@material/floating-label/mdc-floating-label";
+@import '@material/button/mdc-button';
 
 
 @import "@material/tab-bar/mdc-tab-bar";
 @import "@material/tab-scroller/mdc-tab-scroller";
 @import "@material/tab-indicator/mdc-tab-indicator";
 @import "@material/tab/mdc-tab";
-
+@import "@material/fab/mdc-fab";
 
 @font-face {
     font-family: 'Material Icons';

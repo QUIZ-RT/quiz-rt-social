@@ -1,10 +1,8 @@
 import {MDCDialog} from "@material/dialog"
-import {MDCSelect} from "@material/select/index"
 import {renderViewToContainer, getChallengeModalbox, getChallengeModalBodyContent} from "./challenge-modal.view"
 import {Store} from "../../boot/Store"
-import {getFilteredDetails} from "../leader-board/leader-controller"
-import {serviceCall} from "../leader-board/service-methods"
-import {showLoader, hideLoader} from "../loader/loader.controller"
+import {displayLeaderBoard} from "../leader-board/leader-controller"
+import {showLoader} from "../loader/loader.controller"
 
 export const createChallengemodal = () => {
   const challengeModaltemplate = getChallengeModalbox()
@@ -46,54 +44,7 @@ const openChallengeModal = (state, id, target) => {
     showLoader()
     const btnData = event.target.id.split("-")
     const challengeId = btnData[1]
-    sessionStorage.setItem("challengeId", challengeId)
-    serviceCall("/api/getChallengesByTopic")
-      .then(function(data) {
-        const array = new Array()
-        for (const item of data) {
-          if (item) {
-            array.push(item)
-          }
-        }
-        const filteredArray = array.filter(item => {
-          return (item.challengeId == challengeId && item.score != "")
-        })
-        getFilteredDetails(filteredArray, 1)
-        const dialogElement1 = document.querySelector("#challenge-mdc-dialog")
-        const dialog1 = new MDCDialog(dialogElement1)
-        dialog1.close()
-
-        const dialogElement2 = document.querySelector("#leaderBrd-mdc-dialog")
-        const dialog2 = new MDCDialog(dialogElement2)
-        dialog2.show()
-        hideLoader()
-
-        dialog2.listen("MDCDialog:cancel", function() {
-          document.getElementById("leaderBody").innerHTML = ""
-          const select2 = new MDCSelect(document.querySelector(".mdc-select"))
-          select2.value = "1"
-          sessionStorage.removeItem("challengeId")
-          dialog1.close()
-          document.getElementById("challenge-mdc-dialog").classList.remove("mdc-dialog--animating")
-        })
-        const select = new MDCSelect(document.querySelector(".mdc-select"))
-        select.listen("change", (event) => {
-          const challengeId = sessionStorage.getItem("challengeId")
-          serviceCall("/api/getChallengesByTopic")
-            .then(function(data) {
-              const array = new Array()
-              for (const item of data) {
-                if (item) {
-                  array.push(item)
-                }
-              }
-              const filteredArray = array.filter(item => {
-                return (item.challengeId == challengeId)
-              })
-              getFilteredDetails(filteredArray, select.value)
-            })
-        })
-      })
+    displayLeaderBoard("challenge",challengeId);
   })
   // ////////////////////////////////////////////////////////////////////////////////////
 

@@ -11,12 +11,17 @@ export const renderViewToContainer = (content, containerKey) => {
 }
 export const getShareChallengeTemplate = (dataList) => {
   const scContainerStr = `<div class="shareChallenges">        
-    </div>`
+    </div>
+    <span>
+    <button class="mdc-fab app-fab--absolute" aria-label="Favorite" id="createChallenge">
+  <span class="mdc-fab__icon material-icons" id ="createChallIcon">add</span>
+</button>
+</span>`
 
   const scTable = `<table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp" id="shareChallengesTable">
                         <thead>
                             <tr>
-                            <th class="mdl-data-table__cell--non-numeric">Challenge Id</th>
+                            <th class="mdl-data-table__cell--non-numeric tableChallengeIdCol">Challenge Id</th>
                             <th>Challenge Name</th>
                             <th>Option</th>
                             <th>Play</th>
@@ -32,10 +37,10 @@ export const getShareChallengeTemplate = (dataList) => {
     shareChallengesContentStr +=
   `<tbody>
     <tr>
-      <td class="mdl-data-table__cell--non-numeric">${item.challengeId}</td>
+      <td class="mdl-data-table__cell--non-numeric tableChallengeIdCol">${item.challengeId}</td>
       <td>${item.challengeName}</td>
       <td><button class="shareChalBtn mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="shareChallengeButton_${item.challengeId}" data-toggle="modal" data-target="#shareFriendsModel">Share</button>
-      <td><button class="sharePlayBtn mdl-button mdl-js-button mdl-button--raised mdl-button--colored playChallengeBtnCls" id ="playChallengeComp-${item.challengeId}-play">Play Challenge</button>
+      <td><button class="sharePlayBtn mdl-button mdl-js-button mdl-button--raised mdl-button--colored playChallengeBtnCls" id ="playChallengeComp-${item.challengeId}-play">Play</button>
       </td>
     </tr>   
   </tbody>
@@ -79,7 +84,7 @@ export const getshareChallengeModalContent = (friends) => {
   let friendsUserNamesContentStr = ""
   let count = 0
   friends.forEach((friend) => {
-    friendsUserNamesContentStr += `<li class="mdl-list__item" id="friendsLi">
+    friendsUserNamesContentStr += `<li class="mdl-list__item friendsLi" id="friendsLi_${friend.userID}">
     <span class="mdl-list__item-secondary-action">
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-${++count}">
             <input type="checkbox" id="checkbox-${count}" class="mdl-checkbox__input" >

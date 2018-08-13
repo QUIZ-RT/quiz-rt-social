@@ -1,6 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser"
-import {addChallengeToDB, getUserDetail, updateUserTransaction, getChallengeDetails, getAllChallengesFromDB, getUserSpecificChallengesFromDB, getUserFromUserMasterDB} from "./FirebaseDb/challengesDb"
+import {addChallengeToDB, getUserDetail, updateUserTransaction, getChallengeDetails, getAllChallengesFromDB, getParticularChallengeFromDB, getUserSpecificChallengesFromDB, getUserFromUserMasterDB} from "./FirebaseDb/challengesDb"
 import {searchMasterUser, getUserByEmailId, sendFriendRequest, getPendingFriendRequest, getFriendRequest, acceptFriendReq, rejectFriendReq, getListOfFriend} from "./FirebaseDb/Friends"
 import {Topics} from "./topics/topics"
 import {Chat} from "./chat"
@@ -32,10 +32,23 @@ app.post("/api/challenge", (req, res) => {
   )
 })
 
-//expose API to Question Generator
+//  expose API to Question Generator and Game Engine
 app.use("/api/allChallenges", (req, res) => {
   const data = getAllChallengesFromDB(req, res)
   data.then(
+    result => {
+      res.send(result)
+    },
+    error => {
+      res.send(error)
+    }
+  )
+})
+
+//  send given challenge to Game Engine
+app.get("/api/getParticularChallenge", (req, res) => {
+  const chalPromise = getParticularChallengeFromDB(req.query.challengeId)
+  chalPromise.then(
     result => {
       res.send(result)
     },
