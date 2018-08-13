@@ -49,12 +49,13 @@
     font-size: 2em;
     /* margin-top: 11px; */
     position: relative;
-    top: 3px;
+    top: -3px;
   }
   #signinLbl{
     font-size: 1em;
     position: relative;
-    top: -4px;
+    top: 2px;
+    left: 3px;
   }
 }
 #signin:hover{
@@ -176,11 +177,19 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     border-bottom: 1px solid #cacaca;
   }
   .mdc-dialog__body .mdc-button{
-    min-width: 20em;
+    min-width: 18em;
+    width: 18em;
+    margin-left: calc(50% - 9em);
   }
   .mdc-dialog__footer{
     background: #eaeaea;
     border-top: 1px solid #cacaca;
+  }
+}
+
+#topic-mdc-dialog-description{
+  .mdc-button{
+
   }
 }
 
@@ -202,6 +211,21 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
     }
   }
 }
+
+
+.createChallContent {
+  button.mdl-button--raised.mdl-button--colored{
+    background-color:#442e63 !important;
+
+  }
+}
+#shareChall-mdc-dialog{
+  .mdl-button--raised.mdl-button--colored{
+      background-color:#442e63 !important;
+
+    }
+}
+
 
 #quiz-header{
   .mdc-top-app-bar{
@@ -339,7 +363,7 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
 }
 
 #createChallenge{
-    background-color: white;
+    background-color: #442e63;
     top: -2.5 rem;
 }
 #challenegeLabel{
@@ -350,7 +374,7 @@ aside#challenge-mdc-dialog, aside#topic-mdc-dialog{
   text-align: center;
 }
 #createChallIcon{
-  color: #442e63;
+  color: white;
 }
 
 
