@@ -9,7 +9,21 @@ export const serviceCall = (url) => {
     ).then(function(response) {    
       return response;
     }).catch(function(error) {
-      console.log("Request failure: ", error); 
-      hideLoader();     
+     // console.log("Request failure: ", error);
+      let sample = {
+        sample: {
+          heldOn: `${new Date}`,
+          id: 11,
+          players: [
+            {
+              name: "No Record found",
+              score: 0
+            }
+          ],
+          topicId: "",
+          type: "game"
+        }
+      }
+      return JSON.parse(JSON.stringify(sample));
     })
 }

@@ -12,7 +12,7 @@ export let createLeaderBoardForChallenges = () => {
 }
 
 let getFilteredDetails = (arry, days) => {
-
+  debugger;
   let newArray = new Array()
   const startValue = new Date()
   const endValue = days == 1 ? new Date() : new Date(startValue.getTime() - (days * 24 * 60 * 60 * 1000))
