@@ -9,7 +9,7 @@
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot --host 0.0.0.0 --watch-poll",
     "server": "nodemon ./src/server/index.js --host 0.0.0.0",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "mocha test ./src/**/*.test.js src/**/**/*.test.js src/**/**/**/*.test.js --require babel-register --reporter spec || exit 0"
+    "test": "mocha ./src/client/test/*.test.js ./src/client/test/**/*.test.js --require babel-register --reporter spec || exit 0"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",
+    "node-fetch": "^2.2.0",
     "node-pre-gyp": "^0.10.3",
     "popper.js": "^1.14.3",
     "socket.io": "^2.1.1"

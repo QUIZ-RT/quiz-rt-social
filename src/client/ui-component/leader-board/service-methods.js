@@ -1,4 +1,5 @@
 import { hideLoader } from "../loader/loader.controller"
+const fetch = require("node-fetch")
 
 export const serviceCall = (url) => {  
     return fetch(url, {

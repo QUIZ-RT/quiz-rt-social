@@ -1,7 +1,7 @@
 var request = require("supertest")
 const app = require("../../server/server")
 
-describe.only("Testing Server API calls", function() {
+describe("Testing Server API calls", function() {
   it("Fetching all challenges", function(done) {
     request(app)
       .get("/api/allChallenges")
