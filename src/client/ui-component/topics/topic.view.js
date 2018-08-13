@@ -9,7 +9,7 @@ export const topicView = (topicObj, topicId) => {
   if (topicObj.users !== undefined) {
     userNum = topicObj.users.length
   }
-  let image = "https://vignette.wikia.nocookie.net/simpsons/images/6/60/No_Image_Available.png"
+  let image = "src/client/assets/No_Image_Available.png";
 
   if (topicObj.topicUrl !== "") {
     image = topicObj.topicUrl
