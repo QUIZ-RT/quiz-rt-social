@@ -23,7 +23,7 @@ export const getHorizontalScrollableContainerTopic = (dataList, idkey) => {
     }
     hsContentStr += `<div id="${idkey}_${topickey}" class="mdc-card demo-card demo-card--photo">
     <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-        <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${item.topicUrl}');">
+        <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('${item.topicUrl}');height:90%;">
         </div>
     </a>  
     <a class="mdc-card__primary-action demo-card__primary-action" href="#">
@@ -63,7 +63,7 @@ export const getHorizontalScrollableContainerChallenges = (dataList, idkey) => {
   dataList.forEach((item) => {
     hsContentStr += `<div id="${idkey}_${item.challengeId}" class="mdc-card demo-card demo-card--photo">
       <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-          <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('src/client/assets/challenges001.png');">
+          <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('src/client/assets/challenges001.png');height:90%;">
           </div>
       </a>  
       <a class="mdc-card__primary-action demo-card__primary-action" href="#">

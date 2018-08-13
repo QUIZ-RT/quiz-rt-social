@@ -75,8 +75,9 @@ function createChallengeHeaderTemplate(topicsArray) {
                <input class="mdl-textfield__input" type="text" id="challengeName" placeholder="Challenge Name"/>
                <span id ="ChallengeNameErr" style="display:none" class="challFormValidator">Challenge Name is mandatory field</span>
              </div>
-             <div class="mdl-card__actions">
-                   <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="create">Create</button>
+             <div>
+             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="create">Create</button>      
+             
                </div>
                </form>
                </div>
@@ -126,16 +127,16 @@ function createQuestion(challengeJsonObj, count) {
              <span id ="answerErr" style="display:none" class="challFormValidator">Answer is mandatory field</span>
             </div>`
   if (count < 7) {
-    questionTemplate = questionTemplate.concat(" <div class=\"mdl-card__actions mdl-card--border\">")
+    questionTemplate = questionTemplate.concat(" <div class=\"mdl-card__action\">")
   }
   if (count > 1 && count < 7) {
     questionTemplate = questionTemplate.concat(`
-         <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="prevQuestion">Previous</button>`)
+         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="prevQuestion">Previous</button>`)
+         
   }
   if (count < 7) {
     questionTemplate = questionTemplate.concat(`             
-        <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="nextQuestion">Next</button>
-
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="nextQuestion">Next</button>
                      </div>
                      </form>
                      </div>
@@ -145,9 +146,9 @@ function createQuestion(challengeJsonObj, count) {
   }
   if (count === 7) {
     questionTemplate = questionTemplate.concat(` 
-              <div class="mdl-card__actions mdl-card--border">
-                  <button type="button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="prevQuestion">Previous</button>
-                  <button type="submit" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="save">Submit</button>
+              <div class="mdl-card__actions">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="prevQuestion">Previous</button>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="save">Submit</button>
               </div>
           </form>
           </div>

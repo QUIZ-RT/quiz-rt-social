@@ -52,7 +52,7 @@ export const getToipcModalBodyContent = (state, id, emailId) => {
   const modalBodyContentStr = `  
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-6-tablet">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span--tablet">
         <div class="topicCardContainer">
             <div id="topic_${id}" class="mdc-card demo-card demo-card--photo">
               <a class="mdc-card__primary-action demo-card__primary-action" href="#">
@@ -62,7 +62,7 @@ export const getToipcModalBodyContent = (state, id, emailId) => {
             </div>   
         </div>
       </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-6-tablet">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4 mdc-layout-grid__cell--span-8-tablet">
           <button id="topic-${id}-play" class="mar-btm-10px mdc-button mdc-button--raised">Play Game</button>
           ${follow}
           <button id="topic-${id}-leader" class="mar-btm-10px mdc-button mdc-button--raised btnLeaderBoard">Leader Board</button>

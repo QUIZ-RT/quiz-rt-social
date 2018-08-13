@@ -12,7 +12,8 @@
     justify-content: center;
 }
 
-.topicCardContainer{
+.topicCardContainer, .challengeCardContainer{
     height: 10em;
     width: 10em;
+    margin-left: calc(50% - 5em);
 }
