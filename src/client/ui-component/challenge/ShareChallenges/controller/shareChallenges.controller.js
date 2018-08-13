@@ -38,7 +38,12 @@ export const createShareChallengesSection = (userId) => {
       })
     })
     renderViewToContainer(shareChallengesData, "#challengeSection")
-  })
+  },function (error) {
+    let myArray = [];
+    const shareChallengesData = getShareChallengeTemplate(myArray);
+    renderViewToContainer(shareChallengesData, "#challengeSection");
+    console.log("No Record from firebase api",error)
+  } )
 }
 
 export const fetchFriendsToShareChallenges = (friends, userId, curChallengeItem) => {
