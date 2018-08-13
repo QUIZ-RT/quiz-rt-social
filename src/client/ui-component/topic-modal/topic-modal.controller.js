@@ -42,12 +42,19 @@ const openTopicModal = (state, id, target, emailId) => {
   })
 
   /////////////////////////// Leader Board Related Code///////////////////////////////
-  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {    
+  document.querySelector(".btnLeaderBoard").addEventListener("click", function (event) {
     showLoader();
     const btnData = event.target.id.split("-")
-    const topicId = btnData[1]    
-    debugger;
-    displayLeaderBoard("games",topicId);
+    const topicId = btnData[1]
+    const state = Store.getState()
+    let topicData = ""
+    if (state.menuReducer.currentView === "dashboard") {
+      topicData = state.dashboardReducer.TopicList
+    }
+    else if (state.menuReducer.currentView === "topics") {
+      topicData = state.topicReducer.Topics
+    }    
+    displayLeaderBoard("games", topicData[topicId].topicText);
   })
   // ////////////////////////////////////////////////////////////////////////////////////
 
@@ -85,7 +92,7 @@ const topicModalbtnClick = (event) => {
   let userid = state.menuReducer.currentUserInfo.email
   switch (btnData[2]) {
     case "play":
-      const url = "https://game-engine-beta.herokuapp.com/?topicId="+topicData[topicId].topicText
+      const url = "https://game-engine-beta.herokuapp.com/?topicId=" + topicData[topicId].topicText
       window.open(url, '_blank');
       hideLoader()
       break
