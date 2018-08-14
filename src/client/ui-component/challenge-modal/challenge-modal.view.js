@@ -39,7 +39,7 @@ export const getChallengeModalBodyContent = (state, id) => {
           <div class="challengeCardContainer">
               <div id="challenge_${id}" class="mdc-card demo-card demo-card--photo">
                 <a class="mdc-card__primary-action demo-card__primary-action" href="#">
-                  <div class="mdc-card__media mdc-card__media--square demo-card__media" style="background-image: url('src/client/assets/challenges001.png');">
+                  <div class="mdc-card__media mdc-card__media--square demo-card__media chall-img">
                   </div>
                 </a>  
               </div>   
