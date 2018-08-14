@@ -43,8 +43,8 @@ const openChallengeModal = (state, id, target) => {
   document.querySelector(".btnLeaderBoard").addEventListener("click", function(event) {
     showLoader()
     const btnData = event.target.id.split("-")
-    const challengeId = btnData[1]      
-    displayLeaderBoard("challenge",challengeId);
+    const challengeId = btnData[1]
+    displayLeaderBoard("challenge", challengeId)
   })
   // ////////////////////////////////////////////////////////////////////////////////////
 

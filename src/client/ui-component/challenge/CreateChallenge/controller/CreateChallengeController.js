@@ -1,6 +1,6 @@
 import {createChallengeContainer, createQuestion, renderCreateChallengeComponent, createChallengeHeaderPanel} from "../view/CreateChallengeView"
-import {storeChallenge,updateUserTransaction} from "../service/CreateChallengeService"
-import {Store} from '../../../../boot/Store';
+import {storeChallenge, updateUserTransaction} from "../service/CreateChallengeService"
+import {Store} from "../../../../boot/Store"
 import {createShareChallengesSection, createShareChallengesModal} from "../../ShareChallenges/controller/shareChallenges.controller"
 import {getUserFromUserMaster} from "../../ShareChallenges/service/shareChallenges.service"
 
@@ -13,39 +13,39 @@ Store.subscribe(() => {
   if (currentState.menuReducer.currentView === "challenges") {
     document.querySelector("#quiz-maincontent").innerHTML = ""
 
-            createChallengeHeaderPanel()
-            createShareChallengesModal()
-            createChallengeContainer()
-          
-              count =0;
-              document.querySelector('#challengeSection').innerHTML = "";
-              const email = currentState.menuReducer.currentUserInfo.email;       
-              getUserFromUserMaster(email).then(function(currentUser) {
-                const userId = currentUser.userID
-                console.log("This is userid:" + userId)
-                createShareChallengesSection(userId)
-              })
-                      
-        }else if(currentState.menuReducer.currentView === 'createChallenge'){
-          document.querySelector('#quiz-maincontent').innerHTML = "";
-           createChallengeHeaderPanel()
-            createChallengeContainer()
-           
-            if(document.querySelector('#challengeSection')!=null){
-             document.querySelector('#challengeSection').innerHTML = "";
-            }
-             count =0;
-              renderCreateChallengeComponent();
-         }else{
-        }
-  
+    createChallengeHeaderPanel()
+    createShareChallengesModal()
+    createChallengeContainer()
+
+    count = 0
+    document.querySelector("#challengeSection").innerHTML = ""
+    const email = currentState.menuReducer.currentUserInfo.email
+    getUserFromUserMaster(email).then(function(currentUser) {
+      const userId = currentUser.userID
+      console.log("This is userid:" + userId)
+      createShareChallengesSection(userId)
+    })
+  }
+  else if (currentState.menuReducer.currentView === "createChallenge") {
+    document.querySelector("#quiz-maincontent").innerHTML = ""
+    createChallengeHeaderPanel()
+    createChallengeContainer()
+
+    if (document.querySelector("#challengeSection") != null) {
+      document.querySelector("#challengeSection").innerHTML = ""
+    }
+    count = 0
+    renderCreateChallengeComponent()
+  }
+  else {
+  }
+
   if (currentState.menuReducer.currentUserInfo) {
     userEmail = currentState.menuReducer.currentUserInfo.email
 
     console.log("userEmail is :", userEmail)
   }
 })
-
 
 function createNextQuestion(evnt) {
   evnt.preventDefault()

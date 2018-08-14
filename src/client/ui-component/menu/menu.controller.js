@@ -45,7 +45,7 @@ export const createMenu = () => {
   })
   renderViewToContainer(menuContent, "#quiz-header")
   // console.log("currentState = ", currentState.menuReducer.currentUserInfo.email)
-  //document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email
+  // document.getElementById("loggedInEmail").innerText = currentState.menuReducer.currentUserInfo.email
   const drawerEl = document.querySelector(".mdc-drawer")
   drawer = new MDCTemporaryDrawer(drawerEl)
   document.querySelector(".sidemenu").addEventListener("click", function() {

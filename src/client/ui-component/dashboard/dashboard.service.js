@@ -12,19 +12,20 @@ export const getTopics = () => {
       res => res.json()
     ).then(json => {
       console.log(json)
-      if(Array.isArray(json)){
-      if (json.data !== null) {
-        json.data.forEach(item => {
-          console.log(item)
-          if (item !== null) {
-            topics["" + item.id] = item
-          }
-        })
+      if (Array.isArray(json)) {
+        if (json.data !== null) {
+          json.data.forEach(item => {
+            console.log(item)
+            if (item !== null) {
+              topics["" + item.id] = item
+            }
+          })
+        }
+        resolve(topics)
       }
-      resolve(topics)
-    }else{
-      resolve(json.data || {})
-    }
+      else {
+        resolve(json.data || {})
+      }
     }, error => {
       reject(error)
     })

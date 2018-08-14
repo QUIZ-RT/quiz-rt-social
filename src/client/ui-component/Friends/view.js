@@ -113,7 +113,7 @@ const createFriendSuperContentContainer = () => {
 }
 
 const createFriendMainContentContainer = () => {
-  const mainContent = htmlToTemplate(`<div class="mdl-grid"> </div>`)
+  const mainContent = htmlToTemplate("<div class=\"mdl-grid\"> </div>")
   return mainContent
 }
 
@@ -190,11 +190,10 @@ const createchatSectionContainer = () => {
 }
 
 const createCellContainer = () => {
-  const createCell = htmlToTemplate(`<div class = "mdl-cell mdl-cell--4-col"></div>`)
+  const createCell = htmlToTemplate("<div class = \"mdl-cell mdl-cell--4-col\"></div>")
   return createCell
 }
 
-              
 export const showSearchPageWithResult = (users, showProgress) => {
   const friendComponent = createFriendsComponent()
   friendComponent.appendChild(createFriendsSideNav())
@@ -218,7 +217,7 @@ export const showSearchPageWithResult = (users, showProgress) => {
       usersContainer.appendChild(createSearchUserItem(user))
     })
   }
-  const superContainer =  createFriendSuperContentContainer();
+  const superContainer = createFriendSuperContentContainer()
   superContainer.appendChild(mainContent)
   friendComponent.appendChild(superContainer)
   mainContainer.innerHTML = ""
@@ -263,7 +262,7 @@ export const showFriendList = (users, showProgress) => {
     const cell2 = createCellContainer()
     cell2.appendChild(createchatSectionContainer())
     mainContent.appendChild(cell2)
-    const superContainer =  createFriendSuperContentContainer();
+    const superContainer = createFriendSuperContentContainer()
     superContainer.appendChild(mainContent)
     friendComponent.appendChild(superContainer)
     mainContainer.innerHTML = ""
@@ -296,7 +295,7 @@ export const showPendingFriendRequests = (users, showProgress) => {
   if (showProgress) {
     mainContent.appendChild(showProgressBar())
   }
-  else if (users.length > 0){
+  else if (users.length > 0) {
     const usersContainer = createUserListContainer()
     mainContent.appendChild(usersContainer)
 
@@ -305,7 +304,7 @@ export const showPendingFriendRequests = (users, showProgress) => {
     })
   }
 
-  const superContainer =  createFriendSuperContentContainer();
+  const superContainer = createFriendSuperContentContainer()
   superContainer.appendChild(mainContent)
   friendComponent.appendChild(superContainer)
   mainContainer.innerHTML = ""
