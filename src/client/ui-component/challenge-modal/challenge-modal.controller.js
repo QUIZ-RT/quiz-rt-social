@@ -44,7 +44,7 @@ const openChallengeModal = (state, id, target) => {
     showLoader()
     const btnData = event.target.id.split("-")
     const challengeId = btnData[1]
-    displayLeaderBoard("challenge", challengeId)
+    displayLeaderBoard("challenges", challengeId)
   })
   // ////////////////////////////////////////////////////////////////////////////////////
 
