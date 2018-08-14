@@ -13,8 +13,7 @@ export const getFooterHtml = () => {
     <div class="copyRight-container">
     <div class="copyright">Copyright &copy; www.quizzapp.com
     <br>
-    <p>Designed and Maintained by the core team with the help of our contributors. Currently v1.0.1. Code licensed
-    MIT, docs CC BY 3.0.</p>
+    <p>Designed and Maintained by the core team with the help of our contributors. Currently v1.0.1</p>
     </div>
     </div>
     </div>`
